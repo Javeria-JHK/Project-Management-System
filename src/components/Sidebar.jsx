@@ -1,11 +1,13 @@
 import AddIcon from "@mui/icons-material/Add";
-import React, { useEffect, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
 import SpokeOutlinedIcon from "@mui/icons-material/SpokeOutlined";
 import EqualizerRoundedIcon from "@mui/icons-material/EqualizerRounded";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Tooltip from "@mui/material/Tooltip";
+import Button from "./ui/Button";
+
+import { useNavigate } from "react-router-dom";
 
 const items = [
   { label: "Projects", icon: SpokeOutlinedIcon, link: "/projects" },
@@ -14,15 +16,11 @@ const items = [
 ];
 
 function Sidebar() {
-  const [selected, setSelected] = useState(() => {
-    return localStorage.getItem("selectedTab") || null;
-  });
-
-  useEffect(() => {
-    if (selected) {
-      localStorage.setItem("selectedTab", selected);
-    }
-  }, [selected]);
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    navigate("/signin");
+  };
 
   return (
     <div className="w-[15%] h-screen bg-black p-1 flex ">
@@ -46,13 +44,12 @@ function Sidebar() {
               tabIcon={item.icon}
               label={item.label}
               link={item.link}
-              isActive={selected === item.label}
-              onClick={() => setSelected(item.label)}
             />
           ))}
         </div>
         <div className="flex-1">
           <div className="flex flex-col justify-end items-center h-full p-3 rounded-md">
+            <Button onClick={handleLogOut}>Log Out</Button>
             <Tooltip title="Settings" placement="right" arrow>
               <a
                 href="/"
