@@ -13,11 +13,11 @@ export default function Button({
       color={bgcolor}
       style={{ backgroundColor: bgcolor }}
       disabled={isLoading}
-      className={`w-full  font-semibold py-2 px-4 rounded-lg transition duration-300  hover:bg-blue-600 my-2 ${
+      className={`w-full  font-semibold py-2 px-4 rounded-lg transition duration-300  my-2 hover:ring-1 hover:ring-blue-950 ${
         textColor === "white" ? "text-white" : "text-black"
       }`}
     >
-      {isLoading === true ? "...loading" : children}
+      {isLoading === true ? "loading..." : children}
     </button>
   );
 }

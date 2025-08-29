@@ -1,8 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import SidebarItem from "./SidebarItem";
 import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
+import GroupsIcon from "@mui/icons-material/Groups";
 import SpokeOutlinedIcon from "@mui/icons-material/SpokeOutlined";
 import EqualizerRoundedIcon from "@mui/icons-material/EqualizerRounded";
+import CategoryIcon from "@mui/icons-material/Category";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "./ui/Button";
@@ -10,8 +13,11 @@ import Button from "./ui/Button";
 import { useNavigate } from "react-router-dom";
 
 const items = [
+  { label: "Dashboard", icon: SpaceDashboardIcon, link: "/" },
+  { label: "Workspaces", icon: CategoryIcon, link: "/workspaces" },
   { label: "Projects", icon: SpokeOutlinedIcon, link: "/projects" },
   { label: "My Tasks", icon: PlaylistAddCheckRoundedIcon, link: "/my-tasks" },
+  { label: "Team", icon: GroupsIcon, link: "/team" },
   { label: "Analytics", icon: EqualizerRoundedIcon, link: "/analytics" },
 ];
 
@@ -23,8 +29,8 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-[15%] h-screen bg-black p-1 flex ">
-      <div className="w-full h-full bg-black text-white py-5 px-3 flex flex-col rounded-md shadow">
+    <div className="w-[18%] h-screen bg-[#E2E2E2] p-1 flex ">
+      <div className="w-full h-full bg-black text-gray-100 py-5 px-3 flex flex-col rounded-xl shadow">
         <div className="flex justify-end ">
           <Tooltip title="Add Workspace" placement="bottom" arrow>
             <a
@@ -36,7 +42,7 @@ function Sidebar() {
           </Tooltip>
         </div>
         <h2 className="text-2xl font-bold pb-3 self-center">Workspace 1</h2>
-        <div className="w-full bg-gray-700 h-[1px]"></div>
+        <div className="w-full bg-gray-800 h-[1px]"></div>
         <div className="mt-4 mb-6 flex flex-col items-center justify-between">
           {items.map((item) => (
             <SidebarItem
@@ -49,7 +55,9 @@ function Sidebar() {
         </div>
         <div className="flex-1">
           <div className="flex flex-col justify-end items-center h-full p-3 rounded-md">
-            <Button onClick={handleLogOut}>Log Out</Button>
+            <Button onClick={handleLogOut} bgcolor={"#333"}>
+              Log Out
+            </Button>
             <Tooltip title="Settings" placement="right" arrow>
               <a
                 href="/"

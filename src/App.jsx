@@ -5,7 +5,13 @@ import Analytics from "./pages/Analytics/Analytics";
 import MyTasks from "./pages/MyTasks/MyTasks";
 import Auth from "./pages/Auth/Auth";
 import PageNotFound from "./pages/PageNotFound";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Team from "./pages/Team/Team";
+import Workspace from "./pages/Workspaces/workspace";
+
+import {
+  AuthProtectedRoute,
+  UnAuthProtectedRoute,
+} from "./components/ProtectedRoutes";
 
 function App() {
   return (
@@ -14,17 +20,34 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectedRoute>
+            <AuthProtectedRoute>
               <Dashboard />
-            </ProtectedRoute>
+            </AuthProtectedRoute>
           }
         >
           <Route path="/projects" element={<Projects />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/my-tasks" element={<MyTasks />} />
+          <Route path="/workspaces" element={<Workspace />} />
+          <Route path="/team" element={<Team />} />
         </Route>
-        <Route path="/signin" element={<Auth />} />
-        <Route path="/signup" element={<Auth />} />
+
+        <Route
+          path="/signin"
+          element={
+            <UnAuthProtectedRoute>
+              <Auth />
+            </UnAuthProtectedRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <UnAuthProtectedRoute>
+              <Auth />
+            </UnAuthProtectedRoute>
+          }
+        />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>

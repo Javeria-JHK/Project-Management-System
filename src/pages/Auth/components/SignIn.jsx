@@ -3,6 +3,8 @@ import InputFeild from "../../../components/ui/InputFeild";
 import Button from "../../../components/ui/Button";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { isEmailValid } from "../../../utils/validation";
+import PasswordFeild from "../../../components/ui/PasswordFeild";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -14,15 +16,15 @@ function SignIn() {
   const tempAuth = (email, password) => {
     setLoading(true);
     return new Promise((resolve) => {
-      if (email === "javeria@wanclouds.net" && password === "123456") {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (email === "javeria@wanclouds.net" && password === "123456") {
           setLoading(false);
           resolve(email);
-        }, 2000);
-      } else {
-        setLoading(false);
-        resolve(null);
-      }
+        } else {
+          setLoading(false);
+          resolve(null);
+        }
+      }, 2000); //for demonstarting authentication delay
     });
   };
 
@@ -31,22 +33,18 @@ function SignIn() {
       alert("Please fill in all fields.");
     } else if (!isEmailValid(email)) {
       alert("Please enter a valid email address.");
+    } else {
+      const user = await tempAuth(email, password);
+      localStorage.setItem("user", user);
+      console.log(user);
+      if (user) {
+        navigate("/");
+      } else alert("Invalid email or password.");
     }
-    const user = await tempAuth(email, password);
-    localStorage.setItem("user", user);
-    console.log(user);
-    if (user) {
-      navigate("/");
-    } else alert("Invalid email or password.");
-  };
-
-  const isEmailValid = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
   };
 
   return (
-    <div className=" h-full w-full flex flex-col justify-center items-center bg-gray-50 p-10  rounded-2xl border border-gray-600">
+    <div className=" h-full w-full flex flex-col justify-center items-center  p-10  rounded-2xl border-2 border-purple-900">
       <h2 className="text-4xl font-bold mb-3">Welcome Back!</h2>
       <h2 className="text-xl font-semibold text-black/60 mb-3 ">
         Sign In to Continue
@@ -56,17 +54,16 @@ function SignIn() {
           id="email"
           label="Email"
           type="email"
-          required
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <InputFeild
+
+        <PasswordFeild
           id="password"
           label="Password"
           type="password"
           placeholder="Enter your password"
-          required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
