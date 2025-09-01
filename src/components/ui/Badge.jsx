@@ -9,7 +9,7 @@ function Badge({ text, color = "blue" }) {
 
   return (
     <div
-      className={`flex justify-center items-center w-5 h-5 font-medium text-xs rounded-full ${
+      className={`flex justify-center items-center w-4 h-4 font-medium text-xs rounded-full ${
         colorClasses[color] || colorClasses.blue
       }`}
     >

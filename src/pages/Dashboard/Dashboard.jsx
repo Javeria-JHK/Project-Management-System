@@ -8,7 +8,7 @@ function Dashboard() {
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header />
-        <div className="flex-1 p-6 bg-[#E2E2E2] overflow-y-auto">
+        <div className="flex-1 p-2 bg-[#E2E2E2] overflow-y-auto">
           <Outlet />
         </div>
       </div>

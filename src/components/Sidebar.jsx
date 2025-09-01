@@ -11,6 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "./ui/Button";
 
 import { useNavigate } from "react-router-dom";
+import { useWorkspace } from "../Hooks/useWorkspace";
 
 const items = [
   { label: "Dashboard", icon: SpaceDashboardIcon, link: "/" },
@@ -22,7 +23,9 @@ const items = [
 ];
 
 function Sidebar() {
+  const { workspace } = useWorkspace();
   const navigate = useNavigate();
+
   const handleLogOut = () => {
     localStorage.removeItem("user");
     navigate("/signin");
@@ -31,7 +34,7 @@ function Sidebar() {
   return (
     <div className="w-[18%] h-screen bg-[#E2E2E2] p-1 flex ">
       <div className="w-full h-full bg-black text-gray-100 py-5 px-3 flex flex-col rounded-xl shadow">
-        <div className="flex justify-end ">
+        {/* <div className="flex justify-end ">
           <Tooltip title="Add Workspace" placement="bottom" arrow>
             <a
               href="/"
@@ -40,8 +43,8 @@ function Sidebar() {
               <AddIcon sx={{ fontSize: 20, color: "white" }} />
             </a>
           </Tooltip>
-        </div>
-        <h2 className="text-2xl font-bold pb-3 self-center">Workspace 1</h2>
+        </div> */}
+        <h2 className="text-xl font-bold pb-3 self-center">{workspace}</h2>
         <div className="w-full bg-gray-800 h-[1px]"></div>
         <div className="mt-4 mb-6 flex flex-col items-center justify-between">
           {items.map((item) => (
