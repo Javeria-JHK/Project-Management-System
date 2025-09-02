@@ -2,7 +2,7 @@ import { useState } from "react";
 import WorkspaceCard from "./components/WorkspaceCard";
 import AddIcon from "@mui/icons-material/Add";
 import SearchBar from "../../components/ui/SearchBar";
-import { useWorkspace } from "../../Hooks/useWorkspace";
+import { useWorkspace } from "../../hooks/useWorkspace";
 import WorkspaceModal from "./components/WorkspaceModal";
 
 function Workspace() {
@@ -16,7 +16,7 @@ function Workspace() {
     {
       id: 1,
       name: "My Workspace",
-      description: "Your default workspace",
+      description: "My default workspace",
       members: 1,
     },
     {
@@ -27,15 +27,15 @@ function Workspace() {
     },
     {
       id: 3,
-      name: "DesignHub Agency",
-      description: "Agency collaboration workspace",
+      name: "DesignHub",
+      description: "Design collaboration workspace",
       members: 12,
     },
   ]);
 
   //  Workspace functiobs
   const addWorkspace = (workspace) => {
-    setWorkspaces([...workspaces, { ...workspace, id: id++ }]);
+    setWorkspaces([...workspaces, { ...workspace, id: workspace.name + id }]);
   };
 
   const editWorkspace = (id, updatedData) => {
@@ -58,7 +58,7 @@ function Workspace() {
     <div className="px-2 h-full w-full">
       <h2 className="text-2xl font-bold text-black"> My Workspaces</h2>
       <div className="flex items-center justify-start gap-6">
-        <SearchBar handleSearch={(e) => setSearchQuery(e.target.value)} />
+        <SearchBar setSearchQuery={setSearchQuery} />
         <div
           className="w-50 h-10 rounded-xl border-2 border-gray-800 border-dashed hover:bg-white flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
           onClick={() => {

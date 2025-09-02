@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "./ui/Button";
 
 import { useNavigate } from "react-router-dom";
-import { useWorkspace } from "../Hooks/useWorkspace";
+import { useWorkspace } from "../hooks/useWorkspace";
 
 const items = [
   { label: "Dashboard", icon: SpaceDashboardIcon, link: "/" },

@@ -24,6 +24,8 @@ export default function WorkspaceModal({
   const handleSubmit = () => {
     if ((name !== "") | (description !== "")) {
       onSave({ name, description, members: initialData?.members || 1 });
+      setName("");
+      setDescription("");
       onClose();
     } else {
       alert("Please fill in all the feilds");
