@@ -12,6 +12,7 @@ import {
   AuthProtectedRoute,
   UnAuthProtectedRoute,
 } from "../components/ProtectedRoutes";
+import ProjectDetail from "../pages/Projects/ProjectDetail";
 
 function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ function AppRoutes() {
           }
         >
           <Route path="/projects" element={<Projects />} />
+          <Route path="projects/:id" element={<ProjectDetail />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/my-tasks" element={<MyTasks />} />
           <Route path="/workspaces" element={<Workspace />} />

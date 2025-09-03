@@ -95,7 +95,7 @@ function Projects() {
         Projects of{" "}
         <span className="text-gray-800">{workspace || "No Workspace"}</span>
       </h2>
-      <div className="flex items-center justify-start gap-6">
+      <div className="flex items-center justify-start gap-6 py-2">
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

@@ -9,7 +9,7 @@ function SearchBar({
   filters,
 }) {
   return (
-    <div className="flex items-center bg-gray-50 rounded-3xl h-10 pl-2 w-80 focus-within:ring-1 shadow-sm shadow-gray-500 my-2">
+    <div className="flex items-center bg-gray-50 rounded-3xl h-10 pl-2 w-80 focus-within:ring-1 shadow-sm shadow-gray-500 ">
       <SearchIcon className="text-gray-700" />
       {filters && <FilterListIcon className="text-gray-700" />}
       {filters && (

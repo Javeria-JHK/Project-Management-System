@@ -58,7 +58,10 @@ function Workspace() {
     <div className="px-2 h-full w-full">
       <h2 className="text-2xl font-bold text-black"> My Workspaces</h2>
       <div className="flex items-center justify-start gap-6">
-        <SearchBar setSearchQuery={setSearchQuery} />
+        <div className="py-2">
+          <SearchBar setSearchQuery={setSearchQuery} />
+        </div>
+
         <div
           className="w-50 h-10 rounded-xl border-2 border-gray-800 border-dashed hover:bg-white flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
           onClick={() => {
