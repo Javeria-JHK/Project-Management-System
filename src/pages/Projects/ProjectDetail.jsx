@@ -13,7 +13,7 @@ const projectDetails = {
     owner: "Alice",
     workspaceId: "My Workspace",
     name: "Personal Portfolio Website",
-    status: "In Progress",
+    status: "To Do",
     members: [
       { id: 1, name: "Alice" },
       { id: 2, name: "Bob" },
@@ -23,7 +23,7 @@ const projectDetails = {
         id: 1,
         title: "Setup Vite project",
         status: "To Do",
-        assignedTo: "Alice",
+        assignedTo: "Alice ",
         comments: 0,
         description:
           " This is the description of the task this is the description of the task",
@@ -33,7 +33,7 @@ const projectDetails = {
       {
         id: 2,
         title: "Add Hero Section",
-        status: "In Progress",
+        status: "To Do",
         assignedTo: "Bob",
         comments: 2,
         description:
@@ -44,13 +44,13 @@ const projectDetails = {
       {
         id: 3,
         title: "Connect Backend",
-        status: "In Review",
+        status: "In Progress",
         assignedTo: "Alice",
         comments: 5,
         description:
           " This is the description of the task this is the description of the task",
         dueDate: "5 Sept",
-        priority: "Normal",
+        priority: "Urgent",
       },
       {
         id: 4,
@@ -61,7 +61,7 @@ const projectDetails = {
         description:
           " This is the description of the task this is the description of the task",
         dueDate: "25 Sept",
-        priority: "High",
+        priority: "Low",
       },
     ],
   },
@@ -69,18 +69,36 @@ const projectDetails = {
 
 function ProjectDetail() {
   const { id } = useParams();
-
   const { workspace } = useWorkspace();
   const [selectedTab, setSelectedTab] = useState("kanban");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("name");
-  const filters = ["name", "status", "assignee"];
+  const [projectTasks, setProjectTasks] = useState(projectDetails[id].tasks);
+
+  const filters = ["name", "priority", "assignee"];
 
   const project = projectDetails[id];
 
   if (!project || project.workspaceId !== workspace) {
     return <p className="p-4 italic text-gray-500">Project Not Found</p>;
   }
+
+  const filteredTasks = projectTasks.filter((task) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+
+    if (searchFilter === "name") {
+      return task.title.toLowerCase().includes(query);
+    }
+    if (searchFilter === "assignee") {
+      return task.assignedTo.toLowerCase().includes(query);
+    }
+    if (searchFilter === "priority") {
+      return task.priority.toLowerCase().includes(query);
+    }
+
+    return true;
+  });
 
   return (
     <div className="p-1">
@@ -94,7 +112,7 @@ function ProjectDetail() {
       </nav> */}
 
       {/* <MemberList members={project.members} /> */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start">
         <h2 className="font-bold text-xl text-black">{project.name}</h2>
         <SearchBar
           searchQuery={searchQuery}
@@ -155,7 +173,11 @@ function ProjectDetail() {
 
       <div className="w-full h-[1px] bg-gray-400 rounded "></div>
 
-      {selectedTab === "kanban" ? <TasksKanban tasks={project.tasks} /> : <></>}
+      {selectedTab === "kanban" ? (
+        <TasksKanban tasks={filteredTasks} setTasks={setProjectTasks} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

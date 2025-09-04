@@ -18,7 +18,7 @@ const items = [
   { label: "Workspaces", icon: CategoryIcon, link: "/workspaces" },
   { label: "Projects", icon: SpokeOutlinedIcon, link: "/projects" },
   { label: "My Tasks", icon: PlaylistAddCheckRoundedIcon, link: "/my-tasks" },
-  { label: "Team", icon: GroupsIcon, link: "/team" },
+  { label: "Members", icon: GroupsIcon, link: "/members" },
   { label: "Analytics", icon: EqualizerRoundedIcon, link: "/analytics" },
 ];
 

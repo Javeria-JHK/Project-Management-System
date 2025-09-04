@@ -30,7 +30,7 @@ function Header() {
           />
           <div className=" px-2 text-xl text-gray-700">|</div>
 
-          <PaddedIcon Icon={DarkModeIcon} />
+          <PaddedIcon Icon={DarkModeIcon} bgColor={"gray"} hoverBg={"gray"} />
         </div>
       </div>
     </header>

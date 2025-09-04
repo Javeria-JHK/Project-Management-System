@@ -19,14 +19,14 @@ const hoverColors = {
 function PaddedIcon({
   Icon = HelpOutlineIcon,
   color = "white",
-  bgColor = "gray",
-  hoverBg = "gray",
+  bgColor,
+  hoverBg,
 }) {
   return (
     <div
       className={`flex items-center justify-center relative w-7 h-7 cursor-pointer 
         transition-colors duration-200 rounded-md
-        ${bgColors[bgColor]} ${hoverColors[hoverBg]}`}
+        ${bgColors[bgColor] || ""} ${hoverColors[hoverBg] || ""}`}
     >
       <Icon sx={{ fontSize: 18, color: color }} />
     </div>

@@ -74,7 +74,7 @@ function Workspace() {
         </div>
       </div>
 
-      <div className="flex gap-6 flex-wrap mt-2">
+      <div className="flex gap-6 flex-wrap mt-4">
         {filteredWorkspaces.map((ws) => (
           <WorkspaceCard
             key={ws.id}

@@ -31,7 +31,7 @@ function AppRoutes() {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/my-tasks" element={<MyTasks />} />
           <Route path="/workspaces" element={<Workspace />} />
-          <Route path="/team" element={<Team />} />
+          <Route path="/members" element={<Team />} />
         </Route>
 
         <Route

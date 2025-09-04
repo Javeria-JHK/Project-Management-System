@@ -117,7 +117,7 @@ function Projects() {
       </div>
 
       {filteredProjects.length > 0 ? (
-        <div className="flex gap-6 flex-wrap mt-2">
+        <div className="flex gap-6 flex-wrap mt-4">
           {filteredProjects.map((project) => (
             <ProjectCard
               project={project}
