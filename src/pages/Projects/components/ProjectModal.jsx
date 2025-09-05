@@ -7,6 +7,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (initialData) {
@@ -20,8 +21,28 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
     }
   }, [initialData]);
 
+  const validate = () => {
+    let newErrors = {};
+    if (!name.trim()) newErrors.name = "Project name is required";
+    else if (name.trim().length < 6)
+      newErrors.name = "Project name must be at least 6 characters";
+    else if (name.trim().length > 30)
+      newErrors.name = "Project name must be less than 30 characters";
+    if (description.trim().length < 10 && description.trim().length > 0)
+      newErrors.description = "Description must be at least 10 characters";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleClose = () => {
+    onClose();
+    setName("");
+    setDescription("");
+    setStatus("To Do");
+    setErrors({});
+  };
   const handleSubmit = () => {
-    if (name !== "" && description !== "") {
+    if (validate()) {
       onSave({
         name,
         description,
@@ -31,10 +52,8 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
       setName("");
       setDescription("");
       setStatus("To Do");
-
+      setErrors({});
       onClose();
-    } else {
-      alert("Please fill in all required fields");
     }
   };
 
@@ -53,7 +72,14 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
           type="text"
           placeholder="Enter project name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          required
+          onChange={(e) => {
+            setName(e.target.value);
+            if (errors.name) {
+              setErrors((prev) => ({ ...prev, name: "" }));
+            }
+          }}
+          error={errors.name}
         />
 
         {/* Description */}
@@ -61,7 +87,13 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
           label="Description"
           placeholder="Enter description..."
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            if (errors.description) {
+              setErrors((prev) => ({ ...prev, description: "" }));
+            }
+          }}
+          error={errors.description}
         />
 
         {/* Status Chips */}
@@ -90,7 +122,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
 
         <div className="flex justify-end gap-2">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="px-4 py-2 text-white border rounded"
           >
             Cancel

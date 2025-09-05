@@ -6,6 +6,7 @@ const bgColors = {
   blue: "bg-blue-300",
   green: "bg-green-300",
   red: "bg-red-300",
+  white: "bg-gray-300",
 };
 
 const hoverColors = {
@@ -14,6 +15,7 @@ const hoverColors = {
   blue: "hover:bg-blue-400",
   green: "hover:bg-green-400",
   red: "hover:bg-red-400",
+  white: "hover:bg-gray-100",
 };
 
 function PaddedIcon({

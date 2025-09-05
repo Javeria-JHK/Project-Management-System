@@ -2,6 +2,8 @@ import { useState } from "react";
 import TaskCard from "./TaskCard";
 import AddIcon from "@mui/icons-material/Add";
 import { IconButton, Tooltip } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import AddTaskModal from "./AddTaskModal";
 
 const statusColors = {
   Completed: "bg-green-100 text-green-700",
@@ -10,8 +12,9 @@ const statusColors = {
   "To Do": "bg-gray-300 text-gray-800",
 };
 
-function TasksKanban({ tasks, setTasks }) {
+function TasksKanban({ tasks, setTasks, members }) {
   const [draggedTask, setDraggedTask] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const columns = ["To Do", "In Progress", "In Review", "Completed"];
 
@@ -28,13 +31,18 @@ function TasksKanban({ tasks, setTasks }) {
     setDraggedTask(null);
   };
 
+  //add task
+  const handleAddTask = (newTask) => {
+    setTasks((prev) => [...prev, newTask]);
+  };
+
   return (
     <div className="flex gap-4 items-start pb-1 mt-4 overflow-x-auto">
       {columns.map((col) => (
         <div
           key={col}
           className="bg-gray-50  rounded-2xl shadow p-3 w-74 flex-shrink-0"
-          onDragOver={(e) => e.preventDefault()} // allow drop
+          onDragOver={(e) => e.preventDefault()} //helps drop
           onDrop={() => handleDrop(col)}
         >
           <div className="flex justify-between items-center">
@@ -48,11 +56,17 @@ function TasksKanban({ tasks, setTasks }) {
                 {tasks.filter((t) => t.status === col).length}
               </span>
             </div>
-            <Tooltip title="Add task" placement="top" arrow>
-              <IconButton aria-label="add" size="small">
-                <AddIcon fontSize="inherit" sx={{ color: "black" }} />
-              </IconButton>
-            </Tooltip>
+            {col === "To Do" && (
+              <Tooltip title="Add Task" placement="top" arrow>
+                <IconButton aria-label="add task" size="small">
+                  <AddIcon
+                    fontSize="inherit"
+                    sx={{ color: "black" }}
+                    onClick={() => setIsModalOpen(true)}
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
           </div>
 
           <div className="space-y-4 mt-5 max-h-115 min-h-10 overflow-y-auto ">
@@ -76,6 +90,13 @@ function TasksKanban({ tasks, setTasks }) {
           </div>
         </div>
       ))}
+      {/*Add Task Modal */}
+      <AddTaskModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleAddTask}
+        members={members}
+      />
     </div>
   );
 }

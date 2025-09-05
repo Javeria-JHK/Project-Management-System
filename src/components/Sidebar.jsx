@@ -58,9 +58,7 @@ function Sidebar() {
         </div>
         <div className="flex-1">
           <div className="flex flex-col justify-end items-center h-full p-3 rounded-md">
-            <Button onClick={handleLogOut} bgcolor={"#333"}>
-              Log Out
-            </Button>
+            <Button onClick={handleLogOut}>Log Out</Button>
             <Tooltip title="Settings" placement="right" arrow>
               <a
                 href="/"

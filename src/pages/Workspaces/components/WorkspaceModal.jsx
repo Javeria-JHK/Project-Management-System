@@ -10,6 +10,7 @@ export default function WorkspaceModal({
 }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (initialData) {
@@ -21,15 +22,36 @@ export default function WorkspaceModal({
     }
   }, [initialData]);
 
+  const validate = () => {
+    let newErrors = {};
+    if (!name.trim()) newErrors.name = "Workspace name is required";
+    else if (name.trim().length < 6)
+      newErrors.name = "Workspace name must be at least 6 characters.";
+    else if (name.trim().length > 30)
+      newErrors.name = "Workspace name must be less than 30 characters.";
+
+    if (description.trim().length < 10 && description.trim().length > 0)
+      newErrors.description = "Description must be at least 10 characters.";
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = () => {
-    if ((name !== "") | (description !== "")) {
+    if (validate()) {
       onSave({ name, description, members: initialData?.members || 1 });
       setName("");
       setDescription("");
+      setErrors({});
       onClose();
-    } else {
-      alert("Please fill in all the feilds");
     }
+  };
+  const handleClose = () => {
+    onClose();
+    setName("");
+    setDescription("");
+    setErrors({});
   };
 
   if (!isOpen) return null;
@@ -45,17 +67,31 @@ export default function WorkspaceModal({
           type="text"
           placeholder="Enter name of workspace"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+
+            if (errors.name) {
+              setErrors((prev) => ({ ...prev, name: "" }));
+            }
+          }}
+          error={errors.name}
+          required
         />
         <TextArea
           label={"Description"}
           placeholder="Enter description..."
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            if (errors.description) {
+              setErrors((prev) => ({ ...prev, description: "" }));
+            }
+          }}
+          error={errors.description}
         />
         <div className="flex justify-end gap-2">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="px-4 py-2 text-white border rounded"
           >
             Cancel
