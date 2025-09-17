@@ -6,14 +6,26 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import PaddedIcon from "./ui/PaddedIcon";
 import Tooltip from "@mui/material/Tooltip";
-
+import SelectMenu from "./ui/Select";
+import { useWorkspace } from "../hooks/useWorkspace";
 function Header() {
+  const { workspace, updateWorkspace } = useWorkspace();
   return (
     <header className="w-full h-[10%] p-1 flex ">
       <div className=" bg-gray-800 text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
-        <div className="flex ">
-          {/* <SearchBar /> */}
+        <div className="flex items-center">
           {/* <h2 className="text-xl font-bold">Project Management</h2> */}
+          <SelectMenu
+            value={workspace}
+            header={true}
+            height={40}
+            onChange={(e) => updateWorkspace(e.target.value)}
+            items={[
+              { value: "My Workspace" },
+              { value: "Wanclouds Inc." },
+              { value: "DesignHub" },
+            ]}
+          />
         </div>
 
         <div className="flex items-center justify-center">

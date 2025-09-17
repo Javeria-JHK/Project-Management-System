@@ -11,18 +11,21 @@ const flagColors = {
   Low: "gray",
 };
 
-function TaskCard({ task }) {
+function TaskCard({ task, onClick, bordered }) {
   return (
     <div
-      className={`py-3 px-2 rounded-xl  bg-[#f0f0f0] border-1 border-gray-300`}
+      className={`py-3 px-2 rounded-xl  bg-[#f0f0f0] ${
+        bordered ? "border-2 border-gray-700 p-2" : "border-1 border-gray-300"
+      } border-1 border-gray-300`}
+      onClick={onClick}
     >
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center cursor-pointer">
         <h3 className="text-gray-800 font-semibold text-sm py-1">
           {task.title}
         </h3>
       </div>
 
-      <p className="text-gray-600 text-xs font-semibold py-1 overflow-hidden text-ellipsis whitespace-nowrap">
+      <p className="text-gray-600 text-xs font-semibold py-1 overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer">
         {task.description}
       </p>
 

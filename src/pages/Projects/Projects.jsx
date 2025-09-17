@@ -55,7 +55,13 @@ function Projects() {
   const [editData, setEditData] = useState(null);
   let id = 5;
 
-  const filters = ["name", "status"];
+  const filters = [
+    { value: "name", label: "By Name" },
+    {
+      value: "status",
+      label: "By Status",
+    },
+  ];
 
   useEffect(() => {
     const filtered = allProjects.filter((p) => p.workspaceId === workspace);
@@ -102,6 +108,8 @@ function Projects() {
           searchFilter={searchFilter}
           setSearchFilter={setSearchFilter}
           filters={filters}
+          rounded={true}
+          border={false}
         />
         <div
           className="w-40 h-10 rounded-xl border-2 border-gray-800 border-dashed hover:bg-white flex hover:cursor-pointer hover:border-double justify-between items-center px-4"

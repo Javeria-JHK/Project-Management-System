@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useWorkspace } from "../../hooks/useWorkspace";
 import TasksKanban from "./components/TasksKanban";
@@ -7,8 +7,25 @@ import GroupIcon from "@mui/icons-material/Group";
 import ListIcon from "@mui/icons-material/List";
 import ViewKanbanIcon from "@mui/icons-material/ViewKanban";
 import SearchBar from "../../components/ui/SearchBar";
+import Button from "../../components/ui/Button";
+import MemberList from "./components/MembersList";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const members = ["Alice", "Bob"];
+const members = [
+  { value: "Alice" },
+  {
+    value: "Bob",
+  },
+];
+
+const workspaceMembers = [
+  { id: 1, name: "Alice", email: "alice@email.com" },
+  { id: 2, name: "Bob", email: "bob@email.com" },
+  { id: 3, name: "Charlie", email: "charlie@email.com" },
+  { id: 4, name: "Alpha", email: "alpha@email.com" },
+  { id: 5, name: "Bravo", email: "bravo@email.com" },
+  { id: 6, name: "Beta", email: "beta@email.com" },
+];
 
 const projectDetails = {
   1: {
@@ -18,8 +35,8 @@ const projectDetails = {
     name: "Personal Portfolio Website",
     status: "To Do",
     members: [
-      { id: 1, name: "Alice" },
-      { id: 2, name: "Bob" },
+      { id: 1, name: "Alice", email: "alice@email.com" },
+      { id: 2, name: "Bob", email: "bob@email.com" },
     ],
     tasks: [
       {
@@ -181,22 +198,36 @@ const projectDetails = {
 };
 
 function ProjectDetail() {
-  const { id } = useParams();
+  const { id, taskId } = useParams();
   const { workspace } = useWorkspace();
   const [selectedTab, setSelectedTab] = useState("kanban");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("name");
   const [project, setProject] = useState(projectDetails[id]);
   const [projectTasks, setProjectTasks] = useState(project?.tasks || []);
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const isMembersPage = location.pathname.endsWith("/members");
   const tasks = projectDetails[id]?.tasks;
-
-  const filters = ["name", "priority", "assignee"];
+  const filters = [
+    { value: "name", label: "By Name" },
+    {
+      value: "priority",
+      label: "By Priority",
+    },
+    {
+      value: "assignee",
+      label: "By Assignee",
+    },
+  ];
 
   useEffect(() => {
     setProject(projectDetails[id]);
     setProjectTasks(tasks || []);
-  }, [id, tasks]);
+    setOpen(isMembersPage);
+  }, [id, tasks, isMembersPage]);
 
   if (!project || project.workspaceId !== workspace) {
     return <p className="p-4 italic text-gray-500">Project Not Found</p>;
@@ -225,6 +256,13 @@ function ProjectDetail() {
     setProject((proj) => ({ ...proj, tasks: newTasks }));
   };
 
+  const handleClose = () => {
+    setOpen(false); // triggers AnimatePresence exit
+    setTimeout(() => {
+      navigate(`/projects/${id}`);
+    }, 300); // matches transition duration
+  };
+
   return (
     <div className="p-1">
       {/* Breadcrumb  */}
@@ -245,14 +283,28 @@ function ProjectDetail() {
           searchFilter={searchFilter}
           setSearchFilter={setSearchFilter}
           filters={filters}
+          rounded={true}
+          border={false}
         />
 
-        <Link to="">
+        {/* <Link to="">
           <div className="flex items-center gap-2 bg-gray-300 py-1 px-2 rounded-md mr-4 border-1 border-gray-900 cursor-pointer hover:bg-gray-50">
             <GroupIcon sx={{ fontSize: 24, color: "black" }} />
             <p className="text-gray-900 font-semibold"> Members</p>
           </div>
-        </Link>
+        </Link> */}
+        <Button
+          width="w-34"
+          height={"h-10"}
+          bgcolor="lightGray"
+          onClick={() => {
+            setOpen(true);
+            navigate(`/projects/${id}/members`);
+          }}
+        >
+          <GroupIcon sx={{ fontSize: 24, color: "black" }} />
+          <p className="text-gray-900 font-semibold ml-2"> Members</p>
+        </Button>
       </div>
 
       {/* Tabs */}
@@ -303,14 +355,36 @@ function ProjectDetail() {
           tasks={filteredTasks}
           setTasks={updateTasks}
           members={members}
+          taskId={taskId}
+          projectId={id}
         />
       ) : (
         <TasksListView
           tasks={filteredTasks}
           setTasks={updateTasks}
           members={members}
+          taskId={taskId}
+          projectId={id}
         />
       )}
+
+      <Outlet />
+
+      <MemberList
+        open={open}
+        onClose={handleClose}
+        projectMembers={project.members}
+        workspaceMembers={workspaceMembers}
+        onAddMember={(member) =>
+          setProject((p) => ({ ...p, members: [...p.members, member] }))
+        }
+        onRemoveMember={(id) =>
+          setProject((p) => ({
+            ...p,
+            members: p.members.filter((m) => m.id !== id),
+          }))
+        }
+      />
     </div>
   );
 }

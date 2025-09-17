@@ -6,6 +6,7 @@ function TextArea({
   required = false,
   error,
   id,
+  onBlur,
 }) {
   return (
     <div className="mb-4">
@@ -17,6 +18,7 @@ function TextArea({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 ${
           error
             ? "border-red-500 focus:ring-red-500"

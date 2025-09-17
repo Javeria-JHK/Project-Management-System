@@ -59,7 +59,11 @@ function Workspace() {
       <h2 className="text-2xl font-bold text-black"> My Workspaces</h2>
       <div className="flex items-center justify-start gap-6">
         <div className="py-2">
-          <SearchBar setSearchQuery={setSearchQuery} />
+          <SearchBar
+            setSearchQuery={setSearchQuery}
+            rounded={true}
+            border={false}
+          />
         </div>
 
         <div

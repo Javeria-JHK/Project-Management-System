@@ -7,6 +7,7 @@ function InputField({
   onChange,
   required = false,
   error,
+  onBlur,
 }) {
   return (
     <div className="mb-4">
@@ -22,6 +23,7 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        onBlur={onBlur}
         className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 
           ${
             error

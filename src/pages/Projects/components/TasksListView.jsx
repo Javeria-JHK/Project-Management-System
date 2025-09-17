@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AddTaskModal from "./AddTaskModal";
 import FlagIcon from "@mui/icons-material/Flag";
 import ChatIcon from "@mui/icons-material/Chat";
 import IconButton from "../../../components/ui/IconButton";
 import AddIcon from "@mui/icons-material/Add";
-
+import TaskDrawer from "./TaskDrawer";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Button from "../../../components/ui/Button";
 
 const statusColors = {
   Completed: "bg-green-100 text-green-700",
@@ -22,10 +24,24 @@ const flagColors = {
   Low: "gray",
 };
 
-function TasksListView({ tasks, setTasks, members }) {
+function TasksListView({ tasks, setTasks, members, projectId }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const pageSize = 8; // tasks per page
+
+  const navigate = useNavigate();
+  const pId = projectId;
+  const { taskId } = useParams();
+  const isTaskId = taskId;
+
+  useEffect(() => {
+    setOpen(!!isTaskId);
+  }, [isTaskId]);
+
+  const selectedTask = taskId
+    ? tasks.find((t) => String(t.id) === String(taskId))
+    : null;
 
   // Calculate pagination
   const totalPages = Math.ceil(tasks.length / pageSize);
@@ -35,6 +51,13 @@ function TasksListView({ tasks, setTasks, members }) {
   //add task
   const handleAddTask = (newTask) => {
     setTasks((prev) => [...prev, newTask]);
+  };
+
+  const handleClose = () => {
+    setOpen(false); // triggers AnimatePresence exit
+    setTimeout(() => {
+      navigate(`/projects/${pId}`);
+    }, 300); // matches transition duration
   };
 
   return (
@@ -105,12 +128,23 @@ function TasksListView({ tasks, setTasks, members }) {
                   </div>
                 </td>
                 <td className="px-4 py-2 flex justify-end items-center">
-                  <button
-                    className="w-20 h-7 text-xs text-black flex items-center justify-center"
+                  <Button
+                    bgcolor="gray"
+                    width="w-20"
+                    height={"h-8"}
+                    onClick={() => {
+                      setOpen(true);
+                      navigate(`/projects/${pId}/tasks/${task.id}`);
+                    }}
+                  >
+                    Details
+                  </Button>
+                  {/* <button
+                    className="w-20 h-7 text-xs text-white flex items-center justify-center"
                     style={{ backgroundColor: "gray" }}
                   >
                     Details
-                  </button>
+                  </button> */}
                   {/* <Tooltip title="Edit">
                     <span>
                       <IconButton
@@ -164,6 +198,16 @@ function TasksListView({ tasks, setTasks, members }) {
         onClose={() => setIsModalOpen(false)}
         onSave={handleAddTask}
         members={members}
+      />
+      <TaskDrawer
+        open={open}
+        onClose={handleClose}
+        task={selectedTask}
+        onSave={(updatedTask) => {
+          setTasks((prev) =>
+            prev.map((t) => (t.id === updatedTask.id ? updatedTask : t))
+          );
+        }}
       />
     </div>
   );

@@ -1,5 +1,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import SelectMenu from "./Select";
 
 function SearchBar({
   searchQuery,
@@ -7,32 +9,25 @@ function SearchBar({
   searchFilter,
   setSearchFilter,
   filters,
+  rounded,
+  border,
 }) {
   return (
-    <div className="flex items-center bg-gray-50 rounded-3xl h-10 pl-2 w-80 focus-within:ring-1 shadow-sm shadow-gray-500 ">
+    <div
+      className={`flex items-center bg-gray-50 ${
+        rounded
+          ? "rounded-3xl shadow-sm shadow-gray-500 focus-within:ring-1 "
+          : "rounded-lg"
+      } ${border && "border-1 border-gray-700 "} h-10 pl-2 w-80 `}
+    >
       <SearchIcon className="text-gray-700" />
-      {filters && <FilterListIcon className="text-gray-700" />}
+
       {filters && (
-        <select
+        <SelectMenu
           value={searchFilter}
           onChange={(e) => setSearchFilter(e.target.value)}
-          className="
-            appearance-none bg-transparent 
-            focus:outline-none border-none 
-            text-gray-500 text-sm font-medium
-            px-2 cursor-pointer
-          "
-        >
-          {filters.map((f) => (
-            <option
-              key={f}
-              value={f}
-              className="bg-white focus:bg-gray-700 text-gray-800 font-medium hover:bg-gray-100 px-2 rounded-sm"
-            >
-              By {f.charAt(0).toUpperCase() + f.slice(1)}:
-            </option>
-          ))}
-        </select>
+          items={filters}
+        />
       )}
 
       <input

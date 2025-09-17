@@ -2,6 +2,7 @@ const colors = {
   black: "bg-black",
   gray: "bg-gray-600",
   default: "bg-[#1a1a1a]",
+  lightGray: "bg-gray-400",
 };
 
 export default function Button({
@@ -10,6 +11,10 @@ export default function Button({
   onClick,
   bgcolor = "default",
   textColor = "white",
+  width = "w-full",
+  paddingHorizontal = "px-4",
+  paddingVertical = "py-2",
+  height,
   isLoading = false,
 }) {
   return (
@@ -17,9 +22,12 @@ export default function Button({
       type={type}
       onClick={onClick}
       disabled={isLoading}
-      className={`w-full  font-semibold py-2 px-4 rounded-lg transition duration-300  my-2 hover:ring-1 hover:ring-blue-950 ${
-        colors[bgcolor]
-      } ${textColor === "white" ? "text-white" : "text-black"}`}
+      className={`font-semibold ${paddingHorizontal} ${paddingVertical} rounded-lg transition duration-300 flex justify-center items-center 
+        hover:ring-1 hover:ring-blue-950 
+        ${colors[bgcolor]} 
+     
+        ${width} ${height} 
+        ${textColor === "white" ? "text-white" : "text-black"}`}
     >
       {isLoading === true ? "loading..." : children}
     </button>

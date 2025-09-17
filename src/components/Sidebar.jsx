@@ -11,7 +11,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "./ui/Button";
 
 import { useNavigate } from "react-router-dom";
-import { useWorkspace } from "../hooks/useWorkspace";
 
 const items = [
   { label: "Dashboard", icon: SpaceDashboardIcon, link: "/" },
@@ -20,10 +19,10 @@ const items = [
   { label: "My Tasks", icon: PlaylistAddCheckRoundedIcon, link: "/my-tasks" },
   { label: "Members", icon: GroupsIcon, link: "/members" },
   { label: "Analytics", icon: EqualizerRoundedIcon, link: "/analytics" },
+  { label: "Settings", icon: SettingsIcon, link: "/settings" },
 ];
 
 function Sidebar() {
-  const { workspace } = useWorkspace();
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -44,7 +43,11 @@ function Sidebar() {
             </a>
           </Tooltip>
         </div> */}
-        <h2 className="text-xl font-bold pb-3 self-center">{workspace}</h2>
+        {/* <h2 className="text-xl font-bold pb-3 self-center">{workspace}</h2> */}
+        <div className="text-xl font-bold pb-3 flex justify-center gap-2">
+          <img src="/logo.png" alt="logo" className="h-6 w-6" />
+          <h2 className="text-xl font-semibold  self-center">PM&CS</h2>
+        </div>
         <div className="w-full bg-gray-800 h-[1px]"></div>
         <div className="mt-4 mb-6 flex flex-col items-center justify-between">
           {items.map((item) => (
@@ -57,16 +60,16 @@ function Sidebar() {
           ))}
         </div>
         <div className="flex-1">
-          <div className="flex flex-col justify-end items-center h-full p-3 rounded-md">
+          <div className="flex flex-col justify-end items-center h-full p-3 gap-2 rounded-md">
             <Button onClick={handleLogOut}>Log Out</Button>
-            <Tooltip title="Settings" placement="right" arrow>
+            {/* <Tooltip title="Settings" placement="right" arrow>
               <a
                 href="/"
                 className="p-2 w-8 h-8 flex items-center justify-center"
               >
                 <SettingsIcon sx={{ fontSize: 28, color: "white" }} />
               </a>
-            </Tooltip>
+            </Tooltip> */}
           </div>
         </div>
       </div>

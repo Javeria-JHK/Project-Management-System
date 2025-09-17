@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import InputFeild from "../../../components/ui/InputFeild";
 import TextArea from "../../../components/ui/TextArea";
+import SelectMenu from "../../../components/ui/Select";
 
 const priorities = ["Low", "Normal", "High", "Urgent"];
 
@@ -20,14 +21,14 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
       setTitle(initialData.title || "");
       setDescription(initialData.description || "");
 
-      setAssignee(initialData.assignedTo || members?.[0] || "");
+      setAssignee(initialData.assignedTo || members?.[0].value || "");
       setDueDate(initialData.dueDate || "");
       setPriority(initialData.priority || "Normal");
     } else {
       setTitle("");
       setDescription("");
 
-      setAssignee(members?.[0] || "");
+      setAssignee(members?.[0].value || "");
       setDueDate("");
       setPriority("Normal");
     }
@@ -109,15 +110,14 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Assignee
           </label>
-          <select
-            value={assignee}
-            onChange={(e) => setAssignee(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-700"
-          >
-            {members.map((m) => (
-              <option value={m}>{m}</option>
-            ))}
-          </select>
+          <div className="w-full px-3 py-2 border h-10 flex items-center justify-center border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-700">
+            <SelectMenu
+              value={assignee}
+              onChange={(e) => setAssignee(e.target.value)}
+              items={members}
+              widthx={"w-full"}
+            />
+          </div>
         </div>
 
         {/* Due Date */}
