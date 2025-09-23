@@ -46,6 +46,34 @@ const DashboardView = () => {
       tasks: 8,
       status: "Ongoing",
     },
+    // {
+    //   id: 3,
+    //   name: "E-commerce Redesign",
+    //   progress: 70,
+    //   tasks: 12,
+    //   status: "Completed",
+    // },
+    // {
+    //   id: 4,
+    //   name: "Brand Guidelines",
+    //   progress: 40,
+    //   tasks: 8,
+    //   status: "Ongoing",
+    // },
+    // {
+    //   id: 5,
+    //   name: "E-commerce Redesign",
+    //   progress: 70,
+    //   tasks: 12,
+    //   status: "Completed",
+    // },
+    // {
+    //   id: 6,
+    //   name: "Brand Guidelines",
+    //   progress: 40,
+    //   tasks: 8,
+    //   status: "Ongoing",
+    // },
   ];
 
   const data = [
@@ -83,26 +111,27 @@ const DashboardView = () => {
       </div>
 
       <div className="flex justify-between w-full">
-        <div className="bg-white space-y-4 shadow rounded-xl p-2  w-[40%]">
+        <div className="bg-white space-y-4 h-full shadow rounded-xl p-2  w-[40%]">
           <h2 className="text-lg font-semibold pl-2 mb-2">Projects</h2>
-
-          {projects.map((proj) => (
-            <div
-              key={proj.id}
-              className="p-3  rounded-lg bg-gray-50 hover:bg-gray-100"
-            >
-              <p className="font-semibold">{proj.name}</p>
-              <p className="text-sm text-gray-500">
-                Tasks: {proj.tasks} • Progress: {proj.progress}%
-              </p>
-              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                <div
-                  className="bg-blue-800 h-2 rounded-full"
-                  style={{ width: `${proj.progress}%` }}
-                ></div>
+          <div className="flex flex-col  space-y-2 max-h-[400px] overflow-y-auto pr-2">
+            {projects.map((proj) => (
+              <div
+                key={proj.id}
+                className="p-3  rounded-lg bg-gray-50 hover:bg-gray-100"
+              >
+                <p className="font-semibold">{proj.name}</p>
+                <p className="text-sm text-gray-500">
+                  Tasks: {proj.tasks} • Progress: {proj.progress}%
+                </p>
+                <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                  <div
+                    className="bg-blue-800 h-2 rounded-full"
+                    style={{ width: `${proj.progress}%` }}
+                  ></div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         {/* Task Status Chart */}
         <div className="bg-white shadow rounded-xl p-4 w-[58%]">

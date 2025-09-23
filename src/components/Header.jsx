@@ -8,13 +8,18 @@ import PaddedIcon from "./ui/PaddedIcon";
 import Tooltip from "@mui/material/Tooltip";
 import SelectMenu from "./ui/Select";
 import { useWorkspace } from "../hooks/useWorkspace";
+import useTheme from "../hooks/useTheme";
+import IconButton from "./ui/IconButton";
+
 function Header() {
   const { workspace, updateWorkspace } = useWorkspace();
+  const { theme, toggleTheme } = useTheme();
   return (
     <header className="w-full h-[10%] p-1 flex ">
-      <div className=" bg-gray-800 text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
+      <div className=" bg-gray-100 dark:bg-gray-800 text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
         <div className="flex items-center">
           {/* <h2 className="text-xl font-bold">Project Management</h2> */}
+          {/* <div className="w-32 h-32  dark:bg-gray-100 bg-red-600"></div> */}
           <SelectMenu
             value={workspace}
             header={true}
@@ -41,8 +46,12 @@ function Header() {
             src="https://avatar.iran.liara.run/public/75"
           />
           <div className=" px-2 text-xl text-gray-700">|</div>
-
-          <PaddedIcon Icon={DarkModeIcon} bgColor={"gray"} hoverBg={"gray"} />
+          <IconButton
+            Icon={theme === "dark" ? LightModeIcon : DarkModeIcon}
+            bgColor={"gray"}
+            hoverBg={"gray"}
+            onClick={toggleTheme}
+          />
         </div>
       </div>
     </header>
