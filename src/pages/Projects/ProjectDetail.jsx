@@ -10,6 +10,11 @@ import SearchBar from "../../components/ui/SearchBar";
 import Button from "../../components/ui/Button";
 import MemberList from "./components/MembersList";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTasks } from "../../hooks/useTasks";
+import { useStore } from "../../hooks/useStore";
+import { useProjects } from "../../hooks/useProjects";
+
+//dummy data
 
 const members = [
   { value: "Alice" },
@@ -27,190 +32,83 @@ const workspaceMembers = [
   { id: 6, name: "Beta", email: "beta@email.com" },
 ];
 
-const projectDetails = {
-  1: {
-    id: 1,
-    owner: "Alice",
-    workspaceId: "My Workspace",
-    name: "Personal Portfolio Website",
-    status: "To Do",
-    members: [
-      { id: 1, name: "Alice", email: "alice@email.com" },
-      { id: 2, name: "Bob", email: "bob@email.com" },
-    ],
-    tasks: [
-      {
-        id: 1,
-        title: "Setup Vite project",
-        status: "To Do",
-        assignedTo: "Alice ",
-        comments: 0,
-        description:
-          " This is the description of the task this is the description of the task",
-        dueDate: "25 Aug",
-        priority: "Normal",
-      },
-      {
-        id: 2,
-        title: "Add Hero Section",
-        status: "To Do",
-        assignedTo: "Bob",
-        comments: 2,
-        description:
-          " This is the description of the task this is the description of the task",
-        dueDate: "20 Aug",
-        priority: "High",
-      },
-      {
-        id: 3,
-        title: "Connect Backend",
-        status: "In Progress",
-        assignedTo: "Alice",
-        comments: 5,
-        description:
-          " This is the description of the task this is the description of the task",
-        dueDate: "5 Sept",
-        priority: "Urgent",
-      },
-      {
-        id: 4,
-        title: "Deploy on Vercel",
-        status: "Completed",
-        assignedTo: "Bob",
-        comments: 7,
-        description:
-          " This is the description of the task this is the description of the task",
-        dueDate: "25 Sept",
-        priority: "Low",
-      },
-      // {
-      //   id: 5,
-      //   title: "Deploy on Vercel",
-      //   status: "Completed",
-      //   assignedTo: "Bob",
-      //   comments: 7,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "25 Sept",
-      //   priority: "Low",
-      // },
-      // {
-      //   id: 6,
-      //   title: "Deploy on Vercel",
-      //   status: "Completed",
-      //   assignedTo: "Bob",
-      //   comments: 7,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "25 Sept",
-      //   priority: "Low",
-      // },
-      // {
-      //   id: 7,
-      //   title: "Deploy on Vercel",
-      //   status: "Completed",
-      //   assignedTo: "Bob",
-      //   comments: 7,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "25 Sept",
-      //   priority: "Low",
-      // },
-      // {
-      //   id: 8,
-      //   title: "Deploy on Vercel",
-      //   status: "Completed",
-      //   assignedTo: "Bob",
-      //   comments: 7,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "25 Sept",
-      //   priority: "Low",
-      // },
-      // {
-      //   id: 9,
-      //   title: "Deploy on Vercel",
-      //   status: "Completed",
-      //   assignedTo: "Bob",
-      //   comments: 7,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "25 Sept",
-      //   priority: "Low",
-      // },
-      // {
-      //   id: 14,
-      //   title: "Connect Backend",
-      //   status: "In Progress",
-      //   assignedTo: "Alice",
-      //   comments: 5,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "5 Sept",
-      //   priority: "Urgent",
-      // },
-      // {
-      //   id: 13,
-      //   title: "Connect Backend",
-      //   status: "In Progress",
-      //   assignedTo: "Alice",
-      //   comments: 5,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "5 Sept",
-      //   priority: "Urgent",
-      // },
-      // {
-      //   id: 12,
-      //   title: "Connect Backend",
-      //   status: "In Progress",
-      //   assignedTo: "Alice",
-      //   comments: 5,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "5 Sept",
-      //   priority: "Urgent",
-      // },
-      // {
-      //   id: 11,
-      //   title: "Connect Backend",
-      //   status: "In Progress",
-      //   assignedTo: "Alice",
-      //   comments: 5,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "5 Sept",
-      //   priority: "Urgent",
-      // },
-      // {
-      //   id: 10,
-      //   title: "Connect Backend",
-      //   status: "In Progress",
-      //   assignedTo: "Alice",
-      //   comments: 5,
-      //   description:
-      //     " This is the description of the task this is the description of the task",
-      //   dueDate: "5 Sept",
-      //   priority: "Urgent",
-      // },
-    ],
-  },
-};
+// const projectDetails = {
+//   1: {
+//     id: 1,
+//     owner: "Alice",
+//     workspaceId: "My Workspace",
+//     name: "Personal Portfolio Website",
+//     status: "To Do",
+//     members: [
+//       { id: 1, name: "Alice", email: "alice@email.com" },
+//       { id: 2, name: "Bob", email: "bob@email.com" },
+//     ],
+//     tasks: [
+//       {
+//         id: 1,
+//         title: "Setup Vite project",
+//         status: "To Do",
+//         assignedTo: "Alice ",
+//         comments: 0,
+//         description:
+//           " This is the description of the task this is the description of the task",
+//         dueDate: "25 Aug",
+//         priority: "Normal",
+//       },
+//       {
+//         id: 2,
+//         title: "Add Hero Section",
+//         status: "To Do",
+//         assignedTo: "Bob",
+//         comments: 2,
+//         description:
+//           " This is the description of the task this is the description of the task",
+//         dueDate: "20 Aug",
+//         priority: "High",
+//       },
+//       {
+//         id: 3,
+//         title: "Connect Backend",
+//         status: "In Progress",
+//         assignedTo: "Alice",
+//         comments: 5,
+//         description:
+//           " This is the description of the task this is the description of the task",
+//         dueDate: "5 Sept",
+//         priority: "Urgent",
+//       },
+//       {
+//         id: 4,
+//         title: "Deploy on Vercel",
+//         status: "Completed",
+//         assignedTo: "Bob",
+//         comments: 7,
+//         description:
+//           " This is the description of the task this is the description of the task",
+//         dueDate: "25 Sept",
+//         priority: "Low",
+//       },
+//     ],
+//   },
+// };
 
 function ProjectDetail() {
   const { id, taskId } = useParams();
-  const { workspace } = useWorkspace();
+  const { workspaceId } = useWorkspace();
   const [selectedTab, setSelectedTab] = useState("kanban");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("name");
-  const [project, setProject] = useState(projectDetails[id]);
-  const [projectTasks, setProjectTasks] = useState(project?.tasks || []);
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { getProjectById } = useProjects();
   const navigate = useNavigate();
+  const { getTasksByProject, tasks } = useTasks();
+  const { state, dispatch } = useStore();
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
 
   const isMembersPage = location.pathname.endsWith("/members");
-  const tasks = projectDetails[id]?.tasks;
+
   const filters = [
     { value: "name", label: "By Name" },
     {
@@ -224,17 +122,13 @@ function ProjectDetail() {
   ];
 
   useEffect(() => {
-    setProject(projectDetails[id]);
-    setProjectTasks(tasks || []);
+    getTasksByProject(id);
     setOpen(isMembersPage);
-  }, [id, tasks, isMembersPage]);
-
-  if (!project || project.workspaceId !== workspace) {
-    return <p className="p-4 italic text-gray-500">Project Not Found</p>;
-  }
+    getProjectById(id);
+  }, [id, isMembersPage, state.tasks.length, workspaceId]);
 
   const filteredTasks =
-    projectTasks.filter((task) => {
+    tasks.filter((task) => {
       if (!searchQuery) return true;
       const query = searchQuery.toLowerCase();
 
@@ -242,7 +136,7 @@ function ProjectDetail() {
         return task.title.toLowerCase().includes(query);
       }
       if (searchFilter === "assignee") {
-        return task.assignedTo.toLowerCase().includes(query);
+        return task.assignee_id.toLowerCase().includes(query);
       }
       if (searchFilter === "priority") {
         return task.priority.toLowerCase().includes(query);
@@ -251,32 +145,32 @@ function ProjectDetail() {
       return true;
     }) || [];
 
-  const updateTasks = (newTasks) => {
-    setProjectTasks(newTasks);
-    setProject((proj) => ({ ...proj, tasks: newTasks }));
-  };
-
   const handleClose = () => {
     setOpen(false); // triggers AnimatePresence exit
     setTimeout(() => {
       navigate(`/projects/${id}`);
-    }, 300); // matches transition duration
+    }, 300);
   };
 
   return (
-    <div className="p-1">
-      {/* Breadcrumb  */}
-      {/* <nav className="text-md text-gray-700 mb-4">
-        <Link to="/projects">
-          <span className="hover:underline text-gray-800"> Projects</span>
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="font-semibold">{project.name}</span>
-      </nav> */}
-
+    <div className="p-1 relative">
       {/* <MemberList members={project.members} /> */}
       <div className="flex justify-between items-start">
-        <h2 className="font-bold text-xl text-black">{project.name}</h2>
+        <h2 className="font-bold text-xl text-black">
+          {state.currentProject?.name || "Project Name"}
+        </h2>
+        <div>
+          {successAlert && (
+            <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-green-100 text-green-500 text-md rounded-lg border-1 border-green-300">
+              <p>{successAlert}</p>{" "}
+            </div>
+          )}
+          {errorAlert && (
+            <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-red-100 text-red-500 text-md rounded-lg border-1 border-red-300">
+              <p>{errorAlert}</p>{" "}
+            </div>
+          )}
+        </div>
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
@@ -350,18 +244,22 @@ function ProjectDetail() {
 
       <div className="w-full h-[1px] bg-gray-400 rounded "></div>
 
-      {selectedTab === "kanban" ? (
+      {tasks.length === 0 ? (
+        <p className="p-4 italic text-gray-500">No Tasks Found</p>
+      ) : selectedTab === "kanban" ? (
         <TasksKanban
           tasks={filteredTasks}
-          setTasks={updateTasks}
           members={members}
           taskId={taskId}
           projectId={id}
+          setSuccessAlert={setSuccessAlert}
+          setErrorAlert={setErrorAlert}
         />
       ) : (
         <TasksListView
           tasks={filteredTasks}
-          setTasks={updateTasks}
+          setSuccessAlert={setSuccessAlert}
+          setErrorAlert={setErrorAlert}
           members={members}
           taskId={taskId}
           projectId={id}
@@ -373,17 +271,17 @@ function ProjectDetail() {
       <MemberList
         open={open}
         onClose={handleClose}
-        projectMembers={project.members}
+        projectMembers={workspaceMembers}
         workspaceMembers={workspaceMembers}
-        onAddMember={(member) =>
-          setProject((p) => ({ ...p, members: [...p.members, member] }))
-        }
-        onRemoveMember={(id) =>
-          setProject((p) => ({
-            ...p,
-            members: p.members.filter((m) => m.id !== id),
-          }))
-        }
+        // onAddMember={(member) =>
+        //   setProject((p) => ({ ...p, members: [...p.members, member] }))
+        // }
+        // onRemoveMember={(id) =>
+        //   setProject((p) => ({
+        //     ...p,
+        //     members: p.members.filter((m) => m.id !== id),
+        //   }))
+        // }
       />
     </div>
   );

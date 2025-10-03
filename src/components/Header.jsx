@@ -11,9 +11,23 @@ import { useWorkspace } from "../hooks/useWorkspace";
 import useTheme from "../hooks/useTheme";
 import IconButton from "./ui/IconButton";
 
+import { useEffect } from "react";
+
 function Header() {
-  const { workspace, updateWorkspace } = useWorkspace();
+  const { workspaceId, workspaces, updateWorkspace } = useWorkspace();
   const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    console.log("Current workspace:", workspaceId);
+  }, [workspaceId, workspaces]);
+
+  const workspaceItems = workspaces.map((ws) => ({
+    id: ws.id,
+    label: ws.name,
+    value: ws.id,
+  }));
+  console.log("Available workspaces:", workspaceItems);
+
   return (
     <header className="w-full h-[10%] p-1 flex ">
       <div className=" bg-gray-100 dark:bg-gray-800 text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
@@ -21,15 +35,12 @@ function Header() {
           {/* <h2 className="text-xl font-bold">Project Management</h2> */}
           {/* <div className="w-32 h-32  dark:bg-gray-100 bg-red-600"></div> */}
           <SelectMenu
-            value={workspace}
+            value={workspaceId}
             header={true}
             height={40}
+            placeholder="Select Workspace"
             onChange={(e) => updateWorkspace(e.target.value)}
-            items={[
-              { value: "My Workspace" },
-              { value: "Wanclouds Inc." },
-              { value: "DesignHub" },
-            ]}
+            items={workspaceItems}
           />
         </div>
 

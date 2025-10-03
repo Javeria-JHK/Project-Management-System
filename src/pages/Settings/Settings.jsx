@@ -13,19 +13,23 @@ function Settings() {
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
 
-  const user = {
-    name: "Alice Johnson",
-    email: "alice@example.com",
-  };
+  const [user, setUser] = useState(null);
 
   // Avatar initials
-  const initials = user.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
+  const initials = (name = "") => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  };
 
   useEffect(() => {
+    const data = localStorage.getItem("user");
+    console.log(data);
+    if (data) {
+      setUser(JSON.parse(data));
+    }
     if (successMessage) {
       const timer = setTimeout(() => setSuccessMessage(""), 3000);
       return () => clearTimeout(timer);
@@ -84,15 +88,15 @@ function Settings() {
         <div className="flex items-center gap-6 mb-8">
           {/* Avatar */}
           <div className="w-20 h-20 rounded-full bg-gray-900 text-white flex items-center justify-center text-2xl font-bold shadow-md">
-            {initials}
+            {initials(user?.name)}
           </div>
 
           {/* Name + Email */}
           <div>
             <h2 className="text-2xl font-semibold text-gray-800">
-              {user.name}
+              {user?.name}
             </h2>
-            <p className="text-gray-500">{user.email}</p>
+            <p className="text-gray-500">{user?.email}</p>
           </div>
         </div>
 

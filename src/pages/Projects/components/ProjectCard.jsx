@@ -31,6 +31,7 @@ function ProjectCard({ project, onEdit, onDelete }) {
     "In Progress": "bg-yellow-100 text-yellow-700",
     "In Review": "bg-blue-100 text-blue-700",
     "To Do": "bg-gray-300 text-gray-800",
+    active: "bg-gray-300 text-gray-800",
   };
   return (
     <div className="rounded-2xl shadow-md hover:shadow-lg transition-all bg-white w-100 ">
@@ -115,7 +116,7 @@ function ProjectCard({ project, onEdit, onDelete }) {
           <div className="flex justify-between text-sm text-gray-500 mt-6 cursor-pointer">
             <div className="flex items-center gap-2">
               <GroupIcon sx={{ fontSize: 24, color: "darkRed" }} />
-              {project.members} members
+              {project.members || 1} members
             </div>
             <div className="flex items-center text-sm text-gray-500 gap-2">
               <PaddedIcon
@@ -124,7 +125,7 @@ function ProjectCard({ project, onEdit, onDelete }) {
                 color={"darkBlue"}
               />
 
-              <p className="font-semibold">{project.tasks} tasks</p>
+              <p className="font-semibold">{project.tasks || 0} tasks</p>
             </div>
           </div>
         </Link>

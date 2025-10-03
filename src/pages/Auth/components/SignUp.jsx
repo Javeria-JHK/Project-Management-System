@@ -9,16 +9,18 @@ import {
   checkPasswordError,
 } from "../../../utils/validation";
 import { signUp } from "../../../api/auth";
+import { useStore } from "../../../hooks/useStore";
 
 function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+
   const [errors, setErrors] = useState({});
   const [showApiError, setShowApiError] = useState(false);
   const [apiError, setApiError] = useState("");
+  const { state, dispatch } = useStore();
 
   const navigate = useNavigate();
 
@@ -58,22 +60,28 @@ function SignUp() {
       return;
     }
 
-    setLoading(true);
+    dispatch({ type: "REGISTER_REQUEST" });
+
     const data = await signUp(name, email, password);
     console.log(data);
+    if (data) {
+      dispatch({
+        type: "REGISTER_SUCCESS",
+        payload: {},
+      });
 
-    setLoading(false);
+      alert(data.message);
+
+      navigate("/signin");
+    }
+
     if (data.error) {
+      dispatch({ type: "REGISTER_FAILURE", payload: data.error });
       setApiError(data.error);
       setShowApiError(true);
       return;
     }
-    if (data) {
-      localStorage.setItem("user", email);
-      alert(data.message);
-      // localStorage.setItem("access_token", data.tokens.access_token);
-      navigate("/");
-    }
+
     setErrors(newErrors);
   };
 
@@ -152,7 +160,12 @@ function SignUp() {
           }}
           error={errors.confirmPassword}
         />
-        <Button onClick={handleClick} isLoading={loading}>
+        <Button
+          onClick={handleClick}
+          isLoading={state.isLoading}
+          className="mt-4 w-full"
+          disabled={state.isLoading}
+        >
           Sign Up
         </Button>
       </form>

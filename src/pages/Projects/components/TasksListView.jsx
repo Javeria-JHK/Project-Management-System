@@ -9,6 +9,27 @@ import TaskDrawer from "./TaskDrawer";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Button from "../../../components/ui/Button";
+import { useTasks } from "../../../hooks/useTasks";
+
+import { capitalize } from "../../../utils/stringAlterations";
+import { formatDeadline } from "../../../utils/DateFormatter";
+
+const mapStatus = {
+  todo: "To Do",
+  inprogress: "In Progress",
+  inreview: "In Review",
+  completed: "Completed",
+};
+
+function mapStatusforBackend(status) {
+  const map = {
+    "To Do": "todo",
+    "In Progress": "inprogress",
+    "In Review": "review",
+    Completed: "completed",
+  };
+  return map[status] || status.toLowerCase();
+}
 
 const statusColors = {
   Completed: "bg-green-100 text-green-700",
@@ -18,18 +39,24 @@ const statusColors = {
 };
 
 const flagColors = {
-  Normal: "blue",
-  High: "orange",
-  Urgent: "red",
-  Low: "gray",
+  medium: "blue",
+  high: "orange",
+  urgent: "red",
+  low: "gray",
 };
 
-function TasksListView({ tasks, setTasks, members, projectId }) {
+function TasksListView({
+  tasks,
+  members,
+  projectId,
+  setSuccessAlert,
+  setErrorAlert,
+}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const pageSize = 8; // tasks per page
-
+  const { createTask, getTasksByProject, editTask } = useTasks();
   const navigate = useNavigate();
   const pId = projectId;
   const { taskId } = useParams();
@@ -48,9 +75,50 @@ function TasksListView({ tasks, setTasks, members, projectId }) {
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedTasks = tasks.slice(startIndex, startIndex + pageSize);
 
-  //add task
-  const handleAddTask = (newTask) => {
-    setTasks((prev) => [...prev, newTask]);
+  const handleAddTask = async (newTask) => {
+    const task = {
+      title: newTask.title,
+      description: newTask.description,
+      project_id: projectId,
+      assignee_id: newTask.assignee_id,
+      priority: newTask.priority.toLowerCase(),
+      deadline: new Date(newTask.dueDate).toISOString(),
+    };
+
+    const result = await createTask(pId, task);
+    if (!result.error) {
+      setSuccessAlert("Task created successfully!");
+      setTimeout(() => setSuccessAlert(null), 3000);
+      getTasksByProject(projectId);
+    }
+    if (result.error) {
+      setErrorAlert(result.error);
+      setTimeout(() => setErrorAlert(null), 5000);
+    }
+  };
+
+  const handleUpdateTask = async (newTask) => {
+    const updatedTask = {
+      title: newTask.title,
+      description: newTask.description,
+      assignee_id: "a1e53b6d-d17b-4c89-ab2c-19082fa844ed",
+      priority: newTask.priority?.toLowerCase(),
+      status: mapStatusforBackend(newTask.status),
+      deadline: newTask.deadline
+        ? new Date(newTask.deadline).toISOString()
+        : null,
+    };
+
+    const result = await editTask(taskId, updatedTask);
+    if (!result.error) {
+      setSuccessAlert("Task updated successfully!");
+      setTimeout(() => setSuccessAlert(null), 3000);
+      getTasksByProject(projectId);
+    }
+    if (result.error) {
+      setErrorAlert(result.error);
+      setTimeout(() => setErrorAlert(null), 5000);
+    }
   };
 
   const handleClose = () => {
@@ -105,26 +173,30 @@ function TasksListView({ tasks, setTasks, members, projectId }) {
                 <td className="px-4 py-2">
                   <span
                     className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                      statusColors[task.status]
+                      statusColors[mapStatus[task.status]]
                     }`}
                   >
-                    {task.status}
+                    {mapStatus[task.status]}
                   </span>
                 </td>
-                <td className="px-4 py-2">{task.assignedTo}</td>
-                <td className="px-4 py-2 font-semibold">{task.dueDate}</td>
+                <td className="px-4 py-2">{task.assignee_id.slice(0, 10)}</td>
+                <td className="px-4 py-2 font-semibold">
+                  {formatDeadline(task.deadline)}
+                </td>
                 <td className="px-4 py-2">
                   <div className="flex gap-1">
                     <FlagIcon
                       sx={{ fontSize: 18, color: flagColors[task.priority] }}
                     />
-                    <p className="text-xs font-semibold">{task.priority}</p>
+                    <p className="text-xs font-semibold">
+                      {capitalize(task.priority)}
+                    </p>
                   </div>
                 </td>
                 <td className="px-4 py-2">
                   <div className="flex gap-2">
                     <ChatIcon sx={{ color: "gray", fontSize: 18 }} />
-                    <p>{task.comments} </p>
+                    <p>{task.comments || 0} </p>
                   </div>
                 </td>
                 <td className="px-4 py-2 flex justify-end items-center">
@@ -203,11 +275,11 @@ function TasksListView({ tasks, setTasks, members, projectId }) {
         open={open}
         onClose={handleClose}
         task={selectedTask}
-        onSave={(updatedTask) => {
-          setTasks((prev) =>
-            prev.map((t) => (t.id === updatedTask.id ? updatedTask : t))
-          );
+        onSave={async (updatedTask) => {
+          await handleUpdateTask(updatedTask);
         }}
+        setErrorAlert={setErrorAlert}
+        setSuccessAlert={setSuccessAlert}
       />
     </div>
   );

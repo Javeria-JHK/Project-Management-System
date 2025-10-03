@@ -11,44 +11,8 @@ import * as Plot from "@observablehq/plot";
 import PlotFigure from "../../components/PlotFigure";
 import TaskLogTable from "./components/TaskLogTable";
 
-const allProjects = [
-  {
-    id: 1,
-    workspaceId: "My Workspace",
-    name: "Personal Portfolio Website",
-    description: "A modern responsive portfolio built with React and Tailwind.",
-    members: 2,
-    status: "In Progress",
-    tasks: 14,
-  },
-  {
-    id: 2,
-    workspaceId: "Wanclouds Inc.",
-    name: "Cloud Migration Tool",
-    description: "A tool for automating AWS → Azure migration.",
-    members: 10,
-    status: "Completed",
-    tasks: 4,
-  },
-  {
-    id: 3,
-    workspaceId: "DesignHub Agency",
-    name: "E-commerce Redesign",
-    description: "UI/UX redesign for a fashion brand’s online store.",
-    members: 6,
-    status: "In Review",
-    tasks: 9,
-  },
-  {
-    id: 4,
-    workspaceId: "My Workspace",
-    name: "Brand Guidelines",
-    description: "Design system + style guide for client.",
-    members: 4,
-    status: "Completed",
-    tasks: 44,
-  },
-];
+import { useProjects } from "../../hooks/useProjects";
+import { useProjectAnalytics } from "../../hooks/useProjectAnalytics";
 
 const aapl = [
   { date: "2025-09-03", task: "4" },
@@ -64,78 +28,95 @@ const aapl = [
   task: +d.task,
 }));
 
-// Quick Stats
-const quickStats = [
-  { label: "Total Tasks", value: 20, icon: AssignmentIcon },
-  { label: "Completed", value: 8, icon: TaskAltIcon },
-  {
-    label: "Active Tasks",
-    value: 12,
-    icon: AssignmentIndIcon,
-  },
-  {
-    label: "My Tasks",
-    value: 2,
-    icon: PlaylistAddCheckRoundedIcon,
-  },
-  { label: "Members", value: 9, icon: GroupIcon, color: "#475569" },
-];
-
 function Analytics() {
-  const { workspace } = useWorkspace();
+  const { workspaceId } = useWorkspace();
+  const { getProjectAnalytics, analytics } = useProjectAnalytics();
 
-  const [selectedProject, setSelectedProject] = useState(null);
+  const { projects, getProjects } = useProjects();
+  const [projectId, setProjectId] = useState("");
 
-  const projectNames = allProjects
-    .filter((p) => {
-      return p.workspaceId === workspace;
-    })
-    .map((p) => ({ value: p.name }));
+  const filteredProjects = projects.filter(
+    (p) => p.workspace_id === workspaceId
+  );
+
+  const projectItems = filteredProjects.map((p) => ({
+    id: p.id,
+    label: p.name,
+    value: p.id,
+  }));
+  console.log("Available workspaces:", projectItems);
 
   useEffect(() => {
-    const filteredProjects = allProjects.filter(
-      (p) => p.workspaceId === workspace
-    );
+    getProjects();
+    setProjectId("Select Project");
+  }, [workspaceId]);
 
-    const defaultProjectName = filteredProjects[0]?.name || null;
-    setSelectedProject(defaultProjectName);
-  }, [workspace]);
+  useEffect(() => {
+    if (projectId !== "Select Project") {
+      console.log("Fetching analytics for project:", projectId);
+      getProjectAnalytics(projectId);
+    }
+  }, [projectId]);
+
+  const projectAnalytics = analytics;
+
+  // Quick Stats
+  // const quickStats = [
+  //   { label: "Total Tasks", value: 20, icon: AssignmentIcon },
+  //   { label: "Completed", value: 8, icon: TaskAltIcon },
+  //   {
+  //     label: "Active Tasks",
+  //     value: 12,
+  //     icon: AssignmentIndIcon,
+  //   },
+  //   {
+  //     label: "My Tasks",
+  //     value: 2,
+  //     icon: PlaylistAddCheckRoundedIcon,
+  //   },
+  //   { label: "Members", value: 9, icon: GroupIcon, color: "#475569" },
+  // ];
 
   return (
     <div className="w-full px-2 text-gray-800">
       <div className="flex justify-between pr-5 mb-2">
         <h2 className="text-2xl text-black font-bold ">Analytics </h2>
         <SelectMenu
-          items={projectNames}
-          value={selectedProject}
-          color={"text-gray-800"}
+          items={projectItems}
+          value={projectId}
+          color="text-gray-800"
           header={true}
           height={40}
-          onChange={(e) => setSelectedProject(e.target.value)}
+          onChange={(e) => setProjectId(e.target.value)}
         />
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
-        {quickStats.map((stat, idx) => (
-          <div
-            key={idx}
-            className="bg-white shadow rounded-xl px-4 py-6 flex flex-col gap-2 items-start border-l-4 border-[#475569]"
-          >
-            <div className="flex justify-start gap-2">
-              <PaddedIcon
-                Icon={stat.icon}
-                color="black"
-                bgColor={"lightGray"}
-              />
-              <p className="text-gray-500 text-lg font-semibold">
-                {stat.label}
-              </p>
-            </div>
-
-            <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-          </div>
-        ))}
+        <Stat
+          label="Total Tasks"
+          value={projectAnalytics?.total_tasks ?? 0}
+          icon={AssignmentIcon}
+        />
+        <Stat
+          label="Completed"
+          value={projectAnalytics?.completed_tasks ?? 0}
+          icon={TaskAltIcon}
+        />
+        <Stat
+          label="Active Tasks"
+          value={
+            (projectAnalytics?.todo_tasks ?? 0) +
+            (projectAnalytics?.in_progress_tasks ?? 0)
+          }
+          icon={AssignmentIndIcon}
+        />
+        <Stat
+          label="My Tasks"
+          value={projectAnalytics?.tasks_by_assignee?.[0]?.task_count ?? 0}
+          icon={PlaylistAddCheckRoundedIcon}
+        />
+        <Stat label="Members" value={10} icon={GroupIcon} />
       </div>
       <div className="flex justify-center h-full gap-4">
         <div className=" bg-white w-1/2 p-4 rounded-2xl shadow">
@@ -159,11 +140,24 @@ function Analytics() {
             }}
           />
         </div>
-        <div className="bg-white p-4 rounded-2xl shadow">
+        <div className="bg-white w-1/2 p-4 rounded-2xl shadow">
           <h3 className="font-semibold text-lg mb-2">Tasks Activity Log</h3>
-          <TaskLogTable />
+          <TaskLogTable analytics={projectAnalytics} />
         </div>
       </div>
+    </div>
+  );
+}
+
+function Stat({ label, value, icon }) {
+  return (
+    <div className="bg-white shadow rounded-xl px-4 py-6 flex flex-col gap-2 items-start border-l-4 border-[#475569]">
+      <div className="flex justify-start gap-2">
+        <PaddedIcon Icon={icon} color="black" bgColor={"lightGray"} />
+        <p className="text-gray-500 text-lg font-semibold">{label}</p>
+      </div>
+
+      <p className="text-2xl font-bold text-gray-900">{value}</p>
     </div>
   );
 }

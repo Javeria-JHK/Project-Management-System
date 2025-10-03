@@ -1,14 +1,15 @@
 import AppRoutes from "./components/AppRoutes";
-import { WorkspaceProvider } from "./context/workspace/WorkspaceProvider";
+
 import ThemeProvider from "./context/theme/ThemeProvider";
+import { StoreProvider } from "./context/store/StoreProvider";
 
 function App() {
   return (
-    <ThemeProvider>
-      <WorkspaceProvider>
+    <StoreProvider>
+      <ThemeProvider>
         <AppRoutes />
-      </WorkspaceProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </StoreProvider>
   );
 }
 

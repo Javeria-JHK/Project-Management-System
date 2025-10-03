@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { isEmailValid } from "../../../utils/validation";
 import PasswordFeild from "../../../components/ui/PasswordFeild";
 import { signIn } from "../../../api/auth";
+import { useStore } from "../../../hooks/useStore";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -13,8 +14,8 @@ function SignIn() {
   const [errors, setErrors] = useState({});
   const [invalidCred, setInvalidCred] = useState(false);
   const [apiError, setApiError] = useState("");
+  const { state, dispatch } = useStore();
 
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // const tempAuth = (email, password) => {
@@ -43,32 +44,34 @@ function SignIn() {
     } else if (!isEmailValid(email)) {
       newErrors.email = "Please enter a valid email address.";
     } else {
-      setLoading(true);
+      dispatch({ type: "LOGIN_REQUEST" });
 
       const data = await signIn(email, password);
-      setLoading(false);
+
       if (data.error) {
+        dispatch({ type: "LOGIN_FAILURE", payload: data.error });
         setApiError(data.error);
         setInvalidCred(true);
         return;
       }
-      if (data) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("access_token", data.tokens.access_token);
-        localStorage.setItem("refresh_token", data.tokens.refresh_token);
-        navigate("/");
-      }
+
+      // ✅ Success
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          user: data.user,
+          accessToken: data.tokens.access_token,
+          refreshToken: data.tokens.refresh_token,
+        },
+      });
+
+      //Temporary
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("accessToken", data.tokens.access_token);
+      localStorage.setItem("refreshToken", data.tokens.refresh_token);
+
+      navigate("/");
     }
-    //   const user = await tempAuth(email, password);
-    //   localStorage.setItem("user", user);
-    //   console.log(user);
-    //   if (user) {
-    //     navigate("/");
-    //   } else {
-    //     setInvalidCred(true);
-    //   }
-    // }
-    //
     setErrors(newErrors);
   };
 
@@ -118,7 +121,12 @@ function SignIn() {
           }}
           error={errors.password}
         />
-        <Button onClick={handleClick} isLoading={loading}>
+        <Button
+          onClick={handleClick}
+          isLoading={state.isLoading}
+          className="mt-4 w-full"
+          disabled={state.isLoading}
+        >
           Sign In
         </Button>
       </form>

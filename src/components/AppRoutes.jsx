@@ -45,6 +45,8 @@ function AppRoutes() {
             <Route path=":taskId" element={<TaskDrawer />} />
           </Route>
           <Route path="/workspaces" element={<Workspace />} />
+          <Route path="/workspaces/:id" element={<Workspace />} />
+
           <Route path="/members" element={<Members />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
