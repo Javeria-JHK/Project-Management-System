@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import InputFeild from "../../../components/ui/InputFeild";
 import TextArea from "../../../components/ui/TextArea";
+import Button from "../../../components/ui/Button";
 
 export default function WorkspaceModal({
   isOpen,
@@ -90,18 +91,21 @@ export default function WorkspaceModal({
           error={errors.description}
         />
         <div className="flex justify-end gap-2">
-          <button
+          <Button
             onClick={handleClose}
+            width="w-[20%]"
             className="px-4 py-2 text-white border rounded"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleSubmit}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            width="w-[20%]"
+            bgcolor="gray"
+            className="px-4 py-2  text-white rounded"
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </div>

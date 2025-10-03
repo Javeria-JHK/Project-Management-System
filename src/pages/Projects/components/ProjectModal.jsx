@@ -120,19 +120,22 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
           </div>
         </div>
 
-        <div className="flex justify-end gap-2">
-          <button
+        <div className="flex justify-end mt-4  pt-2 gap-2">
+          <Button
             onClick={handleClose}
             className="px-4 py-2 text-white border rounded"
+            width="w-[20%]"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleSubmit}
             className="px-4 py-2  text-white rounded"
+            width="w-[20%]"
+            bgcolor="gray"
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </div>

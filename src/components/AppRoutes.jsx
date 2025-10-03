@@ -41,8 +41,12 @@ function AppRoutes() {
           </Route>
 
           <Route path="/analytics" element={<Analytics />} />
-          <Route path="/my-tasks" element={<MyTasks />} />
+          <Route path="/my-tasks" element={<MyTasks />}>
+            <Route path=":taskId" element={<TaskDrawer />} />
+          </Route>
           <Route path="/workspaces" element={<Workspace />} />
+          <Route path="/workspaces/:id" element={<Workspace />} />
+
           <Route path="/members" element={<Members />} />
           <Route path="/settings" element={<Settings />} />
         </Route>

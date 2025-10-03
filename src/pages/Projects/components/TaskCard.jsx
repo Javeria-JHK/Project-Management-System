@@ -3,12 +3,15 @@ import PaddedIcon from "../../../components/ui/PaddedIcon";
 import ChatIcon from "@mui/icons-material/Chat";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { Tooltip, IconButton } from "@mui/material";
+import { formatDeadline } from "../../../utils/DateFormatter";
+
+import { capitalize } from "../../../utils/stringAlterations";
 
 const flagColors = {
-  Normal: "blue",
-  High: "orange",
-  Urgent: "red",
-  Low: "gray",
+  medium: "blue",
+  high: "orange",
+  urgent: "red",
+  low: "gray",
 };
 
 function TaskCard({ task, onClick, bordered }) {
@@ -32,23 +35,23 @@ function TaskCard({ task, onClick, bordered }) {
       <div className="flex my-1 gap-1 text-gray-700 text-xs items-center justify-between">
         <div className="flex items-center">
           <p className="w-7 h-7 rounded-full border-1 bg-black/80 text-white font-bold  flex justify-center items-center">
-            {task.assignedTo[0].toUpperCase()}
+            {/* {task.assignee_id.toUpperCase()} */}
           </p>
 
           <p className="font-semibold w-20 overflow-hidden text-ellipsis whitespace-nowrap ml-1">
-            {task.assignedTo}
+            {task.assignee_id}
           </p>
         </div>
         <div className="flex items-center">
           <PaddedIcon Icon={ChatIcon} color="grey" />
-          <p>{task.comments} Comments</p>
+          <p>Comments</p>
         </div>
       </div>
       <div className="flex rounded justify-between items-center">
         <div className="flex items-center">
           <CalendarMonthOutlinedIcon sx={{ fontSize: 18, color: "black" }} />
           <p className="text-xs ml-2 font-semibold text-gray-800">
-            Due: {task.dueDate}
+            Due: {formatDeadline(task.deadline)}
           </p>
         </div>
         <div className="flex items-center">
@@ -58,7 +61,7 @@ function TaskCard({ task, onClick, bordered }) {
                 sx={{ fontSize: 18, color: flagColors[task.priority] }}
               />
               <p className="text-xs font-semibold text-gray-800">
-                {task.priority}
+                {capitalize(task.priority)}
               </p>
             </div>
           </Tooltip>

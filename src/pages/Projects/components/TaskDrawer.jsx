@@ -13,21 +13,35 @@ import Button from "../../../components/ui/Button";
 import SelectMenu from "../../../components/ui/Select";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { formatCommentDate } from "../../../utils/DateFormatter";
+import {
+  formatCommentDate,
+  formatDeadline,
+} from "../../../utils/DateFormatter";
+import { useComments } from "../../../hooks/useComments";
 import EditIcon from "@mui/icons-material/Edit";
+import { useParams } from "react-router-dom";
+import { capitalize } from "../../../utils/stringAlterations";
+import { useStore } from "../../../hooks/useStore";
 
 const statusColors = {
-  Completed: "bg-green-100 text-green-700",
-  "In Progress": "bg-yellow-100 text-yellow-700",
-  "In Review": "bg-blue-100 text-blue-700",
-  "To Do": "bg-gray-300 text-gray-800",
+  completed: "bg-green-100 text-green-700",
+  inprogress: "bg-yellow-100 text-yellow-700",
+  inreview: "bg-blue-100 text-blue-700",
+  todo: "bg-gray-300 text-gray-800",
+};
+
+const mapStatus = {
+  todo: "To Do",
+  inprogress: "In Progress",
+  inreview: "In Review",
+  completed: "Completed",
 };
 
 const flagColors = {
-  Normal: "blue",
-  High: "orange",
-  Urgent: "red",
-  Low: "gray",
+  medium: "blue",
+  high: "orange",
+  urgent: "red",
+  low: "gray",
 };
 
 const activities = [
@@ -43,20 +57,28 @@ const activities = [
   },
 ];
 
-function TaskDrawer({ open, onClose, task, onSave }) {
+function TaskDrawer({
+  open,
+  onClose,
+  task,
+  onSave,
+  setSuccessAlert,
+  setErrorAlert,
+}) {
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
-
+  const { taskId } = useParams();
+  const { state, dispatch } = useStore();
+  const { getComments, createComment, comments } = useComments();
   const [isEditMode, setIsEditMode] = useState(false);
 
   const [taskDetails, setTaskDetails] = useState({
     id: task?.id || "",
     title: task?.title || "",
     description: task?.description || "",
-    status: task?.status || "To Do",
-    priority: task?.priority || "Normal",
-    assignedTo: task?.assignedTo || "",
-    dueDate: task?.dueDate || "",
+    status: task?.status || "todo",
+    priority: task?.priority || "medium",
+    assignee_id: task?.assignee_id || "",
+    deadline: task?.deadline || "",
   });
 
   useEffect(() => {
@@ -65,13 +87,19 @@ function TaskDrawer({ open, onClose, task, onSave }) {
         id: task?.id || "",
         title: task.title || "",
         description: task.description || "",
-        status: task.status || "To Do",
-        priority: task.priority || "Normal",
-        assignedTo: task.assignedTo || "",
-        dueDate: task.dueDate || "",
+        status: task.status || "todo",
+        priority: task.priority || "medium",
+        assignee_id: task?.assignee_id || "",
+        deadline: task?.deadline || "",
       });
     }
-  }, [task]);
+  }, [task, comments.length]);
+
+  useEffect(() => {
+    if (taskId) {
+      getComments(taskId);
+    }
+  }, [taskId]);
 
   const updateTaskDetail = (field, value) => {
     setTaskDetails((prev) => {
@@ -79,6 +107,21 @@ function TaskDrawer({ open, onClose, task, onSave }) {
 
       return updated;
     });
+  };
+
+  const handleAddComment = async (comment) => {
+    if (!taskId || !comment) return;
+
+    const result = createComment(taskId, comment.content);
+    if (!result.error) {
+      setSuccessAlert("Comment Added successfully!");
+      setTimeout(() => setSuccessAlert(null), 3000);
+      getComments(taskId);
+    }
+    if (result.error) {
+      setErrorAlert(result.error);
+      setTimeout(() => setErrorAlert(null), 5000);
+    }
   };
 
   if (!task) return null;
@@ -220,10 +263,10 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                             }
                             autoFocus
                             items={[
-                              { value: "To Do" },
-                              { value: "In Progress" },
-                              { value: "In Review" },
-                              { value: "Completed" },
+                              { label: "To Do", value: "todo" },
+                              { label: "In Progress", value: "inprogress" },
+                              { label: "In Review", value: "inreview" },
+                              { label: "Completed", value: "completed" },
                             ]}
                           />
                         ) : (
@@ -232,7 +275,7 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                               statusColors[taskDetails.status]
                             }`}
                           >
-                            {taskDetails.status}
+                            {mapStatus[taskDetails.status]}
                           </span>
                         )}
                       </div>
@@ -254,10 +297,10 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                               }
                               autoFocus
                               items={[
-                                { value: "Low" },
-                                { value: "Normal" },
-                                { value: "High" },
-                                { value: "Urgent" },
+                                { label: "Low", value: "low" },
+                                { label: "Medium", value: "medium" },
+                                { label: "High", value: "high" },
+                                { label: "Urgent", value: "urgent" },
                               ]}
                             />
                           ) : (
@@ -270,7 +313,7 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                                 }}
                               />
                               <span className="cursor-pointer text-sm">
-                                {taskDetails.priority}
+                                {capitalize(taskDetails.priority)}
                               </span>
                             </>
                           )}
@@ -289,7 +332,7 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                       <div className="flex items-center">
                         {isEditMode ? (
                           <SelectMenu
-                            value={taskDetails.assignedTo}
+                            value={taskDetails.assignee_id}
                             height={20}
                             onChange={(e) =>
                               updateTaskDetail("assignedTo", e.target.value)
@@ -300,10 +343,11 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                         ) : (
                           <>
                             <p className="w-7 h-7 rounded-full border bg-black/80 text-white font-bold flex justify-center items-center">
-                              {taskDetails.assignedTo[0]?.toUpperCase()}
+                              {taskDetails.assignee_id[0]?.toUpperCase() || "?"}
                             </p>
                             <span className="cursor-pointer ml-2 h-6 font-semibold">
-                              {taskDetails.assignedTo}
+                              {taskDetails.assignee_id.slice(0, 8) ||
+                                "Unassigned"}
                             </span>
                           </>
                         )}
@@ -321,15 +365,16 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                           <input
                             type="date"
                             className="border p-1 rounded h-8"
-                            value={taskDetails.dueDate}
+                            value={taskDetails.deadline}
                             onChange={(e) =>
-                              updateTaskDetail("dueDate", e.target.value)
+                              updateTaskDetail("deadline", e.target.value)
                             }
                             autoFocus
                           />
                         ) : (
                           <span className="cursor-pointer text-sm">
-                            {taskDetails.dueDate}
+                            {formatDeadline(taskDetails.deadline)}
+                            {!taskDetails.deadline && "No deadline set"}
                           </span>
                         )}
                       </div>
@@ -374,11 +419,11 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                       <h3 className="font-semibold text-gray-800 mb-2">
                         Comments
                       </h3>
-                      {comments.length > 0 ? (
+                      {state.comments.length > 0 ? (
                         <ul className="space-y-2">
-                          {comments.map((c, idx) => (
+                          {state.comments.map((c, idx) => (
                             <li key={idx} className="p-2 bg-gray-100 rounded">
-                              <p className="text-gray-800">{c.text}</p>
+                              <p className="text-gray-800">{c.content}</p>
                               <div className="text-xs text-gray-500 mt-1 flex justify-between">
                                 <p>{c.user}</p>
                                 <p>{formatCommentDate(c.date)}</p>
@@ -420,11 +465,12 @@ function TaskDrawer({ open, onClose, task, onSave }) {
                     onClick={() => {
                       if (comment.trim() !== "") {
                         const newComment = {
-                          text: comment,
+                          content: comment,
                           user: "You",
                           date: new Date().toISOString(),
                         };
-                        setComments([...comments, newComment]);
+                        dispatch({ type: "ADD_COMMENT", payload: newComment });
+                        handleAddComment(newComment);
                         setComment("");
                       }
                     }}

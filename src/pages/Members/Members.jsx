@@ -3,7 +3,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import MenuBar from "../../components/ui/Menu";
-import { WorkspaceContext } from "../../context/workspace/WorkspaceContext";
+
 import { useWorkspace } from "../../hooks/useWorkspace";
 import SearchBar from "../../components/ui/SearchBar";
 import Button from "../../components/ui/Button";

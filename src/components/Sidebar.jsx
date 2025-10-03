@@ -9,6 +9,8 @@ import CategoryIcon from "@mui/icons-material/Category";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "./ui/Button";
+import { logout } from "../api/auth";
+import { useStore } from "../hooks/useStore";
 
 import { useNavigate } from "react-router-dom";
 
@@ -24,9 +26,23 @@ const items = [
 
 function Sidebar() {
   const navigate = useNavigate();
+  const { state, dispatch } = useStore();
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
+    const refresh_token =
+      state.auth.refreshToken || localStorage.getItem("refreshToken");
+    console.log("Logging out with refresh token:", refresh_token);
+    const result = await logout(refresh_token);
+    dispatch({ type: "LOGOUT" });
+
+    if (result?.error) {
+      alert(result.error);
+      return;
+    }
+
     localStorage.removeItem("user");
+    localStorage.removeItem("workspaceId");
+
     navigate("/signin");
   };
 

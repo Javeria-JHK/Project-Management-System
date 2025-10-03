@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import InputFeild from "../../../components/ui/InputFeild";
 import TextArea from "../../../components/ui/TextArea";
 import SelectMenu from "../../../components/ui/Select";
+import Button from "../../../components/ui/Button";
 
 const priorities = ["Low", "Normal", "High", "Urgent"];
 
@@ -158,18 +159,21 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
 
         {/* Actions */}
         <div className="flex justify-end gap-2 mt-4">
-          <button
+          <Button
             onClick={onClose}
             className="px-4 py-2 text-gray-700 border rounded hover:bg-gray-100"
+            width="w-[20%]"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleSubmit}
             className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
+            width="w-[20%]"
+            bgcolor="gray"
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </div>

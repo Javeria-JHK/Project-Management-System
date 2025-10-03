@@ -8,52 +8,81 @@ import {
   isPasswordStrong,
   checkPasswordError,
 } from "../../../utils/validation";
+import { signUp } from "../../../api/auth";
+import { useStore } from "../../../hooks/useStore";
 
 function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const [errors, setErrors] = useState({});
+  const [showApiError, setShowApiError] = useState(false);
+  const [apiError, setApiError] = useState("");
+  const { state, dispatch } = useStore();
 
   const navigate = useNavigate();
 
-  const CreateAccount = (email) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        localStorage.setItem("user", email);
-        resolve({ email });
-      }, 2000); //for demonstarting authentication delay
-    });
-  };
+  // const CreateAccount = (email) => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       localStorage.setItem("user", email);
+  //       resolve({ email });
+  //     }, 2000); //for demonstarting authentication delay
+  //   });
+  // };
 
   const handleClick = async () => {
-    if (
-      name === "" ||
-      email === "" ||
-      password === "" ||
-      confirmPassword === ""
-    ) {
-      alert("Please fill in all fields.");
+    let newErrors = {};
+    if (name === "") {
+      newErrors.name = "Name is required.";
+    }
+    if (email === "") {
+      newErrors.email = "Email is required.";
     } else if (!isEmailValid(email)) {
-      alert("Please enter a valid email address.");
-    } else if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      newErrors.email = "Please enter a valid email address.";
+    }
+    if (password === "") {
+      newErrors.password = "Password is required.";
     } else if (!isPasswordStrong(password)) {
       const errorMessage = checkPasswordError(password);
-      alert(errorMessage);
-    } else {
-      setLoading(true);
-      const user = await CreateAccount(email);
-      console.log(user);
-      alert("Account created successfully!");
-
-      //demonstarting delay after sign Up
-      setTimeout(() => {
-        setLoading(false);
-        navigate("/");
-      }, 2000);
+      newErrors.password = errorMessage;
     }
+    if (confirmPassword === "") {
+      newErrors.confirmPassword = "Confirm password is required.";
+    } else if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    dispatch({ type: "REGISTER_REQUEST" });
+
+    const data = await signUp(name, email, password);
+    console.log(data);
+    if (data) {
+      dispatch({
+        type: "REGISTER_SUCCESS",
+        payload: {},
+      });
+
+      alert(data.message);
+
+      navigate("/signin");
+    }
+
+    if (data.error) {
+      dispatch({ type: "REGISTER_FAILURE", payload: data.error });
+      setApiError(data.error);
+      setShowApiError(true);
+      return;
+    }
+
+    setErrors(newErrors);
   };
 
   return (
@@ -62,40 +91,81 @@ function SignUp() {
       <h2 className="text-xl font-semibold text-black/60 mb-3 ">
         Register to get started
       </h2>
+      {showApiError && (
+        <div className=" w-full mt-4 px-4 py-2 bg-red-100 text-red-500 text-md rounded-lg border-1 border-red-300">
+          <p>{apiError}</p>
+        </div>
+      )}
       <form className="w-full mt-6">
         <InputFeild
           id="name"
           label="Full Name"
           type="input"
+          required
           placeholder="Enter your full name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+
+            if (errors.name) {
+              setErrors((prev) => ({ ...prev, name: "" }));
+            }
+          }}
+          error={errors.name}
         />
         <InputFeild
           id="email"
           label="Email"
           type="email"
+          required
           placeholder="Enter your email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setShowApiError(false);
+            if (errors.email) {
+              setErrors((prev) => ({ ...prev, email: "" }));
+            }
+          }}
+          error={errors.email}
         />
         <PasswordFeild
           id="password"
           label="Password"
           type="password"
+          required
           placeholder="Enter your password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+
+            if (errors.password) {
+              setErrors((prev) => ({ ...prev, password: "" }));
+            }
+          }}
+          error={errors.password}
         />
         <PasswordFeild
           id="confirmPassword"
           label="Confirm Password"
           type="password"
+          required
           placeholder="Enter your password again"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            if (errors.confirmPassword) {
+              setErrors((prev) => ({ ...prev, confirmPassword: "" }));
+            }
+          }}
+          error={errors.confirmPassword}
         />
-        <Button onClick={handleClick} isLoading={loading}>
+        <Button
+          onClick={handleClick}
+          isLoading={state.isLoading}
+          className="mt-4 w-full"
+          disabled={state.isLoading}
+        >
           Sign Up
         </Button>
       </form>
