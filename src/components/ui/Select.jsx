@@ -1,5 +1,5 @@
-import { Height } from "@mui/icons-material";
 import { Select, MenuItem } from "@mui/material";
+import useTheme from "../../hooks/useTheme";
 
 function SelectMenu({
   value,
@@ -12,6 +12,9 @@ function SelectMenu({
   height,
   onBlur,
 }) {
+  const { theme } = useTheme();
+
+  const isDark = theme === "dark";
   return (
     <Select
       value={value}
@@ -44,8 +47,10 @@ function SelectMenu({
         ...(focusedVariant
           ? {
               "&.Mui-focused": {
-                backgroundColor: "#eff6ff",
-                boxShadow: "0 0 0 3px rgba(37, 99, 235, 0.3)",
+                backgroundColor: isDark ? "#363636" : "#eff6ff", // dark: gray-700, light: blue-50
+                boxShadow: isDark
+                  ? "0 0 0 3px rgba(255,255,255,0.2)"
+                  : "0 0 0 3px rgba(37, 99, 235, 0.3)",
               },
             }
           : {
@@ -55,7 +60,15 @@ function SelectMenu({
               },
             }),
       }}
-      className={`${widthx} ${Height} `}
+      MenuProps={{
+        PaperProps: {
+          sx: {
+            backgroundColor: isDark ? "#262626" : "#ffffff", // dark: gray-800, light: white
+            color: isDark ? "#f3f4f6" : "#111827", // text-gray-100 vs gray-900
+          },
+        },
+      }}
+      className={`${widthx} `}
     >
       {items.map((item) => (
         <MenuItem key={item.value} value={item.value}>
@@ -65,7 +78,9 @@ function SelectMenu({
               {item.label}
             </span>
           )}
-          <span className=" text-sm text-gray-600">
+          <span
+            className={`text-sm ${isDark ? "text-gray-100" : "text-gray-600"}`}
+          >
             {(!item.icon && item.label) || item.value}
           </span>
         </MenuItem>

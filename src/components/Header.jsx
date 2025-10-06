@@ -30,7 +30,7 @@ function Header() {
 
   return (
     <header className="w-full h-[10%] p-1 flex ">
-      <div className=" bg-gray-100 dark:bg-gray-800 text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
+      <div className=" bg-gray-800 dark:bg-[#262e37] text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
         <div className="flex items-center">
           {/* <h2 className="text-xl font-bold">Project Management</h2> */}
           {/* <div className="w-32 h-32  dark:bg-gray-100 bg-red-600"></div> */}
@@ -61,6 +61,7 @@ function Header() {
             Icon={theme === "dark" ? LightModeIcon : DarkModeIcon}
             bgColor={"gray"}
             hoverBg={"gray"}
+            color={"text-white"}
             onClick={toggleTheme}
           />
         </div>

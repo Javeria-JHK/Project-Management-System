@@ -111,12 +111,20 @@ function Workspace() {
 
   return (
     <div className="px-2 h-full w-full relative">
-      <h2 className="text-2xl font-bold text-black"> My Workspaces</h2>
+      <h2 className="text-2xl font-bold dark:text-white text-black">
+        {" "}
+        My Workspaces
+      </h2>
       <div className="flex items-center justify-start gap-6 ">
         <div>
           {successAlert && (
             <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-green-100 text-green-500 text-md rounded-lg border-1 border-green-300">
               <p>{successAlert}</p>{" "}
+            </div>
+          )}
+          {errorAlert && (
+            <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-red-100 text-red-500 text-md rounded-lg border-1 border-red-300">
+              <p>{errorAlert}</p>{" "}
             </div>
           )}
         </div>
@@ -129,21 +137,26 @@ function Workspace() {
         </div>
 
         <div
-          className="w-50 h-10 rounded-xl border-2 border-gray-800 border-dashed hover:bg-white flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
+          className="w-50 h-10 rounded-xl border-2 border-gray-800 dark:border-gray-500 border-dashed hover:bg-white dark:hover:bg-[#333] flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
           onClick={() => {
             setEditData(null);
             setModalOpen(true);
           }}
         >
-          <AddIcon sx={{ fontSize: 26, color: "black" }} />
-          <p className="text-md text-gray-800 font-bold">Add Workspace</p>
+          <AddIcon
+            className="text-black dark:text-white"
+            sx={{ fontSize: 26 }}
+          />
+          <p className="text-md text-gray-800 dark:text-gray-400 font-bold">
+            Add Workspace
+          </p>
         </div>
       </div>
 
       <div className="flex gap-6 flex-wrap mt-4">
         {state.isWorkspaceLoading ? (
           <div className="w-full flex justify-center items-center py-10">
-            <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 dark:border-gray-800 border-gray-300 dark:border-t-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
           </div>
         ) : (
           filteredWorkspaces.map((ws) => (
@@ -172,7 +185,9 @@ function Workspace() {
       </div>
 
       {!state.isWorkspaceLoading && filteredWorkspaces.length === 0 && (
-        <p className="text-gray-800 italic mx-2 mt-4">No workspaces found.</p>
+        <p className="text-gray-800 dark:text-gray-200 italic mx-2 mt-4">
+          No workspaces found.
+        </p>
       )}
 
       {/* Modal for add/edit */}

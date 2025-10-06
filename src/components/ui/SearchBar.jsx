@@ -14,13 +14,13 @@ function SearchBar({
 }) {
   return (
     <div
-      className={`flex items-center bg-gray-50 ${
+      className={`flex items-center bg-gray-50 dark:bg-[#333] ${
         rounded
-          ? "rounded-3xl shadow-sm shadow-gray-500 focus-within:ring-1 "
+          ? "rounded-3xl shadow-sm shadow-gray-500 dark:shadow-[#1c1c1c] focus-within:ring-1 "
           : "rounded-lg"
-      } ${border && "border-1 border-gray-700 "} h-10 pl-2 w-80 `}
+      } ${border && "border-1 border-gray-700  "} h-10 pl-2 w-80 `}
     >
-      <SearchIcon className="text-gray-700" />
+      <SearchIcon className="text-gray-700 dark:text-gray-100" />
 
       {filters && (
         <SelectMenu
@@ -34,7 +34,7 @@ function SearchBar({
         type="text"
         placeholder={filters ? "..." : "Search..."}
         value={searchQuery}
-        className=" focus:outline-none  rounded-2xl w-full h-full p-2 text-gray-800"
+        className=" focus:outline-none  rounded-2xl w-full h-full p-2 text-gray-200   dark:text-gray-800"
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       {/* Dropdown for filter */}

@@ -7,7 +7,7 @@ const initialState = {
     accessToken: null,
     refreshToken: null,
   },
-  analytics: {},
+  projectAnalytics: {},
   workspaces: [], //  workspaces
   activeWorkspaceId: "Select Workspace",
   isWorkspaceLoading: false,

@@ -34,11 +34,11 @@ function ProjectCard({ project, onEdit, onDelete }) {
     active: "bg-gray-300 text-gray-800",
   };
   return (
-    <div className="rounded-2xl shadow-md hover:shadow-lg transition-all bg-white w-100 ">
+    <div className="rounded-2xl shadow-md hover:shadow-lg transition-all bg-white dark:bg-black w-100 ">
       <div className="p-4 flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <Link to={`/projects/${project.id}`}>
-            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 cursor-pointer">
+            <h3 className="text-lg font-bold  text-gray-800 dark:text-[#b5b5b5] flex items-center gap-2 cursor-pointer">
               {project.name}
             </h3>
           </Link>
@@ -109,20 +109,20 @@ function ProjectCard({ project, onEdit, onDelete }) {
           </div>
         </div>
         <Link to={`/projects/${project.id}`}>
-          <p className="text-sm text-gray-600 line-clamp-2 h-10 cursor-pointer">
+          <p className="text-sm text-gray-600 dark:text-[#838383] line-clamp-2 h-10 cursor-pointer">
             {project.description}
           </p>
 
           <div className="flex justify-between text-sm text-gray-500 mt-6 cursor-pointer">
-            <div className="flex items-center gap-2">
-              <GroupIcon sx={{ fontSize: 24, color: "darkRed" }} />
+            <div className="flex items-center dark:text-[#838383] gap-2">
+              <GroupIcon className="text-red-900 " sx={{ fontSize: 24 }} />
               {project.members || 1} members
             </div>
-            <div className="flex items-center text-sm text-gray-500 gap-2">
+            <div className="flex items-center text-sm text-gray-500  dark:text-[#838383] gap-2">
               <PaddedIcon
                 Icon={AssignmentIcon}
                 bgColor={"blue"}
-                color={"darkBlue"}
+                color={"text-gray-900 dark:text-gray-400"}
               />
 
               <p className="font-semibold">{project.tasks || 0} tasks</p>
