@@ -3,6 +3,7 @@ import { fetchWithAuth } from "../api/fetchWithAuth";
 
 export function useTasks() {
   const { state, dispatch } = useStore();
+  const {task} = state;
 
   // 🔹 Get all tasks for a project
   async function getTasksByProject(projectId) {
@@ -168,9 +169,9 @@ export function useTasks() {
   }
 
   return {
-    tasks: state.tasks,
-    currentTask: state.currentTask,
-    userTasks: state.userTasks,
+    tasks: task.tasks,
+    currentTask: task.currentTask,
+    userTasks: task.userTasks,
     getTasksByProject,
     getTasksByUser,
     getTaskById,

@@ -3,6 +3,8 @@ import { fetchWithAuth } from "../api/fetchWithAuth";
 
 export function useProjects() {
   const { state, dispatch } = useStore();
+  const {project} = state;
+
 
     // 🔹 Get all projects for a workspace
   async function getProjects() {
@@ -20,6 +22,13 @@ export function useProjects() {
       if (!res.ok) throw new Error(response.error || "Failed to fetch projects");
 
       dispatch({ type: "SET_PROJECTS", payload: response.data });
+      if(!project.currentProject){
+        const currentProject = response.data[0];
+        console.log("setting project",currentProject);
+        if(currentProject)
+        dispatch({type:"SET_CURRENT_PROJECT", payload:currentProject})
+      }
+
       return response.data;
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -144,8 +153,8 @@ export function useProjects() {
 
 
   return {
-    projects: state.projects,
-    currentProject: state.currentProject,
+    projects: project.projects,
+    currentProject: project.currentProject,
     getProjects,
     createProject,
     getProjectById,

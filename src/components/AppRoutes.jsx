@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import Main from "../pages/Main";
 import Projects from "../pages/Projects/Projects";
 import Analytics from "../pages/Analytics/Analytics";
 import MyTasks from "../pages/MyTasks/MyTasks";
@@ -27,7 +27,7 @@ function AppRoutes() {
           path="/"
           element={
             <AuthProtectedRoute>
-              <Dashboard />
+              <Main />
             </AuthProtectedRoute>
           }
         >

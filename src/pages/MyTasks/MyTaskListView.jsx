@@ -48,6 +48,7 @@ function MyTasksListView({ tasks, setErrorAlert, setSuccessAlert }) {
   const [open, setOpen] = useState(false);
   const pageSize = 8; // tasks per page
   const { state, dispatch } = useStore();
+  const { task, project } = state;
   const navigate = useNavigate();
   const { taskId } = useParams();
   const { editTask, getTasksByUser } = useTasks();
@@ -67,9 +68,9 @@ function MyTasksListView({ tasks, setErrorAlert, setSuccessAlert }) {
   const paginatedTasks = tasks.slice(startIndex, startIndex + pageSize);
 
   const getProjectNameById = (projectId) => {
-    const project = state.projects.find((p) => p.id === projectId);
+    const pj = project.projects.find((p) => p.id === projectId);
 
-    return project ? project.name : "Unknown Project";
+    return pj ? pj.name : "Unknown Project";
   };
 
   const handleUpdateTask = async (newTask) => {

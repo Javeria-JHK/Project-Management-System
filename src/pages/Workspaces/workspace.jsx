@@ -10,10 +10,11 @@ import { useParams, useNavigate, Outlet } from "react-router-dom";
 
 function Workspace() {
   const [searchQuery, setSearchQuery] = useState("");
-  const { workspaceId, updateWorkspace } = useWorkspace();
+  const { workspaceId, updateWorkspace, workspaces } = useWorkspace();
   const [modalOpen, setModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
   const { state, dispatch } = useStore();
+  const { workspace } = state;
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -24,22 +25,30 @@ function Workspace() {
     useWorkspaces();
 
   useEffect(() => {
-    getWorkspaces().then(() => {
-      if (id) {
-        // If URL has an id, set that as active
-        updateWorkspace(id);
-      } else if (
-        state.workspaces.length > 0 &&
-        state.activeWorkspaceId === "Select Workspace"
-      ) {
-        // Otherwise, default to first workspace
-        // dispatch({
-        //   type: "SET_ACTIVE_WORKSPACE",
-        //   payload: state.workspaces[0].id,
-        // });
+    //make sure workspaces are loaded first
+    async function handleWorkspaces() {
+      if (workspaces.length === 0) {
+        await getWorkspaces();
       }
-    });
-  }, []);
+    }
+
+    // When id exists (from params)
+    if (id) {
+      const targetWs = workspaces.find((ws) => {
+        return ws.id === id;
+      });
+
+      if (targetWs) {
+        // Set the matching workspace as active
+        dispatch({ type: "SET_ACTIVE_WORKSPACE", payload: id });
+        console.log("Workspace set active →", id);
+      } else {
+        console.warn("Workspace not found for ID:", id);
+      }
+    }
+
+    handleWorkspaces();
+  }, [id, workspaces.length]);
 
   const addWorkspace = async (workspace) => {
     const result = await createWorkspace(workspace.name, workspace.description);
@@ -84,11 +93,11 @@ function Workspace() {
       // getWorkspaces();
 
       // remove from state
-      const updatedWorkspaces = state.workspaces.filter((ws) => ws.id !== id);
+      const updatedWorkspaces = workspaces.filter((ws) => ws.id !== id);
       dispatch({ type: "SET_WORKSPACES", payload: updatedWorkspaces });
 
       // if deleted workspace was active → pick next one
-      if (state.activeWorkspaceId === id) {
+      if (workspace.activeWorkspaceId === id) {
         const nextWorkspace = updatedWorkspaces[0] || null;
         dispatch({
           type: "SET_ACTIVE_WORKSPACE",
@@ -104,7 +113,7 @@ function Workspace() {
   };
 
   // filetring workspaces based on search by name
-  const filteredWorkspaces = (state.workspaces || []).filter((ws) => {
+  const filteredWorkspaces = (workspaces || []).filter((ws) => {
     const name = ws?.name ?? "";
     return name.toLowerCase().includes(searchQuery.toLowerCase());
   });
@@ -171,7 +180,7 @@ function Workspace() {
         )}
       </div>
 
-      {!state.isWorkspaceLoading && filteredWorkspaces.length === 0 && (
+      {!workspace.isWorkspaceLoading && filteredWorkspaces.length === 0 && (
         <p className="text-gray-800 italic mx-2 mt-4">No workspaces found.</p>
       )}
 

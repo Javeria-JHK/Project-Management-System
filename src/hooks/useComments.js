@@ -3,6 +3,7 @@ import { fetchWithAuth } from "../api/fetchWithAuth";
 
 export function useComments() {
   const { state, dispatch } = useStore();
+  const {comment} = state;
 
   // 🔹 Get all comments for a task
   async function getComments(taskId) {
@@ -113,7 +114,7 @@ export function useComments() {
   }
 
   return {
-    comments: state.comments,
+    comments: comment.comments,
     getComments,
     createComment,
     editComment,

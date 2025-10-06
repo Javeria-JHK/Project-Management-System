@@ -4,6 +4,7 @@ import { fetchWithAuth } from "../api/fetchWithAuth";
 
 export function useProjectAnalytics() {
       const { state, dispatch } = useStore();
+      const {analytics} = state;
 
 
 
@@ -33,5 +34,5 @@ export function useProjectAnalytics() {
 
   };
 
-  return {  getProjectAnalytics, analytics:state.projectAnalytics };
+  return {  getProjectAnalytics, analytics:analytics.projectAnalytics };
 }

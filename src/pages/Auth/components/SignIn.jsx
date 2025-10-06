@@ -15,6 +15,7 @@ function SignIn() {
   const [invalidCred, setInvalidCred] = useState(false);
   const [apiError, setApiError] = useState("");
   const { state, dispatch } = useStore();
+  const { auth } = state;
 
   const navigate = useNavigate();
 
@@ -123,9 +124,9 @@ function SignIn() {
         />
         <Button
           onClick={handleClick}
-          isLoading={state.isLoading}
+          isLoading={auth.isSigninLoading}
           className="mt-4 w-full"
-          disabled={state.isLoading}
+          disabled={auth.isSigninLoading}
         >
           Sign In
         </Button>

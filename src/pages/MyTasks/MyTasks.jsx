@@ -81,7 +81,7 @@ function MyTasks() {
     if (user.id) {
       getTasksByUser(user.id);
     }
-  }, [state.userTasks.length]);
+  }, [userTasks.length]);
 
   const filters = [
     { value: "name", label: "By Name" },

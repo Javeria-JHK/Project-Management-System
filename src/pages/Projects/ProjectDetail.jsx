@@ -100,10 +100,12 @@ function ProjectDetail() {
   const [searchFilter, setSearchFilter] = useState("name");
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const { getProjectById } = useProjects();
+  const { getProjectById, getProjects, projects } = useProjects();
   const navigate = useNavigate();
   const { getTasksByProject, tasks } = useTasks();
+
   const { state, dispatch } = useStore();
+  const { project } = state;
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
 
@@ -122,10 +124,13 @@ function ProjectDetail() {
   ];
 
   useEffect(() => {
+    if (projects.length === 0) {
+      getProjects();
+    }
     getTasksByProject(id);
     setOpen(isMembersPage);
     getProjectById(id);
-  }, [id, isMembersPage, state.tasks.length, workspaceId]);
+  }, [id, isMembersPage, tasks.length]);
 
   const filteredTasks =
     tasks.filter((task) => {
@@ -157,7 +162,7 @@ function ProjectDetail() {
       {/* <MemberList members={project.members} /> */}
       <div className="flex justify-between items-start">
         <h2 className="font-bold text-xl text-black">
-          {state.currentProject?.name || "Project Name"}
+          {project.currentProject?.name || "Project Name"}
         </h2>
         <div>
           {successAlert && (

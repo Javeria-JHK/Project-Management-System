@@ -65,9 +65,10 @@ function TaskDrawer({
   setSuccessAlert,
   setErrorAlert,
 }) {
-  const [comment, setComment] = useState("");
+  const [cmnt, setComment] = useState("");
   const { taskId } = useParams();
   const { state, dispatch } = useStore();
+  const { comment } = state;
   const { getComments, createComment, comments } = useComments();
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -419,9 +420,9 @@ function TaskDrawer({
                       <h3 className="font-semibold text-gray-800 mb-2">
                         Comments
                       </h3>
-                      {state.comments.length > 0 ? (
+                      {comment.comments.length > 0 ? (
                         <ul className="space-y-2">
-                          {state.comments.map((c, idx) => (
+                          {comment.comments.map((c, idx) => (
                             <li key={idx} className="p-2 bg-gray-100 rounded">
                               <p className="text-gray-800">{c.content}</p>
                               <div className="text-xs text-gray-500 mt-1 flex justify-between">
@@ -446,7 +447,7 @@ function TaskDrawer({
               <div className="text-gray-800  border-1 border-gray-300 mx-2 mb-4 rounded-2xl pt-4 p-2">
                 <textarea
                   className="w-full rounded-xl focus:outline-none"
-                  value={comment}
+                  value={cmnt}
                   placeholder="Type your comment here..."
                   id="comment"
                   onChange={(e) => {
@@ -463,9 +464,9 @@ function TaskDrawer({
                     width="w-24"
                     height="h-8 "
                     onClick={() => {
-                      if (comment.trim() !== "") {
+                      if (cmnt.trim() !== "") {
                         const newComment = {
-                          content: comment,
+                          content: cmnt,
                           user: "You",
                           date: new Date().toISOString(),
                         };

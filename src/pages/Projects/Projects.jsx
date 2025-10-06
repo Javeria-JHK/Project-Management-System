@@ -63,13 +63,12 @@ function Projects() {
     setCurrentProject,
   } = useProjects();
   const { state } = useStore();
+  const { project } = state;
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
 
   const currentWorkSpaceProjects =
-    workspaceId === "Select Workspace"
-      ? projects
-      : projects.filter((p) => p.workspace_id === workspaceId) || projects;
+    projects.filter((p) => p.workspace_id === workspaceId) || projects;
 
   const filters = [
     { value: "name", label: "By Name" },
@@ -80,13 +79,15 @@ function Projects() {
   ];
 
   useEffect(() => {
-    getProjects();
+    if (projects.length === 0) {
+      getProjects();
+    }
   }, [workspaceId]);
 
   //projects handler functions
 
   const WorkspaceName =
-    state.workspaces.find((ws) => ws.id === workspaceId)?.name ||
+    state.workspace.workspaces.find((ws) => ws.id === workspaceId)?.name ||
     "No Workspace";
 
   const addPj = async (project) => {
@@ -191,31 +192,31 @@ function Projects() {
       </div>
 
       <div className="flex gap-6 flex-wrap mt-4">
-        {state.isProjectLoading ? (
+        {project.isProjectLoading ? (
           <div className="w-full flex justify-center items-center py-10">
             <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
           </div>
         ) : (
-          filteredProjects.map((project) => (
+          filteredProjects.map((pj) => (
             <ProjectCard
-              project={project}
-              key={project.id}
+              project={pj}
+              key={pj.id}
               onEdit={() => {
-                setEditData(project);
+                setEditData(pj);
                 setModalOpen(true);
               }}
               onDelete={() => {
-                deletePj(project.id);
+                deletePj(pj.id);
               }}
               onClick={() => {
-                console.log(project);
-                setCurrentProject(project);
+                console.log(pj);
+                setCurrentProject(pj);
               }}
             />
           ))
         )}
       </div>
-      {!state.isProjectLoading && filteredProjects.length === 0 && (
+      {!project.isProjectLoading && filteredProjects.length === 0 && (
         <p className="text-gray-600 italic">No projects found.</p>
       )}
 

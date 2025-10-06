@@ -10,6 +10,7 @@ import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRou
 import * as Plot from "@observablehq/plot";
 import PlotFigure from "../../components/PlotFigure";
 import TaskLogTable from "./components/TaskLogTable";
+import { useStore } from "../../hooks/useStore";
 
 import { useProjects } from "../../hooks/useProjects";
 import { useProjectAnalytics } from "../../hooks/useProjectAnalytics";
@@ -31,32 +32,60 @@ const aapl = [
 function Analytics() {
   const { workspaceId } = useWorkspace();
   const { getProjectAnalytics, analytics } = useProjectAnalytics();
+  const { dispatch } = useStore();
 
   const { projects, getProjects } = useProjects();
-  const [projectId, setProjectId] = useState("");
+  const [projectId, setProjectId] = useState("Select Project");
 
-  const filteredProjects = projects.filter(
-    (p) => p.workspace_id === workspaceId
-  );
+  const filteredProjects =
+    projects.filter((p) => p.workspace_id === workspaceId) || [];
 
-  const projectItems = filteredProjects.map((p) => ({
-    id: p.id,
-    label: p.name,
-    value: p.id,
-  }));
+  const projectItems =
+    filteredProjects.map((p) => ({
+      id: p.id,
+      label: p.name,
+      value: p.id,
+    })) || [];
   console.log("Available workspaces:", projectItems);
 
   useEffect(() => {
-    getProjects();
     setProjectId("Select Project");
+    // When workspace changes, fetch projects of that workspace
+    async function fetchProjectsForWorkspace() {
+      if (!workspaceId) return;
+
+      const data = await getProjects(); // wait for projects
+      const workspaceProjects =
+        data.filter((p) => p.workspace_id === workspaceId) || [];
+
+      if (workspaceProjects.length > 0) {
+        const firstProject = workspaceProjects[0];
+        setProjectId(firstProject.id);
+        dispatch({ type: "SET_CURRENT_PROJECT", payload: firstProject });
+      } else {
+        dispatch({ type: "SET_CURRENT_PROJECT", payload: "" });
+        setProjectId("No Projects");
+      }
+    }
+
+    fetchProjectsForWorkspace();
   }, [workspaceId]);
 
   useEffect(() => {
-    if (projectId !== "Select Project") {
+    if (projectId !== "") {
       console.log("Fetching analytics for project:", projectId);
       getProjectAnalytics(projectId);
     }
   }, [projectId]);
+
+  function handleUpdate(pid) {
+    setProjectId(pid);
+    const project = projects.filter((pj) => {
+      return pj.id === pid;
+    });
+
+    if (project) dispatch({ type: "SET_CURRENT_PROJECT", payload: project[0] });
+  }
 
   const projectAnalytics = analytics;
 
@@ -81,14 +110,19 @@ function Analytics() {
     <div className="w-full px-2 text-gray-800">
       <div className="flex justify-between pr-5 mb-2">
         <h2 className="text-2xl text-black font-bold ">Analytics </h2>
-        <SelectMenu
-          items={projectItems}
-          value={projectId}
-          color="text-gray-800"
-          header={true}
-          height={40}
-          onChange={(e) => setProjectId(e.target.value)}
-        />
+        <div className="flex items-center">
+          <p className="text-xs">Project: </p>
+          <SelectMenu
+            items={projectItems}
+            value={projectId}
+            color="text-gray-800"
+            header={true}
+            height={40}
+            onChange={(e) => {
+              handleUpdate(e.target.value);
+            }}
+          />
+        </div>
       </div>
 
       {/* Quick Stats */}

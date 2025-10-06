@@ -31,13 +31,12 @@ function Header() {
   return (
     <header className="w-full h-[10%] p-1 flex ">
       <div className=" bg-gray-100 dark:bg-gray-800 text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
-        <div className="flex items-center">
-          {/* <h2 className="text-xl font-bold">Project Management</h2> */}
-          {/* <div className="w-32 h-32  dark:bg-gray-100 bg-red-600"></div> */}
+        <div className="flex flex-col items-start ">
+          <p className="text-xs pl-3 text-gray-400">Workspace:</p>
           <SelectMenu
             value={workspaceId}
             header={true}
-            height={40}
+            height={38}
             placeholder="Select Workspace"
             onChange={(e) => updateWorkspace(e.target.value)}
             items={workspaceItems}
