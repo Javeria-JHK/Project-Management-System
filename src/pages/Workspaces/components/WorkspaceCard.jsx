@@ -16,20 +16,27 @@ function WorkspaceCard({
   return (
     <div
       className={`${
-        isDefault ? "border-2 border-gray-800" : "border border-gray-200"
-      } bg-white shadow-md rounded-xl p-4 w-70 hover:shadow-lg transition cursor-pointer`}
+        isDefault
+          ? "border-2 border-gray-800 dark:border-gray-600"
+          : "border border-gray-200 dark:border-gray-900"
+      } bg-white dark:bg-black shadow-md rounded-xl p-4 w-70 hover:shadow-lg transition cursor-pointer`}
       onClick={onClick}
     >
-      <h2 className="text-xl font-bold text-gray-800">
+      <h2 className="text-xl font-bold text-gray-800 dark:text-[#b5b5b5] ">
         {name}{" "}
         {isDefault && <span className="text-xs text-blue-500">(Active)</span>}
       </h2>
-      <p className="text-sm text-gray-600 mt-1">{description}</p>
+      <p className="text-sm text-gray-600 dark:text-[#838383] mt-1">
+        {description}
+      </p>
 
       <div className="flex justify-between items-center mt-10">
         <div className="flex items-center">
-          <GroupIcon sx={{ fontSize: 24, color: "black" }} />
-          <p className=" ml-2 text-sm text-gray-600">
+          <GroupIcon
+            className="text-black dark:text-[#838383]"
+            sx={{ fontSize: 24 }}
+          />
+          <p className=" ml-2 text-sm text-gray-600 dark:text-[#838383]">
             {members} {members < 2 ? "Member" : "Members"}{" "}
           </p>
         </div>
@@ -37,7 +44,6 @@ function WorkspaceCard({
         <div className="flex justify-end items-center gap-2">
           <IconButton
             Icon={EditIcon}
-            color="#333"
             bgColor="lightGray"
             bgHover="lightGray"
             onClick={onEdit}
@@ -46,7 +52,6 @@ function WorkspaceCard({
             Icon={DeleteIcon}
             bgColor="lightGray"
             bgHover="lightGray"
-            color="#333"
             onClick={onDelete}
           />
         </div>

@@ -31,7 +31,7 @@ function Header() {
 
   return (
     <header className="w-full h-[10%] p-1 flex ">
-      <div className=" bg-gray-100 dark:bg-gray-800 text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
+      <div className=" bg-gray-800 dark:bg-[#262e37] text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
         <div className="flex flex-col items-start ">
           <p className="text-xs pl-3 text-gray-400">Workspace:</p>
           {isWorkspaceLoading ? (
@@ -67,6 +67,7 @@ function Header() {
             Icon={theme === "dark" ? LightModeIcon : DarkModeIcon}
             bgColor={"gray"}
             hoverBg={"gray"}
+            color={"text-white"}
             onClick={toggleTheme}
           />
         </div>

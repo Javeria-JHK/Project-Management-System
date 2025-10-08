@@ -79,7 +79,9 @@ const DashboardView = () => {
   return (
     <div className="px-2 text-gray-600 h-full w-full">
       {/* Header */}
-      <h2 className="text-2xl font-bold text-black pb-2">Welcome back</h2>
+      <h2 className="text-2xl font-bold dark:text-white text-black pb-2">
+        Welcome back
+      </h2>
 
       {isDashboardDataLoading ? (
         <div className="w-full flex justify-center items-center py-10">
@@ -92,26 +94,24 @@ const DashboardView = () => {
             {quickStats.map((stat, idx) => (
               <div
                 key={idx}
-                className="bg-white shadow rounded-xl p-4 flex flex-col gap-2 items-start "
+                className="bg-white dark:bg-black shadow rounded-xl p-4 flex flex-col gap-2 items-start "
               >
-                <PaddedIcon
-                  Icon={stat.icon}
-                  color="black"
-                  bgColor={"lightGray"}
-                />
-                <p className="text-gray-500 text-lg font-semibold">
+                <PaddedIcon Icon={stat.icon} bgColor={"lightGray"} />
+                <p className="text-gray-500 dark:text-gray-500 text-lg font-semibold">
                   {stat.label}
                 </p>
 
-                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-2xl font-bold dark:text-gray-400 text-gray-900">
+                  {stat.value}
+                </p>
               </div>
             ))}
           </div>
 
           <div className="flex justify-between w-full">
             {/* Projects */}
-            <div className="bg-white space-y-4 h-full shadow rounded-xl p-2 w-[40%]">
-              <h2 className="text-lg font-semibold pl-2 mb-2">
+            <div className="bg-white  dark:bg-black  space-y-4 h-full shadow rounded-xl p-2 w-[40%]">
+              <h2 className="text-lg dark:text-white font-semibold pl-2 mb-2">
                 Recent Projects
               </h2>
               <div className="flex flex-col space-y-2 max-h-[400px] overflow-y-auto pr-2">
@@ -148,8 +148,10 @@ const DashboardView = () => {
             </div>
 
             {/* Task Status Chart */}
-            <div className="bg-white shadow rounded-xl p-4 w-[58%]">
-              <h2 className="text-lg font-semibold mb-6">My Tasks Overview</h2>
+            <div className="bg-white dark:bg-black shadow rounded-xl p-4 w-[58%]">
+              <h2 className="text-lg  dark:text-white font-semibold mb-6">
+                My Tasks Overview
+              </h2>
               <div className="flex justify-center items-center gap-6">
                 <DonutChart data={data} width={300} />
                 <div className="flex flex-col gap-4 justify-center items-start">
@@ -159,7 +161,7 @@ const DashboardView = () => {
                       className="flex gap-2 justify-start items-center"
                     >
                       <p className={`h-3 w-3 rounded-full ${tag.color}`}></p>
-                      <p className="ml-2 text-gray-700 font-semibold text-md">
+                      <p className="ml-2 text-gray-700 dark:text-[#8d8d8d] font-semibold text-md">
                         {tag.name}
                       </p>
                     </div>

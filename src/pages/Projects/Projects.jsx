@@ -112,8 +112,11 @@ function Projects() {
 
   return (
     <div className="px-2  h-full w-full relative">
-      <h2 className="text-2xl font-bold text-black">
-        Projects of <span className="text-gray-800">{WorkspaceName}</span>
+      <h2 className="text-2xl font-bold text-black dark:text-white">
+        Projects of{" "}
+        <span className="text-gray-800 dark:text-gray-400">
+          {WorkspaceName}
+        </span>
       </h2>
       <div>
         {successAlert && (
@@ -138,15 +141,20 @@ function Projects() {
           border={false}
         />
         <div
-          className="w-40 h-10 rounded-xl border-2 border-gray-800 border-dashed hover:bg-white flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
+          className="w-40 h-10 rounded-xl border-2 border-gray-800 dark:border-gray-500  border-dashed hover:bg-white dark:hover:bg-[#333] flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
           onClick={() => {
             setEditData(null);
 
             setModalOpen(true);
           }}
         >
-          <AddIcon sx={{ fontSize: 26, color: "black" }} />
-          <p className="text-md text-gray-800 font-bold">Add Project</p>
+          <AddIcon
+            className="text-black dark:text-white"
+            sx={{ fontSize: 26 }}
+          />
+          <p className="text-md  text-gray-800 dark:text-gray-400 font-bold">
+            Add Project
+          </p>
         </div>
       </div>
 
