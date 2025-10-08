@@ -35,11 +35,11 @@ function TaskCard({ task, onClick, bordered }) {
       <div className="flex my-1 gap-1 text-gray-700 text-xs items-center justify-between">
         <div className="flex items-center">
           <p className="w-7 h-7 rounded-full border-1 bg-black/80 text-white font-bold  flex justify-center items-center">
-            {/* {task.assignee_id.toUpperCase()} */}
+            {task.assignee_id?.toUpperCase()[0] || "A"}
           </p>
 
           <p className="font-semibold w-20 overflow-hidden text-ellipsis whitespace-nowrap ml-1">
-            {task.assignee_id}
+            {task.assignee_id || "Assignee"}
           </p>
         </div>
         <div className="flex items-center">

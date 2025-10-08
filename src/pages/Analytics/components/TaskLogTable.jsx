@@ -18,7 +18,7 @@ function TaskLogTable({ analytics }) {
     status: "To Do", // or derive later if backend adds statuses
   }));
   return (
-    <TableContainer className="rounded-2xl shadow">
+    <TableContainer className="rounded-2xl shadow h-[90%]">
       <Table>
         <TableHead>
           <TableRow className="bg-gray-100">

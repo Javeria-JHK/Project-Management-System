@@ -179,7 +179,9 @@ function TasksListView({
                     {mapStatus[task.status]}
                   </span>
                 </td>
-                <td className="px-4 py-2">{task.assignee_id.slice(0, 10)}</td>
+                <td className="px-4 py-2">
+                  {task.assignee_id?.slice(0, 10) || "Assignee"}
+                </td>
                 <td className="px-4 py-2 font-semibold">
                   {formatDeadline(task.deadline)}
                 </td>

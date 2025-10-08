@@ -31,7 +31,8 @@ const aapl = [
 
 function Analytics() {
   const { workspaceId } = useWorkspace();
-  const { getProjectAnalytics, analytics } = useProjectAnalytics();
+  const { getProjectAnalytics, analytics, currentProject } =
+    useProjectAnalytics();
   const { dispatch } = useStore();
 
   const { projects, getProjects, isProjectLoading } = useProjects();
@@ -49,7 +50,7 @@ function Analytics() {
   console.log("Available workspaces:", projectItems);
 
   useEffect(() => {
-    setProjectId("Select Project");
+    setProjectId(currentProject?.id);
     // When workspace changes, fetch projects of that workspace
     async function fetchProjectsForWorkspace() {
       if (!workspaceId) return;
@@ -60,7 +61,7 @@ function Analytics() {
 
       if (workspaceProjects.length > 0) {
         const firstProject = workspaceProjects[0];
-        setProjectId(firstProject.id);
+        setProjectId(currentProject?.id || firstProject.id);
         dispatch({
           type: PROJECT_ACTIONS.SET_CURRENT_PROJECT,
           payload: firstProject,
@@ -114,7 +115,7 @@ function Analytics() {
   // ];
 
   return (
-    <div className="w-full px-2 text-gray-800">
+    <div className="w-full h-full px-2 text-gray-800">
       <div className="flex justify-between pr-5 mb-2">
         <h2 className="text-2xl text-black font-bold ">Analytics </h2>
         <div className="flex items-center">
@@ -165,8 +166,8 @@ function Analytics() {
         />
         <Stat label="Members" value={10} icon={GroupIcon} />
       </div>
-      <div className="flex justify-center h-full gap-4">
-        <div className=" bg-white w-1/2 p-4 rounded-2xl shadow">
+      <div className="flex justify-center h-[70%] gap-4">
+        <div className=" bg-white w-1/2 px-4 py-4 rounded-2xl shadow">
           <div className="flex justify-between items-center mb-4 pr-6">
             <h3 className="font-semibold text-lg">Task Completion Trend</h3>
             <p className="text-xs ">last week</p>
@@ -187,8 +188,8 @@ function Analytics() {
             }}
           />
         </div>
-        <div className="bg-white w-1/2 p-4 rounded-2xl shadow">
-          <h3 className="font-semibold text-lg mb-2">Tasks Activity Log</h3>
+        <div className="bg-white w-1/2 px-4 pt-4 rounded-2xl shadow">
+          <h3 className="font-semibold text-lg mb-1">Tasks Activity Log</h3>
           <TaskLogTable analytics={projectAnalytics} />
         </div>
       </div>

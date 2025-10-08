@@ -4,7 +4,7 @@ import TextArea from "../../../components/ui/TextArea";
 import SelectMenu from "../../../components/ui/Select";
 import Button from "../../../components/ui/Button";
 
-const priorities = ["Low", "Normal", "High", "Urgent"];
+const priorities = ["Low", "Medium", "High", "Urgent"];
 
 function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
   const [title, setTitle] = useState("");

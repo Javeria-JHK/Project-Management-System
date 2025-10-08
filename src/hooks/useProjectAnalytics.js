@@ -35,5 +35,5 @@ export function useProjectAnalytics() {
 
   };
 
-  return {  getProjectAnalytics, analytics:analytics.projectAnalytics };
+  return {  getProjectAnalytics, analytics:analytics.projectAnalytics, currentProject:state.project.currentProject };
 }

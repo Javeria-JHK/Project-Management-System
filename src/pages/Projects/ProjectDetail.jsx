@@ -1,6 +1,6 @@
 import { useParams, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useWorkspace } from "../../hooks/useWorkspace";
+
 import TasksKanban from "./components/TasksKanban";
 import TasksListView from "./components/TasksListView";
 import GroupIcon from "@mui/icons-material/Group";

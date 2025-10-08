@@ -54,9 +54,8 @@ function ProjectCard({ project, onEdit, onDelete }) {
             {/* More menu button */}
 
             <MoreVertIcon
-              sx={{ color: "black" }}
               onClick={handleMenuOpen}
-              className="cursor-pointer"
+              className="cursor-pointer text-black dark:text-white"
             />
 
             {/* Dropdown menu */}

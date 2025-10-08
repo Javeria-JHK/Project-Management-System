@@ -34,7 +34,7 @@ function SearchBar({
         type="text"
         placeholder={filters ? "..." : "Search..."}
         value={searchQuery}
-        className=" focus:outline-none  rounded-2xl w-full h-full p-2 text-gray-200   dark:text-gray-800"
+        className=" focus:outline-none  rounded-2xl w-full h-full p-2 text-gray-800   dark:text-gray-200"
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       {/* Dropdown for filter */}
