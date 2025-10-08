@@ -1,3 +1,4 @@
+import {AUTH_ACTIONS} from '../context/store/actionTypes';
 
 export async function fetchWithAuth(url, options = {}, state, dispatch) {
       const token = localStorage.getItem("accessToken");
@@ -13,7 +14,7 @@ export async function fetchWithAuth(url, options = {}, state, dispatch) {
   if (res.status === 401) {
     const token = localStorage.getItem("refreshToken");
     if (!token) {
-      dispatch({ type: "LOGOUT" });
+      dispatch({ type: AUTH_ACTIONS.LOGOUT });
       throw new Error("Session expired");
     }
 
@@ -24,13 +25,13 @@ export async function fetchWithAuth(url, options = {}, state, dispatch) {
     });
 
     if (!refreshRes.ok) {
-      dispatch({ type: "LOGOUT" });
+      dispatch({ type: AUTH_ACTIONS.LOGOUT });
       throw new Error("Session expired");
     }
     console.log("Token refreshed");
 
     const refreshData = await refreshRes.json();
-    dispatch({ type: "REFRESH_TOKEN_SUCCESS", payload: refreshData.data });
+    dispatch({ type: AUTH_ACTIONS.REFRESH_TOKEN_SUCCESS, payload: refreshData.data });
 
     localStorage.setItem("accessToken", refreshData.data.access_token);
     localStorage.setItem("refreshToken", refreshData.data.refresh_token);

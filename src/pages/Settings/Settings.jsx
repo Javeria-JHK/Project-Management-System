@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "../../components/ui/Button";
 import PasswordFeild from "../../components/ui/PasswordFeild";
 import { isPasswordStrong, checkPasswordError } from "../../utils/validation";
+import { useStore } from "../../hooks/useStore";
 
 function Settings() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,6 +11,8 @@ function Settings() {
     newPassword: "",
     confirmPassword: "",
   });
+  const { state } = useStore();
+  const { auth } = state;
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -25,10 +28,10 @@ function Settings() {
   };
 
   useEffect(() => {
-    const data = localStorage.getItem("user");
+    const data = auth?.user || JSON.parse(localStorage.getItem("user"));
     console.log(data);
     if (data) {
-      setUser(JSON.parse(data));
+      setUser(data);
     }
     if (successMessage) {
       const timer = setTimeout(() => setSuccessMessage(""), 3000);

@@ -211,30 +211,6 @@ function TasksListView({
                   >
                     Details
                   </Button>
-                  {/* <button
-                    className="w-20 h-7 text-xs text-white flex items-center justify-center"
-                    style={{ backgroundColor: "gray" }}
-                  >
-                    Details
-                  </button> */}
-                  {/* <Tooltip title="Edit">
-                    <span>
-                      <IconButton
-                        Icon={EditIcon}
-                        color={"gray"}
-                        bgHover={"white"}
-                      />
-                    </span>
-                  </Tooltip>
-                  <Tooltip title="Delete">
-                    <span>
-                      <IconButton
-                        Icon={DeleteIcon}
-                        color={"gray"}
-                        bgHover={"white"}
-                      />
-                    </span>
-                  </Tooltip> */}
                 </td>
               </tr>
             ))

@@ -21,6 +21,7 @@ function SignUp() {
   const [showApiError, setShowApiError] = useState(false);
   const [apiError, setApiError] = useState("");
   const { state, dispatch } = useStore();
+  const { auth } = state;
 
   const navigate = useNavigate();
 
@@ -162,9 +163,9 @@ function SignUp() {
         />
         <Button
           onClick={handleClick}
-          isLoading={state.isLoading}
+          isLoading={auth.isSignupLoading}
           className="mt-4 w-full"
-          disabled={state.isLoading}
+          disabled={auth.isSignupLoading}
         >
           Sign Up
         </Button>

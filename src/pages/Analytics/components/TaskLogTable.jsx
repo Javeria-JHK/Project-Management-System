@@ -8,42 +8,6 @@ import {
   Paper,
 } from "@mui/material";
 
-// // Example task logs
-// const taskLogs = [
-//   {
-//     id: 1,
-//     date: "2025-09-10 10:15",
-//     user: "Alice",
-//     action: "Created",
-//     task: "Design Landing Page",
-//     status: "To Do",
-//   },
-//   {
-//     id: 2,
-//     date: "2025-09-10 11:45",
-//     user: "Bob",
-//     action: "Completed",
-//     task: "Setup Database Schema",
-//     status: "Completed",
-//   },
-//   {
-//     id: 3,
-//     date: "2025-09-11 09:20",
-//     user: "Charlie",
-//     action: "Assigned",
-//     task: "Implement Auth Flow",
-//     status: "In Progress",
-//   },
-//   {
-//     id: 4,
-//     date: "2025-09-11 08:20",
-//     user: "Alpha",
-//     action: "Assigned",
-//     task: "Design Product Page",
-//     status: "In Review",
-//   },
-// ];
-
 function TaskLogTable({ analytics }) {
   const taskLogs = (analytics?.recent_activity ?? []).map((log, idx) => ({
     id: idx + 1,

@@ -1,10 +1,10 @@
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
+import Sidebar from "../components/Sidebar";
+import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
-import { useWorkspaces } from "../../hooks/useWorkspaces";
+import { useWorkspaces } from "../hooks/useWorkspaces";
 import { useEffect } from "react";
 
-function Dashboard() {
+function Main() {
   const { getWorkspaces } = useWorkspaces();
 
   useEffect(() => {
@@ -24,4 +24,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Main;

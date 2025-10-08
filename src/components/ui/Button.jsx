@@ -29,7 +29,13 @@ export default function Button({
         ${width} ${height} 
         ${textColor === "white" ? "text-white" : "text-black"}`}
     >
-      {isLoading === true ? "loading..." : children}
+      {isLoading === true ? (
+        <div className="w-full flex justify-center items-center ">
+          <div className="w-5 h-5 border-3 border-gray-700 border-t-white rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        children
+      )}
     </button>
   );
 }
