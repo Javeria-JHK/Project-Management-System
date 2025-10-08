@@ -6,64 +6,6 @@ import SearchBar from "../../components/ui/SearchBar";
 import MyTasksListView from "./MyTaskListView";
 import { useStore } from "../../hooks/useStore";
 
-// const tasksData = [
-//   {
-//     id: 1,
-//     title: "Setup Vite project",
-//     status: "To Do",
-//     projectName: "Personal Portfolio Website",
-//     workspaceId: "My Workspace",
-//     comments: 0,
-//     description: "Setup Vite project structure",
-//     dueDate: "25 Aug",
-//     priority: "Normal",
-//   },
-//   {
-//     id: 2,
-//     title: "Add Hero Section",
-//     status: "To Do",
-//     projectName: "Personal Portfolio Website",
-//     workspaceId: "My Workspace",
-//     comments: 2,
-//     description: "Build hero section",
-//     dueDate: "20 Aug",
-//     priority: "High",
-//   },
-//   {
-//     id: 3,
-//     title: "Setup Database",
-//     status: "In Progress",
-//     projectName: "E-commerce Website",
-//     workspaceId: "My Workspace",
-//     comments: 3,
-//     description: "Configure Postgres DB",
-//     dueDate: "28 Aug",
-//     priority: "Urgent",
-//   },
-//   {
-//     id: 4,
-//     title: "Implement Auth",
-//     status: "Completed",
-//     projectName: "E-commerce Website",
-//     workspaceId: "My Workspace",
-//     comments: 1,
-//     description: "JWT-based authentication",
-//     dueDate: "30 Aug",
-//     priority: "High",
-//   },
-//   {
-//     id: 5,
-//     title: "Do Something",
-//     status: "To Do",
-//     projectName: "E-commerce Website",
-//     workspaceId: "Wanclouds Inc.",
-//     comments: 1,
-//     description: "A Task to do something",
-//     dueDate: "30 Aug",
-//     priority: "High",
-//   },
-// ];
-
 function MyTasks() {
   const { taskId } = useParams();
   // const { workspaceId } = useWorkspace();

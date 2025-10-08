@@ -14,8 +14,6 @@ import { useTasks } from "../../hooks/useTasks";
 import { useStore } from "../../hooks/useStore";
 import { useProjects } from "../../hooks/useProjects";
 
-//dummy data
-
 const members = [
   { value: "Alice" },
   {
@@ -32,69 +30,9 @@ const workspaceMembers = [
   { id: 6, name: "Beta", email: "beta@email.com" },
 ];
 
-// const projectDetails = {
-//   1: {
-//     id: 1,
-//     owner: "Alice",
-//     workspaceId: "My Workspace",
-//     name: "Personal Portfolio Website",
-//     status: "To Do",
-//     members: [
-//       { id: 1, name: "Alice", email: "alice@email.com" },
-//       { id: 2, name: "Bob", email: "bob@email.com" },
-//     ],
-//     tasks: [
-//       {
-//         id: 1,
-//         title: "Setup Vite project",
-//         status: "To Do",
-//         assignedTo: "Alice ",
-//         comments: 0,
-//         description:
-//           " This is the description of the task this is the description of the task",
-//         dueDate: "25 Aug",
-//         priority: "Normal",
-//       },
-//       {
-//         id: 2,
-//         title: "Add Hero Section",
-//         status: "To Do",
-//         assignedTo: "Bob",
-//         comments: 2,
-//         description:
-//           " This is the description of the task this is the description of the task",
-//         dueDate: "20 Aug",
-//         priority: "High",
-//       },
-//       {
-//         id: 3,
-//         title: "Connect Backend",
-//         status: "In Progress",
-//         assignedTo: "Alice",
-//         comments: 5,
-//         description:
-//           " This is the description of the task this is the description of the task",
-//         dueDate: "5 Sept",
-//         priority: "Urgent",
-//       },
-//       {
-//         id: 4,
-//         title: "Deploy on Vercel",
-//         status: "Completed",
-//         assignedTo: "Bob",
-//         comments: 7,
-//         description:
-//           " This is the description of the task this is the description of the task",
-//         dueDate: "25 Sept",
-//         priority: "Low",
-//       },
-//     ],
-//   },
-// };
-
 function ProjectDetail() {
   const { id, taskId } = useParams();
-  const { workspaceId } = useWorkspace();
+
   const [selectedTab, setSelectedTab] = useState("kanban");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("name");
@@ -104,7 +42,7 @@ function ProjectDetail() {
   const navigate = useNavigate();
   const { getTasksByProject, tasks } = useTasks();
 
-  const { state, dispatch } = useStore();
+  const { state } = useStore();
   const { project } = state;
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);

@@ -7,47 +7,6 @@ import ProjectModal from "./components/ProjectModal";
 import { useProjects } from "../../hooks/useProjects";
 import { useStore } from "../../hooks/useStore";
 
-//dummy data
-
-// const allProjects = [
-//   {
-//     id: 1,
-//     workspaceId: "My Workspace",
-//     name: "Personal Portfolio Website",
-//     description: "A modern responsive portfolio built with React and Tailwind.",
-//     members: 2,
-//     status: "In Progress",
-//     tasks: 14,
-//   },
-//   {
-//     id: 2,
-//     workspaceId: "Wanclouds Inc.",
-//     name: "Cloud Migration Tool",
-//     description: "A tool for automating AWS → Azure migration.",
-//     members: 10,
-//     status: "Completed",
-//     tasks: 4,
-//   },
-//   {
-//     id: 3,
-//     workspaceId: "DesignHub Agency",
-//     name: "E-commerce Redesign",
-//     description: "UI/UX redesign for a fashion brand’s online store.",
-//     members: 6,
-//     status: "In Review",
-//     tasks: 9,
-//   },
-//   {
-//     id: 4,
-//     workspaceId: "My Workspace",
-//     name: "Brand Guidelines",
-//     description: "Design system + style guide for client.",
-//     members: 4,
-//     status: "Completed",
-//     tasks: 44,
-//   },
-// ];
-
 function Projects() {
   const { workspaceId } = useWorkspace();
   const [searchQuery, setSearchQuery] = useState("");

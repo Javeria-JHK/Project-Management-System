@@ -62,65 +62,6 @@ const DashboardView = () => {
     return Math.round(progress);
   }
 
-  // const projects = [
-  //   {
-  //     id: 1,
-  //     name: "Personal Portfolio Website",
-  //     progress: 70,
-  //     tasks: 12,
-  //     status: "Completed",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Cloud Migration Tool",
-  //     progress: 40,
-  //     tasks: 8,
-  //     status: "Ongoing",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "E-commerce Redesign",
-  //     progress: 70,
-  //     tasks: 12,
-  //     status: "Completed",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Brand Guidelines",
-  //     progress: 40,
-  //     tasks: 8,
-  //     status: "Ongoing",
-  //   },
-  // {
-  //   id: 3,
-  //   name: "E-commerce Redesign",
-  //   progress: 70,
-  //   tasks: 12,
-  //   status: "Completed",
-  // },
-  // {
-  //   id: 4,
-  //   name: "Brand Guidelines",
-  //   progress: 40,
-  //   tasks: 8,
-  //   status: "Ongoing",
-  // },
-  // {
-  //   id: 5,
-  //   name: "E-commerce Redesign",
-  //   progress: 70,
-  //   tasks: 12,
-  //   status: "Completed",
-  // },
-  // {
-  //   id: 6,
-  //   name: "Brand Guidelines",
-  //   progress: 40,
-  //   tasks: 8,
-  //   status: "Ongoing",
-  // },
-  // ];
-
   const data = [
     { label: "To Do", value: taskStatusSummary.todo },
     { label: "In Progress", value: taskStatusSummary.in_progress },
