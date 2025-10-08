@@ -1,3 +1,5 @@
+import { ANALYTICS_ACTIONS } from "../actionTypes";
+
 export const analyticsInitialState = {
   projectAnalytics: {},
   isAnalyticsLoading: false,
@@ -6,17 +8,17 @@ export const analyticsInitialState = {
 
 export function analyticsReducer(state, action) {
   switch (action.type) {
-    case "ANALYTICS_REQUEST":
+    case ANALYTICS_ACTIONS.ANALYTICS_REQUEST:
       return { ...state, isAnalyticsLoading: true, error: null };
 
-    case "SET_PROJECT_ANALYTICS":
+    case ANALYTICS_ACTIONS.SET_PROJECT_ANALYTICS:
       return {
         ...state,
         projectAnalytics: action.payload,
         isAnalyticsLoading: false,
       };
 
-    case "ANALYTICS_FAILURE":
+    case ANALYTICS_ACTIONS.ANALYTICS_FAILURE:
       return { ...state, isAnalyticsLoading: false, error: action.payload };
 
     default:

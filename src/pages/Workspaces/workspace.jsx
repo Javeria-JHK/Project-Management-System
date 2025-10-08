@@ -128,6 +128,11 @@ function Workspace() {
               <p>{successAlert}</p>{" "}
             </div>
           )}
+          {errorAlert && (
+            <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-red-100 text-red-500 text-md rounded-lg border-1 border-red-300">
+              <p>{errorAlert}</p>{" "}
+            </div>
+          )}
         </div>
         <div className="py-2">
           <SearchBar

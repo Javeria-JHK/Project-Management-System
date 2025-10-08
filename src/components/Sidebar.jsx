@@ -13,6 +13,7 @@ import { logout } from "../api/auth";
 import { useStore } from "../hooks/useStore";
 
 import { useNavigate } from "react-router-dom";
+import { AUTH_ACTIONS } from "../context/store/actionTypes";
 
 const items = [
   { label: "Dashboard", icon: SpaceDashboardIcon, link: "/" },
@@ -27,13 +28,15 @@ const items = [
 function Sidebar() {
   const navigate = useNavigate();
   const { state, dispatch } = useStore();
+  const { auth } = state;
 
   const handleLogOut = async () => {
+    dispatch({ type: AUTH_ACTIONS.LOGOUT_REQUEST });
     const refresh_token =
       state.auth.refreshToken || localStorage.getItem("refreshToken");
     console.log("Logging out with refresh token:", refresh_token);
     const result = await logout(refresh_token);
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: AUTH_ACTIONS.LOGOUT });
 
     if (result?.error) {
       alert(result.error);
@@ -77,7 +80,9 @@ function Sidebar() {
         </div>
         <div className="flex-1">
           <div className="flex flex-col justify-end items-center h-full p-3 gap-2 rounded-md">
-            <Button onClick={handleLogOut}>Log Out</Button>
+            <Button onClick={handleLogOut} isLoading={auth.isLoggingOut}>
+              Log Out
+            </Button>
             {/* <Tooltip title="Settings" placement="right" arrow>
               <a
                 href="/"

@@ -163,6 +163,7 @@
 
 import { useStore } from "./useStore";
 import { fetchWithAuth } from "../api/fetchWithAuth";
+import {WORKSPACE_ACTIONS} from "../context/store/actionTypes";
 
 export function useWorkspaces() {
   const { state, dispatch } = useStore();
@@ -173,7 +174,7 @@ export function useWorkspaces() {
 
   async function getWorkspaces(paramId = null) {
     try {
-      dispatch({ type: "WORKSPACE_REQUEST" });
+      dispatch({ type: WORKSPACE_ACTIONS.WORKSPACE_REQUEST});
 
       const res = await fetchWithAuth(
         `/api/workspaces`,
@@ -186,7 +187,7 @@ export function useWorkspaces() {
       if (!res.ok) throw new Error(response.error || "Failed to fetch workspaces");
 
       const workspaces = response.data || [];
-      dispatch({ type: "SET_WORKSPACES", payload: workspaces });
+      dispatch({ type: WORKSPACE_ACTIONS.SET_WORKSPACES, payload: workspaces });
 
       // ✅ Set active workspace
       if (workspaces.length > 0) {
@@ -194,15 +195,15 @@ export function useWorkspaces() {
         if (paramId) {
           const match = workspaces.find(ws => ws.id === paramId);
           if (match) {
-            dispatch({ type: "SET_ACTIVE_WORKSPACE", payload: match.id });
+            dispatch({ type: WORKSPACE_ACTIONS.SET_ACTIVE_WORKSPACE, payload: match.id });
           } else {
             // Fallback to first workspace if not found
-            dispatch({ type: "SET_ACTIVE_WORKSPACE", payload: workspaces[0].id });
+            dispatch({ type: WORKSPACE_ACTIONS.SET_ACTIVE_WORKSPACE, payload: workspaces[0].id });
           }
         }
         // Case 2: If there's no ID and no active workspace yet, set first as default
         else if (!state.activeWorkspaceId) {
-          dispatch({ type: "SET_ACTIVE_WORKSPACE", payload: workspaces[0].id });
+          dispatch({ type: WORKSPACE_ACTIONS.SET_ACTIVE_WORKSPACE, payload: workspaces[0].id });
         }
       }
 
@@ -218,7 +219,7 @@ export function useWorkspaces() {
 
   async function createWorkspace(name, description) {
     try {
-      dispatch({ type: "WORKSPACE_REQUEST" });
+      dispatch({ type:WORKSPACE_ACTIONS.WORKSPACE_REQUEST });
       const res = await fetchWithAuth(
         `/api/workspaces`,
         {
@@ -230,7 +231,7 @@ export function useWorkspaces() {
       );
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to create workspace");
-      dispatch({ type: "ADD_WORKSPACE", payload: data });
+      dispatch({ type: WORKSPACE_ACTIONS.ADD_WORKSPACE, payload: data });
       return data;
     } catch (error) {
       console.error("Error creating workspace:", error);
@@ -242,7 +243,7 @@ export function useWorkspaces() {
 
   async function getWorkspaceById(id) {
     try {
-      dispatch({ type: "WORKSPACE_REQUEST" });
+      dispatch({ type: WORKSPACE_ACTIONS.WORKSPACE_REQUEST });
       const res = await fetchWithAuth(
         `/api/workspaces/${id}`,
         { method: "GET" },
@@ -251,7 +252,7 @@ export function useWorkspaces() {
       );
       const response = await res.json();
       if (!res.ok) throw new Error(response.error || "Failed to fetch workspace details");
-      dispatch({ type: "SET_CURRENT_WORKSPACE", payload: response });
+      dispatch({ type: WORKSPACE_ACTIONS.SET_ACTIVE_WORKSPACE, payload: response });
       return response;
     } catch (error) {
       console.error("Error fetching workspace details:", error);
@@ -263,7 +264,7 @@ export function useWorkspaces() {
 
   async function editWorkspace(id, updates) {
     try {
-      dispatch({ type: "WORKSPACE_REQUEST" });
+      dispatch({ type: WORKSPACE_ACTIONS.WORKSPACE_REQUEST });
       const res = await fetchWithAuth(
         `/api/workspaces/${id}`,
         {
@@ -278,7 +279,7 @@ export function useWorkspaces() {
       const response = text ? JSON.parse(text) : {};
 
       if (!res.ok) throw new Error(response.error || "Failed to update workspace");
-      dispatch({ type: "UPDATE_WORKSPACE", payload: response });
+      dispatch({ type: WORKSPACE_ACTIONS.EDIT_WORKSPACE, payload: response });
       return response;
     } catch (error) {
       console.error("Error updating workspace:", error);
@@ -290,7 +291,7 @@ export function useWorkspaces() {
 
   async function deleteWorkspace(id) {
     try {
-      dispatch({ type: "WORKSPACE_REQUEST" });
+      dispatch({ type: WORKSPACE_ACTIONS.WORKSPACE_REQUEST });
       const res = await fetchWithAuth(
         `/api/workspaces/${id}`,
         { method: "DELETE" },
@@ -302,7 +303,7 @@ export function useWorkspaces() {
       const response = text ? JSON.parse(text) : {};
 
       if (!res.ok) throw new Error(response.error || "Failed to delete workspace");
-      dispatch({ type: "DELETE_WORKSPACE", payload: id });
+      dispatch({ type: WORKSPACE_ACTIONS.DELETE_WORKSPACE, payload: id });
       return response;
     } catch (error) {
       console.error("Error deleting workspace:", error);

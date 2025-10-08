@@ -47,8 +47,8 @@ function MyTasksListView({ tasks, setErrorAlert, setSuccessAlert }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
   const pageSize = 8; // tasks per page
-  const { state, dispatch } = useStore();
-  const { task, project } = state;
+  const { state } = useStore();
+  const { project } = state;
   const navigate = useNavigate();
   const { taskId } = useParams();
   const { editTask, getTasksByUser } = useTasks();

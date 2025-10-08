@@ -14,7 +14,8 @@ import IconButton from "./ui/IconButton";
 import { useEffect } from "react";
 
 function Header() {
-  const { workspaceId, workspaces, updateWorkspace } = useWorkspace();
+  const { workspaceId, workspaces, updateWorkspace, isWorkspaceLoading } =
+    useWorkspace();
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -33,14 +34,20 @@ function Header() {
       <div className=" bg-gray-100 dark:bg-gray-800 text-white rounded-xl w-full h-full flex items-center justify-between px-6 shadow-sm">
         <div className="flex flex-col items-start ">
           <p className="text-xs pl-3 text-gray-400">Workspace:</p>
-          <SelectMenu
-            value={workspaceId}
-            header={true}
-            height={38}
-            placeholder="Select Workspace"
-            onChange={(e) => updateWorkspace(e.target.value)}
-            items={workspaceItems}
-          />
+          {isWorkspaceLoading ? (
+            <div className="w-full flex justify-center items-center p-1 ">
+              <div className="w-5 h-5 border-3 border-gray-700 border-t-white rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <SelectMenu
+              value={workspaceId}
+              header={true}
+              height={38}
+              placeholder="Select Workspace"
+              onChange={(e) => updateWorkspace(e.target.value)}
+              items={workspaceItems}
+            />
+          )}
         </div>
 
         <div className="flex items-center justify-center">

@@ -69,7 +69,7 @@ function MyTasks() {
   // const { workspaceId } = useWorkspace();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("name");
-  const { userTasks, getTasksByUser } = useTasks();
+  const { userTasks, getTasksByUser, isUserTasksLoading } = useTasks();
   const { state } = useStore();
 
   useEffect(() => {
@@ -121,7 +121,13 @@ function MyTasks() {
         />
       </div>
 
-      <MyTasksListView tasks={filteredTasks} taskId={taskId} />
+      {isUserTasksLoading ? (
+        <div className="w-full flex justify-center items-center py-10">
+          <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        <MyTasksListView tasks={filteredTasks} taskId={taskId} />
+      )}
 
       <Outlet />
     </div>

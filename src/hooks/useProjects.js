@@ -1,5 +1,6 @@
 import { useStore } from "./useStore";
 import { fetchWithAuth } from "../api/fetchWithAuth";
+import {PROJECT_ACTIONS} from "../context/store/actionTypes";
 
 export function useProjects() {
   const { state, dispatch } = useStore();
@@ -9,7 +10,7 @@ export function useProjects() {
     // 🔹 Get all projects for a workspace
   async function getProjects() {
     try {
-      dispatch({ type: "PROJECT_REQUEST" });
+      dispatch({ type: PROJECT_ACTIONS.PROJECT_REQUEST });
 
       const res = await fetchWithAuth(
         'api/projects',
@@ -21,12 +22,12 @@ export function useProjects() {
       const response = await res.json();
       if (!res.ok) throw new Error(response.error || "Failed to fetch projects");
 
-      dispatch({ type: "SET_PROJECTS", payload: response.data });
+      dispatch({ type: PROJECT_ACTIONS.SET_PROJECTS, payload: response.data });
       if(!project.currentProject){
         const currentProject = response.data[0];
         console.log("setting project",currentProject);
         if(currentProject)
-        dispatch({type:"SET_CURRENT_PROJECT", payload:currentProject})
+        dispatch({type:PROJECT_ACTIONS.SET_CURRENT_PROJECT, payload:currentProject})
       }
 
       return response.data;
@@ -41,7 +42,7 @@ export function useProjects() {
  // 🔹 Create a new project
   async function createProject(workspace_id, name, description) {
     try {
-        dispatch({ type: "PROJECT_REQUEST" });
+        dispatch({ type: PROJECT_ACTIONS.PROJECT_REQUEST});
       const res = await fetchWithAuth(
         `/api/projects`,
         {
@@ -57,7 +58,7 @@ export function useProjects() {
         throw new Error(data.error || "Failed to create project");
       }
 
-      dispatch({ type: "ADD_PROJECT", payload: data });
+      dispatch({ type: PROJECT_ACTIONS.ADD_PROJECT, payload: data });
       return data;
     } catch (error) {
       console.error("Error creating project:", error);
@@ -70,7 +71,7 @@ export function useProjects() {
   // 🔹 Get project by ID
   async function getProjectById(projectId) {
     try {
-        dispatch({ type: "PROJECT_REQUEST" });
+        dispatch({ type:PROJECT_ACTIONS.PROJECT_REQUEST });
       const res = await fetchWithAuth(
         `/api/projects/${projectId}`,
         { method: "GET" },
@@ -83,7 +84,7 @@ export function useProjects() {
 
 
 
-      dispatch({ type: "SET_CURRENT_PROJECT", payload: response.data });
+      dispatch({ type: PROJECT_ACTIONS.SET_CURRENT_PROJECT, payload: response.data });
   
       return response;
     } catch (error) {
@@ -97,7 +98,7 @@ export function useProjects() {
   // 🔹 Update project
   async function editProject( projectId, updates) {
     try {
-        dispatch({ type: "PROJECT_REQUEST" });
+        dispatch({ type: PROJECT_ACTIONS.PROJECT_REQUEST });
       const res = await fetchWithAuth(
         `/api/projects/${projectId}`,
         {
@@ -113,7 +114,7 @@ export function useProjects() {
 
       if (!res.ok) throw new Error(response.error || "Failed to update project");
 
-      dispatch({ type: "UPDATE_PROJECT", payload: response });
+      dispatch({ type: PROJECT_ACTIONS.UPDATE_PROJECT, payload: response });
       return response;
     } catch (error) {
       console.error("Error updating project:", error);
@@ -126,7 +127,7 @@ export function useProjects() {
   // 🔹 Delete project
   async function deleteProject(projectId) {
     try {
-        dispatch({ type: "PROJECT_REQUEST" });
+        dispatch({ type: PROJECT_ACTIONS.PROJECT_REQUEST });
       const res = await fetchWithAuth(
         `/api/projects/${projectId}`,
         { method: "DELETE" },
@@ -139,7 +140,7 @@ export function useProjects() {
 
       if (!res.ok) throw new Error(response.error || "Failed to delete project");
 
-      dispatch({ type: "DELETE_PROJECT", payload: projectId });
+      dispatch({ type: PROJECT_ACTIONS.DELETE_PROJECT, payload: projectId });
       return response;
     } catch (error) {
       console.error("Error deleting project:", error);
@@ -155,6 +156,7 @@ export function useProjects() {
   return {
     projects: project.projects,
     currentProject: project.currentProject,
+    isProjectLoading:project.isProjectLoading,
     getProjects,
     createProject,
     getProjectById,

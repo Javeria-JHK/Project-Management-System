@@ -4,6 +4,7 @@ import { projectReducer, projectInitialState } from "./projectReducer";
 import { taskReducer, taskInitialState } from "./taskReducer";
 import { commentReducer, commentInitialState } from "./commentReducer";
 import { analyticsReducer, analyticsInitialState } from "./analyticsReducer";
+import { dashboardReducer, dashboardInitialState } from "./dashboardReducer";
 
 export const initialState = {
   auth: authInitialState,
@@ -12,6 +13,7 @@ export const initialState = {
   task: taskInitialState,
   comment: commentInitialState,
   analytics: analyticsInitialState,
+  dashboard:dashboardInitialState,
 };
 
 export function rootReducer(state, action) {
@@ -22,5 +24,6 @@ export function rootReducer(state, action) {
     task: taskReducer(state.task, action),
     comment: commentReducer(state.comment, action),
     analytics: analyticsReducer(state.analytics, action),
+    dashboard: dashboardReducer(state.dashboard,action),
   };
 }

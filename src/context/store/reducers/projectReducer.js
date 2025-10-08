@@ -1,3 +1,5 @@
+import { PROJECT_ACTIONS } from "../actionTypes";
+
 export const projectInitialState = {
   projects: [],
   currentProject: null,
@@ -7,23 +9,23 @@ export const projectInitialState = {
 
 export function projectReducer(state, action) {
   switch (action.type) {
-    case "PROJECT_REQUEST":
+    case PROJECT_ACTIONS.PROJECT_REQUEST:
       return { ...state, isProjectLoading: true, error: null };
 
-    case "SET_PROJECTS":
+    case PROJECT_ACTIONS.SET_PROJECTS:
       return { ...state, projects: action.payload, isProjectLoading: false };
 
-    case "SET_CURRENT_PROJECT":
+    case PROJECT_ACTIONS.SET_CURRENT_PROJECT:
       return { ...state, currentProject: action.payload, isProjectLoading: false };
 
-    case "ADD_PROJECT":
+    case PROJECT_ACTIONS.ADD_PROJECT:
       return {
         ...state,
         projects: [...state.projects, action.payload],
         isProjectLoading: false,
       };
 
-    case "UPDATE_PROJECT":
+    case PROJECT_ACTIONS.UPDATE_PROJECT:
       return {
         ...state,
         projects: state.projects.map((p) =>
@@ -31,13 +33,13 @@ export function projectReducer(state, action) {
         ),
       };
 
-    case "DELETE_PROJECT":
+    case PROJECT_ACTIONS.DELETE_PROJECT:
       return {
         ...state,
         projects: state.projects.filter((p) => p.id !== action.payload),
       };
 
-    case "PROJECT_ERROR":
+    case PROJECT_ACTIONS.PROJECT_ERROR:
       return { ...state, isProjectLoading: false, error: action.payload };
 
     default:

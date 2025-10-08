@@ -1,6 +1,7 @@
-
 import { useStore } from "./useStore";
 import { fetchWithAuth } from "../api/fetchWithAuth";
+import {ANALYTICS_ACTIONS} from "../context/store/actionTypes";
+
 
 export function useProjectAnalytics() {
       const { state, dispatch } = useStore();
@@ -22,7 +23,7 @@ export function useProjectAnalytics() {
           console.log("response for analytics:", response.data); 
     
           dispatch({
-          type: "SET_PROJECT_ANALYTICS",
+          type: ANALYTICS_ACTIONS.SET_PROJECT_ANALYTICS,
           payload: response.data ,
         });
           return response.data;

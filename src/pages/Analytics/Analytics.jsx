@@ -11,7 +11,7 @@ import * as Plot from "@observablehq/plot";
 import PlotFigure from "../../components/PlotFigure";
 import TaskLogTable from "./components/TaskLogTable";
 import { useStore } from "../../hooks/useStore";
-
+import { PROJECT_ACTIONS } from "../../context/store/actionTypes";
 import { useProjects } from "../../hooks/useProjects";
 import { useProjectAnalytics } from "../../hooks/useProjectAnalytics";
 
@@ -34,7 +34,7 @@ function Analytics() {
   const { getProjectAnalytics, analytics } = useProjectAnalytics();
   const { dispatch } = useStore();
 
-  const { projects, getProjects } = useProjects();
+  const { projects, getProjects, isProjectLoading } = useProjects();
   const [projectId, setProjectId] = useState("Select Project");
 
   const filteredProjects =
@@ -61,9 +61,12 @@ function Analytics() {
       if (workspaceProjects.length > 0) {
         const firstProject = workspaceProjects[0];
         setProjectId(firstProject.id);
-        dispatch({ type: "SET_CURRENT_PROJECT", payload: firstProject });
+        dispatch({
+          type: PROJECT_ACTIONS.SET_CURRENT_PROJECT,
+          payload: firstProject,
+        });
       } else {
-        dispatch({ type: "SET_CURRENT_PROJECT", payload: "" });
+        dispatch({ type: PROJECT_ACTIONS.SET_CURRENT_PROJECT, payload: "" });
         setProjectId("No Projects");
       }
     }
@@ -84,7 +87,11 @@ function Analytics() {
       return pj.id === pid;
     });
 
-    if (project) dispatch({ type: "SET_CURRENT_PROJECT", payload: project[0] });
+    if (project)
+      dispatch({
+        type: PROJECT_ACTIONS.SET_CURRENT_PROJECT,
+        payload: project[0],
+      });
   }
 
   const projectAnalytics = analytics;
@@ -112,16 +119,22 @@ function Analytics() {
         <h2 className="text-2xl text-black font-bold ">Analytics </h2>
         <div className="flex items-center">
           <p className="text-xs">Project: </p>
-          <SelectMenu
-            items={projectItems}
-            value={projectId}
-            color="text-gray-800"
-            header={true}
-            height={40}
-            onChange={(e) => {
-              handleUpdate(e.target.value);
-            }}
-          />
+          {isProjectLoading ? (
+            <div className="w-full flex justify-center items-center p-1 ">
+              <div className="w-5 h-5 border-3 border-gray-700 border-t-white rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <SelectMenu
+              items={projectItems}
+              value={projectId}
+              color="text-gray-800"
+              header={true}
+              height={40}
+              onChange={(e) => {
+                handleUpdate(e.target.value);
+              }}
+            />
+          )}
         </div>
       </div>
 
