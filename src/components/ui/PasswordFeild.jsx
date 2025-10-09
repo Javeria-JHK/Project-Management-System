@@ -15,7 +15,7 @@ function PasswordFeild({
   const [Visibility, SetVisibility] = useState(false);
   return (
     <div className="mb-4">
-      <label className="block text-gray-700 font-semibold mb-2">
+      <label htmlFor={id} className="block text-gray-700 font-semibold mb-2">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
