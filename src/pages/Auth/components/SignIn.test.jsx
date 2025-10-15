@@ -7,6 +7,7 @@ import { StoreProvider } from "../../../context/store/StoreProvider";
 import { vi } from "vitest";
 import * as authApi from "../../../api/auth";
 import * as Store from "../../../hooks/useStore";
+import Button from "../../../components/ui/Button";
 
 describe("SignIn Component", () => {
   //Test 1
@@ -48,7 +49,7 @@ describe("SignIn Component", () => {
   //Test 3
 
   it("shows email validation message for invalid email", async () => {
-    render(
+    const { getByLabelText, getByRole, getByText } = render(
       <StoreProvider>
         <BrowserRouter>
           <SignIn />
@@ -56,13 +57,13 @@ describe("SignIn Component", () => {
       </StoreProvider>
     );
 
-    const emailInput = screen.getByLabelText(/Email/i);
+    const emailInput = getByLabelText(/Email/i);
     await userEvent.type(emailInput, "invalidemail");
-    const signInButton = screen.getByRole("button", { name: /sign in/i });
+    const signInButton = getByRole("button", { name: /sign in/i });
     await userEvent.click(signInButton);
 
     expect(
-      screen.getByText(/Please enter a valid email address/i)
+      getByText(/Please enter a valid email address/i)
     ).toBeInTheDocument();
   });
 
@@ -83,15 +84,15 @@ describe("SignIn Component", () => {
       },
     });
 
-    render(
+    const { getByLabelText, getByRole } = render(
       <BrowserRouter>
         <SignIn />
       </BrowserRouter>
     );
 
-    await userEvent.type(screen.getByLabelText(/Email/i), "ali@example.com");
-    await userEvent.type(screen.getByLabelText(/Password/i), "123456");
-    await userEvent.click(screen.getByRole("button", { name: /sign in/i }));
+    await userEvent.type(getByLabelText(/Email/i), "ali@example.com");
+    await userEvent.type(getByLabelText(/Password/i), "123456");
+    await userEvent.click(getByRole("button", { name: /sign in/i }));
 
     expect(mockDispatch).toHaveBeenCalledWith({ type: "LOGIN_REQUEST" });
 
@@ -123,16 +124,17 @@ describe("SignIn Component", () => {
     });
 
     // Render the component
-    render(
+
+    const { getByLabelText, getByRole, findByText } = render(
       <BrowserRouter>
         <SignIn />
       </BrowserRouter>
     );
 
     // Fill invalid credentials
-    await userEvent.type(screen.getByLabelText(/Email/i), "wrong@example.com");
-    await userEvent.type(screen.getByLabelText(/Password/i), "wrongpassword");
-    await userEvent.click(screen.getByRole("button", { name: /sign in/i }));
+    await userEvent.type(getByLabelText(/Email/i), "wrong@example.com");
+    await userEvent.type(getByLabelText(/Password/i), "wrongpassword");
+    await userEvent.click(getByRole("button", { name: /sign in/i }));
 
     expect(mockDispatch).toHaveBeenCalledWith({ type: "LOGIN_REQUEST" });
 
@@ -143,8 +145,25 @@ describe("SignIn Component", () => {
     });
 
     // Expect error message visible on the screen
-    expect(
-      await screen.findByText(/Invalid email or password/i)
-    ).toBeInTheDocument();
+    expect(await findByText(/Invalid email or password/i)).toBeInTheDocument();
+  });
+
+  it("renders spinner and disables the button when loading", () => {
+    const { getByRole, queryByText } = render(
+      <Button isLoading={true}>Sign In</Button>
+    );
+
+    // Check that the button is disabled
+    const button = getByRole("button");
+    expect(button).toBeDisabled();
+
+    // Check that the spinner is visible
+    // You can match it by its animation or shape class
+    const spinner = button.querySelector(".animate-spin");
+    expect(spinner).toBeInTheDocument();
+
+    // The text "Sign In" should NOT appear during loading
+
+    expect(queryByText(/sign in/i)).not.toBeInTheDocument();
   });
 });
