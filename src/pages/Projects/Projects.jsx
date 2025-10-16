@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ProjectModal from "./components/ProjectModal";
 import { useProjects } from "../../hooks/useProjects";
 import { useStore } from "../../hooks/useStore";
+import Button from "../../components/ui/Button";
 
 function Projects() {
   const { workspaceId } = useWorkspace();
@@ -112,9 +113,9 @@ function Projects() {
 
   return (
     <div className="px-2  h-full w-full relative">
-      <h2 className="text-2xl font-bold text-black dark:text-white">
+      <h2 className="text-2xl font-bold text-gray-700 dark:text-white">
         Projects of{" "}
-        <span className="text-gray-800 dark:text-gray-400">
+        <span className="text-gray-900 dark:text-gray-400">
           {WorkspaceName}
         </span>
       </h2>
@@ -130,7 +131,7 @@ function Projects() {
           </div>
         )}
       </div>
-      <div className="flex items-center justify-start gap-6 py-2">
+      <div className="flex items-center justify-between gap-6 py-2">
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
@@ -140,7 +141,7 @@ function Projects() {
           rounded={true}
           border={false}
         />
-        <div
+        {/* <div
           className="w-40 h-10 rounded-xl border-2 border-gray-800 dark:border-gray-500  border-dashed hover:bg-white dark:hover:bg-[#333] flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
           onClick={() => {
             setEditData(null);
@@ -155,7 +156,21 @@ function Projects() {
           <p className="text-md  text-gray-800 dark:text-gray-400 font-bold">
             Add Project
           </p>
-        </div>
+        </div> */}
+        <Button
+          bgcolor="accent"
+          textColor
+          width="w-60"
+          height={"h-11"}
+          onClick={() => {
+            setEditData(null);
+
+            setModalOpen(true);
+          }}
+        >
+          <AddIcon className="text-white" sx={{ fontSize: 26 }} />
+          <p className="text-md text-white font-semibold">Add Project</p>
+        </Button>
       </div>
 
       <div className="flex gap-6 flex-wrap mt-4">

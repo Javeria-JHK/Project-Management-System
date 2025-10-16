@@ -51,7 +51,7 @@ function MyTasks() {
   return (
     <div className="px-2">
       <div className="flex justify-start gap-10 mb-4 items-start">
-        <h2 className="text-2xl font-bold text-black">My Tasks</h2>
+        <h2 className="text-2xl font-bold text-gray-800">My Tasks</h2>
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

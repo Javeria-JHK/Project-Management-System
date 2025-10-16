@@ -131,13 +131,22 @@ function TasksListView({
   return (
     <div className="mt-2 mr-6">
       <div className="flex justify-end px-1 py-2">
-        <div
+        {/* <div
           className="w-28 h-7 rounded-md border-2 border-gray-800 border-dashed hover:bg-white flex hover:cursor-pointer hover:border-double justify-between items-center px-2 ml-30"
           onClick={() => setIsModalOpen(true)}
         >
           <AddIcon sx={{ fontSize: 18, color: "black" }} />
           <p className="text-sm text-gray-800 font-bold">Add Task</p>
-        </div>
+        </div> */}
+        <Button
+          width="w-34"
+          height={"h-8"}
+          bgcolor="accent"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <AddIcon sx={{ fontSize: 24, color: "white" }} />
+          <p className="text-white font-semibold ml-2 text-sm"> Add Task</p>
+        </Button>
       </div>
       <table className="w-full border-1 border-gray-800 rounded-lg overflow-hidden px-2">
         <thead className="bg-gray-300 text-gray-700 text-sm font-semibold">
@@ -203,7 +212,7 @@ function TasksListView({
                 </td>
                 <td className="px-4 py-2 flex justify-end items-center">
                   <Button
-                    bgcolor="gray"
+                    bgcolor="mdGray"
                     width="w-20"
                     height={"h-8"}
                     onClick={() => {

@@ -19,7 +19,7 @@ const hoverColors = {
 };
 
 function PaddedIcon({ Icon = HelpOutlineIcon, color, bgColor, hoverBg }) {
-  const iconColor = color || "text-black dark:text-white";
+  const iconColor = color || "text-gray-800 dark:text-white";
   return (
     <div
       className={`flex items-center justify-center relative w-7 h-7 cursor-pointer 

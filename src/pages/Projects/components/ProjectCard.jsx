@@ -34,7 +34,7 @@ function ProjectCard({ project, onEdit, onDelete }) {
     active: "bg-gray-300 text-gray-800",
   };
   return (
-    <div className="rounded-2xl shadow-md hover:shadow-lg transition-all bg-white dark:bg-black w-100 ">
+    <div className="rounded-2xl shadow-md hover:shadow-lg transition-all bg-white dark:bg-black w-96 ">
       <div className="p-4 flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <Link to={`/projects/${project.id}`}>
@@ -120,8 +120,8 @@ function ProjectCard({ project, onEdit, onDelete }) {
             <div className="flex items-center text-sm text-gray-500  dark:text-[#838383] gap-2">
               <PaddedIcon
                 Icon={AssignmentIcon}
-                bgColor={"blue"}
-                color={"text-gray-900 dark:text-gray-400"}
+                bgColor={"lightGray"}
+                color={"text-gray-800 dark:text-gray-400"}
               />
 
               <p className="font-semibold">{project.tasks || 0} tasks</p>

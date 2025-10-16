@@ -191,7 +191,7 @@ function TasksKanban({
                   size="small"
                   onClick={() => setIsModalOpen(true)}
                 >
-                  <AddIcon fontSize="inherit" sx={{ color: "black" }} />
+                  <AddIcon fontSize="medium" sx={{ color: "#499E8E" }} />
                 </IconButton>
               </Tooltip>
             )}

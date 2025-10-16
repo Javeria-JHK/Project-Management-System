@@ -170,7 +170,7 @@ function MyTasksListView({ tasks, setErrorAlert, setSuccessAlert }) {
                 </td>
                 <td className="px-4 py-2 flex justify-end items-center">
                   <Button
-                    bgcolor="gray"
+                    bgcolor="accent"
                     width="w-20"
                     height={"h-8"}
                     onClick={() => {

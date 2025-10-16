@@ -117,7 +117,7 @@ function Analytics() {
   return (
     <div className="w-full h-full px-2 text-gray-800">
       <div className="flex justify-between pr-5 mb-2">
-        <h2 className="text-2xl text-black font-bold ">Analytics </h2>
+        <h2 className="text-2xl text-gray-800 font-bold ">Analytics </h2>
         <div className="flex items-center">
           <p className="text-xs">Project: </p>
           {isProjectLoading ? (
@@ -180,10 +180,10 @@ function Analytics() {
                 Plot.areaY(aapl, {
                   x: "date",
                   y: "task",
-                  fill: "#4C5E70",
+                  fill: "#499E8E",
                   fillOpacity: 0.1,
                 }),
-                Plot.line(aapl, { x: "date", y: "task", stroke: "steelBlue" }),
+                Plot.line(aapl, { x: "date", y: "task", stroke: "#499E8E" }),
               ],
             }}
           />

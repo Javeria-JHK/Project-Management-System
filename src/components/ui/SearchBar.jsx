@@ -18,7 +18,9 @@ function SearchBar({
         rounded
           ? "rounded-3xl shadow-sm shadow-gray-500 dark:shadow-[#1c1c1c] focus-within:ring-1 "
           : "rounded-lg"
-      } ${border && "border-1 border-gray-700  "} h-10 pl-2 w-80 `}
+      } ${border && "border-1 border-gray-700  "} h-10 pl-2 ${
+        border ? "w-full" : "w-80"
+      }`}
     >
       <SearchIcon className="text-gray-700 dark:text-gray-100" />
 

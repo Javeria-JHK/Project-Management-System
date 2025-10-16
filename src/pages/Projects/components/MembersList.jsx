@@ -28,7 +28,7 @@ function MemberList({
 
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [showProject, setShowProject] = useState(true);
-  const [showWorkspace, setShowWorkspace] = useState(true);
+  const [showWorkspace, setShowWorkspace] = useState(false);
 
   // Filters
   const filteredProjectMembers = projectMembers.filter(
@@ -93,6 +93,69 @@ function MemberList({
 
             {/* Collapsibles */}
             <div className="h-[80%] flex flex-col px-4 pb-2 mb-1 gap-4">
+              {/* Project Members Section */}
+              <div
+                className={`flex flex-col border border-gray-300 shadow rounded-lg overflow-hidden ${
+                  showProject
+                    ? projectMembers.length > 0
+                      ? "flex-1"
+                      : "h-auto"
+                    : "h-[43px]"
+                }`}
+              >
+                <div
+                  className="flex justify-between items-center p-2 cursor-pointer bg-gray-100 rounded-lg"
+                  onClick={() => setShowProject((p) => !p)}
+                >
+                  <div className="flex gap-5 items-center">
+                    <h3 className="font-semibold">Already in Project</h3>
+                    <p className="text-sm text-gray-600">
+                      {filteredProjectMembers.length}
+                    </p>
+                  </div>
+
+                  <span>
+                    {showProject ? (
+                      <ExpandLessIcon sx={{ color: "black", fontSize: 24 }} />
+                    ) : (
+                      <ExpandMoreIcon sx={{ color: "black", fontSize: 24 }} />
+                    )}
+                  </span>
+                </div>
+
+                {showProject && (
+                  <div className="flex-1 overflow-y-auto p-2">
+                    {filteredProjectMembers.length > 0 ? (
+                      filteredProjectMembers.map((m) => (
+                        <div
+                          key={m.id}
+                          className="flex items-center justify-between p-2 rounded-xl hover:bg-gray-50"
+                        >
+                          <div className="flex items-center gap-2">
+                            <p className="w-8 h-8 rounded-full border bg-gray-800 text-white font-bold flex justify-center items-center">
+                              {m.name[0].toUpperCase()}
+                            </p>
+                            <div>
+                              <p className="text-sm font-medium">{m.name}</p>
+                              <p className="text-xs text-gray-500">{m.email}</p>
+                            </div>
+                          </div>
+                          <IconButton
+                            size="small"
+                            onClick={() => setDeleteTarget(m)}
+                          >
+                            <DeleteIcon sx={{ fontSize: 16 }} />
+                          </IconButton>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-gray-500 italic">
+                        No members yet
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
               {/* Workspace Members Section */}
               <div
                 className={`flex flex-col border border-gray-300 shadow rounded-lg overflow-hidden ${
@@ -148,77 +211,13 @@ function MemberList({
                               setQuery("");
                             }}
                           >
-                            <AddIcon sx={{ color: "black", fontSize: 18 }} />
+                            <AddIcon sx={{ color: "#499E8E", fontSize: 20 }} />
                           </IconButton>
                         </div>
                       ))
                     ) : (
                       <p className="text-sm text-gray-500 italic">
                         No available members
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {/* Project Members Section */}
-              <div
-                className={`flex flex-col border border-gray-300 shadow rounded-lg overflow-hidden ${
-                  showProject
-                    ? projectMembers.length > 0
-                      ? "flex-1"
-                      : "h-auto"
-                    : "h-[43px]"
-                }`}
-              >
-                <div
-                  className="flex justify-between items-center p-2 cursor-pointer bg-gray-100 rounded-lg"
-                  onClick={() => setShowProject((p) => !p)}
-                >
-                  <div className="flex gap-5 items-center">
-                    <h3 className="font-semibold">Already in Project</h3>
-                    <p className="text-sm text-gray-600">
-                      {filteredProjectMembers.length}
-                    </p>
-                  </div>
-
-                  <span>
-                    {showProject ? (
-                      <ExpandLessIcon sx={{ color: "black", fontSize: 24 }} />
-                    ) : (
-                      <ExpandMoreIcon sx={{ color: "black", fontSize: 24 }} />
-                    )}
-                  </span>
-                </div>
-
-                {showProject && (
-                  <div className="flex-1 overflow-y-auto p-2">
-                    {filteredProjectMembers.length > 0 ? (
-                      filteredProjectMembers.map((m) => (
-                        <div
-                          key={m.id}
-                          className="flex items-center justify-between p-2 rounded-xl hover:bg-gray-50"
-                        >
-                          <div className="flex items-center gap-2">
-                            <p className="w-8 h-8 rounded-full border bg-black/80 text-white font-bold flex justify-center items-center">
-                              {m.name[0].toUpperCase()}
-                            </p>
-                            <div>
-                              <p className="text-sm font-medium">{m.name}</p>
-                              <p className="text-xs text-gray-500">{m.email}</p>
-                            </div>
-                          </div>
-                          <IconButton
-                            size="small"
-                            onClick={() => setDeleteTarget(m)}
-                          >
-                            <DeleteIcon sx={{ fontSize: 16 }} />
-                          </IconButton>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-sm text-gray-500 italic">
-                        No members yet
                       </p>
                     )}
                   </div>

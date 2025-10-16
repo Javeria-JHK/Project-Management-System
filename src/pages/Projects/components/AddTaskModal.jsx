@@ -76,7 +76,7 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
       <div className="bg-white text-gray-800 rounded-lg shadow py-8 px-6 w-[40%] border-2 border-gray-800">
-        <h2 className="text-2xl text-gray-900 font-bold mb-4">
+        <h2 className="text-2xl text-gray-800 font-bold mb-4">
           {initialData ? "Edit Task" : "Add Task"}
         </h2>
 
@@ -147,8 +147,8 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
                 className={`px-4 py-1 rounded-full text-sm font-medium border cursor-pointer transition
                   ${
                     priority === p
-                      ? "bg-gray-700 text-white border-gray-700"
-                      : "bg-gray-100 text-gray-700 border-gray-400 hover:bg-gray-200"
+                      ? "bg-gray-800 text-white border-[#499E8E]"
+                      : "bg-gray-200 text-gray-700 border-gray-400 hover:bg-gray-200"
                   }`}
               >
                 {p}
@@ -158,11 +158,14 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="flex justify-end gap-2 mt-6">
           <Button
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 border rounded hover:bg-gray-100"
             width="w-[20%]"
+            height={"h-10"}
+            border="ring-1 ring-gray-800"
+            bgcolor="white"
+            textColor="black"
           >
             Cancel
           </Button>
@@ -170,7 +173,8 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
             onClick={handleSubmit}
             className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
             width="w-[20%]"
-            bgcolor="gray"
+            height={"h-10"}
+            bgcolor="accent"
           >
             Save
           </Button>

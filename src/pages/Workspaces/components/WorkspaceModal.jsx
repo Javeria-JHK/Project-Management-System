@@ -93,17 +93,14 @@ export default function WorkspaceModal({
         <div className="flex justify-end gap-2">
           <Button
             onClick={handleClose}
+            bgcolor="white"
+            border={"ring-1 ring-gray-800"}
             width="w-[20%]"
-            className="px-4 py-2 text-white border rounded"
+            textColor="black"
           >
             Cancel
           </Button>
-          <Button
-            onClick={handleSubmit}
-            width="w-[20%]"
-            bgcolor="gray"
-            className="px-4 py-2  text-white rounded"
-          >
+          <Button onClick={handleSubmit} width="w-[20%]" bgcolor="accent">
             Save
           </Button>
         </div>

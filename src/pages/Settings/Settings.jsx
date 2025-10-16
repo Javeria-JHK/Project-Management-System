@@ -80,7 +80,7 @@ function Settings() {
         </div>
       )}
       {/* Header */}
-      <h2 className="text-2xl font-bold text-black mb-4">Settings</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">Settings</h2>
 
       {/* Profile Section Card */}
       <div className="bg-white w-full max-w-2xl rounded-xl p-6 shadow-lg">
@@ -90,7 +90,7 @@ function Settings() {
 
         <div className="flex items-center gap-6 mb-8">
           {/* Avatar */}
-          <div className="w-20 h-20 rounded-full bg-gray-900 text-white flex items-center justify-center text-2xl font-bold shadow-md">
+          <div className="w-20 h-20 rounded-full bg-gray-800 text-gray-300 flex items-center justify-center text-2xl font-bold shadow-md">
             {initials(user?.name)}
           </div>
 
@@ -108,7 +108,7 @@ function Settings() {
           <Button
             onClick={() => setIsModalOpen(true)}
             width="w-[50%]"
-            bgcolor="gray"
+            bgcolor="accent"
           >
             Change Password
           </Button>

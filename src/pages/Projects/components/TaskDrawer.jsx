@@ -165,7 +165,7 @@ function TaskDrawer({
                     </h2>
                     <div className="flex gap-2">
                       <Button
-                        bgcolor="lightGray"
+                        bgcolor="accent"
                         width="w-20"
                         height="h-8"
                         onClick={() => {
@@ -174,8 +174,8 @@ function TaskDrawer({
                           setIsEditMode(!isEditMode);
                         }}
                       >
-                        <TaskAltIcon sx={{ color: "black" }} />
-                        <p className="text-black ml-2">Save</p>
+                        <TaskAltIcon sx={{ color: "white" }} />
+                        <p className="text-white ml-2">Save</p>
                       </Button>
 
                       <IconButton
@@ -252,7 +252,10 @@ function TaskDrawer({
                       {/* Status */}
                       <div className="flex gap-4 w-1/2 ">
                         <div className="flex items-center gap-2 text-gray-600">
-                          <AdjustIcon sx={{ fontSize: 18 }} />
+                          <AdjustIcon
+                            sx={{ fontSize: 18 }}
+                            className="text-gray-800"
+                          />
                           <p className="font-normal">Status:</p>
                         </div>
                         {isEditMode ? (
@@ -284,7 +287,10 @@ function TaskDrawer({
                       {/* Priority */}
                       <div className="flex gap-6 w-1/2">
                         <div className="flex items-center gap-2 text-gray-600">
-                          <OutlinedFlagIcon sx={{ fontSize: 18 }} />
+                          <OutlinedFlagIcon
+                            sx={{ fontSize: 18 }}
+                            className="text-gray-800"
+                          />
                           <p className="font-normal">Priority:</p>
                         </div>
                         <div className="flex items-center gap-2 text-gray-800 ">
@@ -327,7 +333,10 @@ function TaskDrawer({
                     {/* Assignee */}
                     <div className="flex  gap-4 w-1/2 ">
                       <div className="flex items-center gap-2 text-gray-600">
-                        <PersonOutlineIcon sx={{ fontSize: 18 }} />
+                        <PersonOutlineIcon
+                          sx={{ fontSize: 18 }}
+                          className="text-gray-800"
+                        />
                         <p className="font-normal">Assignee:</p>
                       </div>
                       <div className="flex items-center">
@@ -343,7 +352,7 @@ function TaskDrawer({
                           />
                         ) : (
                           <>
-                            <p className="w-7 h-7 rounded-full border bg-black/80 text-white font-bold flex justify-center items-center">
+                            <p className="w-7 h-7 rounded-full border bg-gray-800 text-white font-bold flex justify-center items-center">
                               {taskDetails.assignee_id[0]?.toUpperCase() || "?"}
                             </p>
                             <span className="cursor-pointer ml-2 h-6 font-semibold">
@@ -358,7 +367,10 @@ function TaskDrawer({
                     {/* Due Date */}
                     <div className="flex w-1/2  gap-6 ">
                       <div className="flex items-center gap-2 text-gray-600">
-                        <CalendarMonthIcon sx={{ fontSize: 18 }} />
+                        <CalendarMonthIcon
+                          sx={{ fontSize: 18 }}
+                          className="text-gray-800"
+                        />
                         <p className="font-normal">Due Date:</p>
                       </div>
                       <div className="flex items-center gap-2 text-gray-800 ">
@@ -460,7 +472,7 @@ function TaskDrawer({
                 </IconButton> */}
 
                   <Button
-                    bgcolor="gray"
+                    bgcolor="accent"
                     width="w-24"
                     height="h-8 "
                     onClick={() => {

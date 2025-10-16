@@ -34,7 +34,7 @@ function TaskCard({ task, onClick, bordered }) {
 
       <div className="flex my-1 gap-1 text-gray-700 text-xs items-center justify-between">
         <div className="flex items-center">
-          <p className="w-7 h-7 rounded-full border-1 bg-black/80 text-white font-bold  flex justify-center items-center">
+          <p className="w-7 h-7 rounded-full border-1 bg-gray-800 text-white font-bold  flex justify-center items-center">
             {task.assignee_id?.toUpperCase()[0] || "A"}
           </p>
 
@@ -43,13 +43,14 @@ function TaskCard({ task, onClick, bordered }) {
           </p>
         </div>
         <div className="flex items-center">
-          <PaddedIcon Icon={ChatIcon} color="grey" />
+          <PaddedIcon Icon={ChatIcon} color="mdGray" />
           <p>Comments</p>
         </div>
       </div>
       <div className="flex rounded justify-between items-center">
         <div className="flex items-center">
-          <CalendarMonthOutlinedIcon sx={{ fontSize: 18, color: "black" }} />
+          <PaddedIcon Icon={CalendarMonthOutlinedIcon} color="mdGray" />
+
           <p className="text-xs ml-2 font-semibold text-gray-800">
             Due: {formatDeadline(task.deadline)}
           </p>

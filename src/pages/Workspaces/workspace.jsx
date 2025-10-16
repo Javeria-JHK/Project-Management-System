@@ -7,6 +7,7 @@ import WorkspaceModal from "./components/WorkspaceModal";
 import { useStore } from "../../hooks/useStore";
 import { useWorkspaces } from "../../hooks/useWorkspaces";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
+import Button from "../../components/ui/Button";
 
 function Workspace() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -120,23 +121,22 @@ function Workspace() {
 
   return (
     <div className="px-2 h-full w-full relative">
-      <h2 className="text-2xl font-bold dark:text-white text-black">
+      <h2 className="text-2xl font-bold dark:text-white text-gray-800">
         {" "}
         My Workspaces
       </h2>
-      <div className="flex items-center justify-start gap-6 ">
-        <div>
-          {successAlert && (
-            <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-green-100 text-green-500 text-md rounded-lg border-1 border-green-300">
-              <p>{successAlert}</p>{" "}
-            </div>
-          )}
-          {errorAlert && (
-            <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-red-100 text-red-500 text-md rounded-lg border-1 border-red-300">
-              <p>{errorAlert}</p>{" "}
-            </div>
-          )}
-        </div>
+      <div className="flex items-center justify-between gap-6 ">
+        {successAlert && (
+          <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-green-100 text-green-500 text-md rounded-lg border-1 border-green-300">
+            <p>{successAlert}</p>{" "}
+          </div>
+        )}
+        {errorAlert && (
+          <div className="absolute top-0 right-0 transform -translate-x-1/2 mt-4 px-4 py-2 bg-red-100 text-red-500 text-md rounded-lg border-1 border-red-300">
+            <p>{errorAlert}</p>{" "}
+          </div>
+        )}
+
         <div className="py-2">
           <SearchBar
             setSearchQuery={setSearchQuery}
@@ -145,8 +145,8 @@ function Workspace() {
           />
         </div>
 
-        <div
-          className="w-50 h-10 rounded-xl border-2 border-gray-800 dark:border-gray-500 border-dashed hover:bg-white dark:hover:bg-[#333] flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
+        {/* <div
+          className="w-50 h-10 rounded-xl bg-[#14B8A6] hover:bg-[#14B8A6] dark:hover:bg-[#333] flex hover:cursor-pointer hover:border-double justify-between items-center px-4"
           onClick={() => {
             setEditData(null);
             setModalOpen(true);
@@ -159,7 +159,21 @@ function Workspace() {
           <p className="text-md text-gray-800 dark:text-gray-400 font-bold">
             Add Workspace
           </p>
-        </div>
+        </div> */}
+
+        <Button
+          bgcolor="accent"
+          textColor
+          width="w-60"
+          height={"h-11"}
+          onClick={() => {
+            setEditData(null);
+            setModalOpen(true);
+          }}
+        >
+          <AddIcon className="text-white" sx={{ fontSize: 26 }} />
+          <p className="text-md text-white font-semibold">Add Workspace</p>
+        </Button>
       </div>
 
       <div className="flex gap-6 flex-wrap mt-4">

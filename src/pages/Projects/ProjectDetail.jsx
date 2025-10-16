@@ -133,14 +133,14 @@ function ProjectDetail() {
         <Button
           width="w-34"
           height={"h-10"}
-          bgcolor="lightGray"
+          bgcolor="accent"
           onClick={() => {
             setOpen(true);
             navigate(`/projects/${id}/members`);
           }}
         >
-          <GroupIcon sx={{ fontSize: 24, color: "black" }} />
-          <p className="text-gray-900 font-semibold ml-2"> Members</p>
+          <GroupIcon sx={{ fontSize: 24, color: "white" }} />
+          <p className="text-white font-semibold ml-2"> Members</p>
         </Button>
       </div>
 
@@ -150,7 +150,7 @@ function ProjectDetail() {
         <div
           className={`flex gap-1 font-semibold cursor-pointer ${
             selectedTab === "kanban"
-              ? "border-b-3 border-black text-gray-900 "
+              ? "border-b-3 border-[#499E8E] text-gray-800 "
               : "text-gray-700"
           }`}
           onClick={() => {
@@ -168,7 +168,7 @@ function ProjectDetail() {
         <div
           className={`flex gap-1 font-semibold cursor-pointer ${
             selectedTab === "list"
-              ? "border-b-3 border-black text-gray-900 "
+              ? "border-b-3 border-[#499E8E] text-gray-800 "
               : "text-gray-700"
           }`}
           onClick={() => {

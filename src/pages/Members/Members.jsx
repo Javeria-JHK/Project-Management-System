@@ -74,7 +74,7 @@ function Members() {
 
   return (
     <div className="px-2 h-full w-full">
-      <h2 className="text-2xl font-bold text-black pb-2">
+      <h2 className="text-2xl font-bold text-gray-800 pb-2">
         {" "}
         {workspace}
         {" Members"}
@@ -88,13 +88,13 @@ function Members() {
         />
 
         <Button
-          width="w-[9%]"
+          width="w-[10%]"
           height={"h-10"}
-          bgcolor="gray"
+          bgcolor="accent"
           onClick={handleInviteMenuOpen}
         >
           <AddIcon />
-          <p className="pl-2"> Invite</p>
+          <p className="pl-1"> Invite</p>
         </Button>
       </div>
       <table className="w-full border border-gray-400 shadow rounded-2xl overflow-hidden px-4">
@@ -124,7 +124,7 @@ function Members() {
               >
                 <td className="px-6 py-2 font-medium text-gray-800">
                   <div className="flex justify-start items-center">
-                    <p className="w-7 h-7 rounded-full border bg-black/80 text-white font-bold flex justify-center items-center">
+                    <p className="w-7 h-7 rounded-full border bg-gray-800 text-white font-bold flex justify-center items-center">
                       {wm.name[0]?.toUpperCase()}
                     </p>
                     <span className="cursor-pointer ml-2 h-6 font-semibold">

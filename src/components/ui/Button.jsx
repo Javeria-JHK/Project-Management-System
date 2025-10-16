@@ -3,6 +3,9 @@ const colors = {
   gray: "bg-gray-600",
   default: "bg-[#1a1a1a]",
   lightGray: "bg-gray-400",
+  mdGray: "bg-gray-700",
+  accent: "bg-[#499E8E]",
+  darkGray: "bg-gray-800",
 };
 
 export default function Button({
@@ -15,6 +18,7 @@ export default function Button({
   paddingHorizontal = "px-4",
   paddingVertical = "py-2",
   height,
+  border = "",
   isLoading = false,
 }) {
   return (
@@ -22,12 +26,12 @@ export default function Button({
       type={type}
       onClick={onClick}
       disabled={isLoading}
-      className={`font-semibold ${paddingHorizontal} ${paddingVertical} rounded-lg transition duration-300 flex justify-center items-center 
-        hover:ring-1 hover:ring-blue-950 
+      className={`font-semibold ${paddingHorizontal} ${paddingVertical} rounded-lg transition duration-300 flex justify-center items-center border-2 border-gray-800
+        hover:ring-1 hover:ring-gray-800 
         ${colors[bgcolor]} 
      
         ${width} ${height} 
-        ${textColor === "white" ? "text-white" : "text-black"}`}
+        ${textColor === "white" ? "text-white" : "text-black"} ${border}`}
     >
       {isLoading === true ? (
         <div className="w-full flex justify-center items-center ">
