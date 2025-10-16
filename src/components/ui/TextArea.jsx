@@ -10,7 +10,10 @@ function TextArea({
 }) {
   return (
     <div className="mb-4">
-      <label htmlFor={id} className="block text-gray-700 font-semibold mb-2">
+      <label
+        htmlFor={id}
+        className="block text-gray-700 dark:text-gray-300 font-semibold mb-2"
+      >
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <textarea
@@ -19,7 +22,7 @@ function TextArea({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 ${
+        className={`w-full px-3 py-2 dark:text-gray-500 border rounded-lg focus:outline-none focus:ring-1 ${
           error
             ? "border-red-500 focus:ring-red-500"
             : "border-gray-300 focus:ring-gray-700"

@@ -117,9 +117,11 @@ function Analytics() {
   return (
     <div className="w-full h-full px-2 text-gray-800">
       <div className="flex justify-between pr-5 mb-2">
-        <h2 className="text-2xl text-gray-800 font-bold ">Analytics </h2>
+        <h2 className="text-2xl text-gray-800 dark:text-white font-bold ">
+          Analytics{" "}
+        </h2>
         <div className="flex items-center">
-          <p className="text-xs">Project: </p>
+          <p className="text-xs dark:text-gray-300">Project: </p>
           {isProjectLoading ? (
             <div className="w-full flex justify-center items-center p-1 ">
               <div className="w-5 h-5 border-3 border-gray-700 border-t-white rounded-full animate-spin"></div>
@@ -128,7 +130,7 @@ function Analytics() {
             <SelectMenu
               items={projectItems}
               value={projectId}
-              color="text-gray-800"
+              color="text-gray-800 dark:text-gray-200"
               header={true}
               height={40}
               onChange={(e) => {
@@ -167,10 +169,12 @@ function Analytics() {
         <Stat label="Members" value={10} icon={GroupIcon} />
       </div>
       <div className="flex justify-center h-[70%] gap-4">
-        <div className=" bg-white w-1/2 px-4 py-4 rounded-2xl shadow">
+        <div className=" bg-white dark:bg-[#0E1012] w-1/2 px-4 py-4 rounded-2xl shadow">
           <div className="flex justify-between items-center mb-4 pr-6">
-            <h3 className="font-semibold text-lg">Task Completion Trend</h3>
-            <p className="text-xs ">last week</p>
+            <h3 className="font-semibold dark:text-gray-300 text-lg">
+              Task Completion Trend
+            </h3>
+            <p className="text-xs dark:text-gray-300 ">last week</p>
           </div>
 
           <PlotFigure
@@ -188,8 +192,10 @@ function Analytics() {
             }}
           />
         </div>
-        <div className="bg-white w-1/2 px-4 pt-4 rounded-2xl shadow">
-          <h3 className="font-semibold text-lg mb-1">Tasks Activity Log</h3>
+        <div className="bg-white dark:bg-[#0E1012] w-1/2 px-4 pt-4 rounded-2xl shadow">
+          <h3 className="font-semibold text-lg dark:text-gray-300 mb-1">
+            Tasks Activity Log
+          </h3>
           <TaskLogTable analytics={projectAnalytics} />
         </div>
       </div>
@@ -199,13 +205,17 @@ function Analytics() {
 
 function Stat({ label, value, icon }) {
   return (
-    <div className="bg-white shadow rounded-xl px-4 py-6 flex flex-col gap-2 items-start border-l-4 border-[#475569]">
+    <div className="bg-white dark:bg-[#0E1012] shadow rounded-xl px-4 py-6 flex flex-col gap-2 items-start border-l-4 border-[#475569]">
       <div className="flex justify-start gap-2">
-        <PaddedIcon Icon={icon} color="black" bgColor={"lightGray"} />
-        <p className="text-gray-500 text-lg font-semibold">{label}</p>
+        <PaddedIcon Icon={icon} bgColor={"lightGray"} />
+        <p className="text-gray-500 dark:text-gray-400 text-lg font-semibold">
+          {label}
+        </p>
       </div>
 
-      <p className="text-2xl font-bold text-gray-900">{value}</p>
+      <p className="text-2xl font-bold text-gray-900 dark:text-gray-200">
+        {value}
+      </p>
     </div>
   );
 }

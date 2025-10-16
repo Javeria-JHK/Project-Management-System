@@ -14,15 +14,15 @@ function SearchBar({
 }) {
   return (
     <div
-      className={`flex items-center bg-gray-50 dark:bg-[#333] ${
+      className={`flex items-center bg-gray-50 dark:bg-[#0E1012] ${
         rounded
-          ? "rounded-3xl shadow-sm shadow-gray-500 dark:shadow-[#1c1c1c] focus-within:ring-1 "
+          ? "rounded-3xl shadow-sm shadow-gray-500 dark:shadow-[#1a253d] focus-within:ring-1 "
           : "rounded-lg"
-      } ${border && "border-1 border-gray-700  "} h-10 pl-2 ${
+      } ${border && "border-1 border-gray-700 "} h-10 pl-2 ${
         border ? "w-full" : "w-80"
       }`}
     >
-      <SearchIcon className="text-gray-700 dark:text-gray-100" />
+      <SearchIcon className="text-gray-700 pl-1 dark:text-gray-100" />
 
       {filters && (
         <SelectMenu

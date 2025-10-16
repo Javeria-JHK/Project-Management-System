@@ -106,8 +106,8 @@ function MyTasksListView({ tasks, setErrorAlert, setSuccessAlert }) {
 
   return (
     <div className="mt-2 mr-6">
-      <table className="w-full border-1 border-gray-800 rounded-lg overflow-hidden px-2">
-        <thead className="bg-gray-300 text-gray-700 text-sm font-semibold">
+      <table className="w-full border-1  border-gray-800  dark:border-gray-100 rounded-lg overflow-hidden px-2">
+        <thead className="bg-gray-300 dark:bg-[#0E1012]  text-gray-700 dark:text-gray-300 text-sm font-semibold dark:border-b-1 dark:border-b-gray-500">
           <tr>
             <th className="px-4 py-2 text-left">Title</th>
             <th className="px-4 py-2 text-left">Status</th>
@@ -118,12 +118,12 @@ function MyTasksListView({ tasks, setErrorAlert, setSuccessAlert }) {
             <th className="px-4 py-2 text-right">Actions</th>
           </tr>
         </thead>
-        <tbody className="text-sm text-gray-800 divide-y divide-gray-300">
+        <tbody className="text-sm text-gray-800 dark:text-gray-500 dark:bg-[#121517]  divide-y divide-gray-300 dark:divide-gray-800">
           {paginatedTasks.length === 0 ? (
             <tr>
               <td
                 colSpan="7"
-                className="px-4 py-4 text-center text-gray-400 italic"
+                className="px-4 py-4 text-center dark:bg-[#121517] text-gray-400 italic"
               >
                 No tasks available
               </td>
@@ -132,11 +132,9 @@ function MyTasksListView({ tasks, setErrorAlert, setSuccessAlert }) {
             paginatedTasks.map((task) => (
               <tr
                 key={task.id}
-                className="hover:bg-gray-300 transition bg-gray-100"
+                className="hover:bg-gray-300 dark:hover:bg-gray-800 transition dark:bg-[#0E1012] bg-gray-100"
               >
-                <td className="px-4 py-2 font-medium text-gray-800">
-                  {task.title}
-                </td>
+                <td className="px-4 py-2 font-medium">{task.title}</td>
                 <td className="px-4 py-2">
                   <span
                     className={`px-2 py-1 text-xs font-semibold rounded-full ${

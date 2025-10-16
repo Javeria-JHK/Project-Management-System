@@ -58,9 +58,9 @@ export default function WorkspaceModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center">
-      <div className="bg-white text-gray-800 rounded-lg shadow py-10 px-8 w-[40%]  border-2 border-gray-800">
-        <h2 className="text-2xl text-gray-900 font-bold mb-4">
+    <div className="fixed inset-0 bg-black/50 dark:bg-gray-800/50 backdrop-blur-sm flex justify-center items-center">
+      <div className="bg-white dark:bg-[#15191C] text-gray-800 rounded-lg shadow py-10 px-8 w-[40%]  border-2 border-gray-800">
+        <h2 className="text-2xl dark:text-white text-gray-900 font-bold mb-4">
           {initialData ? "Edit Workspace" : "Add Workspace"}
         </h2>
         <InputFeild
@@ -94,7 +94,7 @@ export default function WorkspaceModal({
           <Button
             onClick={handleClose}
             bgcolor="white"
-            border={"ring-1 ring-gray-800"}
+            border={"ring-1 ring-gray-800 dark:ring-gray-500"}
             width="w-[20%]"
             textColor="black"
           >

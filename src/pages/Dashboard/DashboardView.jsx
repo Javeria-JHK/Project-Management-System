@@ -94,7 +94,7 @@ const DashboardView = () => {
             {quickStats.map((stat, idx) => (
               <div
                 key={idx}
-                className="bg-white dark:bg-black shadow rounded-xl p-4 flex flex-col gap-2 items-start "
+                className="bg-white dark:bg-[#0E1012] shadow rounded-xl p-4 flex flex-col gap-2 items-start "
               >
                 <PaddedIcon Icon={stat.icon} bgColor={"lightGray"} />
                 <p className="text-gray-600 dark:text-gray-500 text-lg font-semibold">
@@ -110,7 +110,7 @@ const DashboardView = () => {
 
           <div className="flex justify-between w-full">
             {/* Projects */}
-            <div className="bg-white  dark:bg-black  space-y-4 h-full shadow rounded-xl p-2 w-[40%]">
+            <div className="bg-white  dark:bg-[#0E1012]  space-y-4 h-full shadow rounded-xl p-2 w-[40%]">
               <h2 className="text-lg text-gray-800 dark:text-white font-semibold pl-2 mb-2">
                 Recent Projects
               </h2>
@@ -124,13 +124,15 @@ const DashboardView = () => {
                     return (
                       <div
                         key={proj.id}
-                        className="p-3 rounded-lg bg-gray-50 hover:bg-gray-100"
+                        className="p-3 rounded-lg dark:bg-[#121517] bg-gray-50 hover:bg-gray-100 dark:hover:bg-[#15191C]"
                       >
-                        <p className="font-semibold">{proj.name}</p>
+                        <p className="font-semibold dark:text-gray-300">
+                          {proj.name}
+                        </p>
                         <p className="text-sm text-gray-500">
                           Tasks: {proj.task_count} • Progress: {progress}%
                         </p>
-                        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div className="w-full  dark:bg-gray-800 bg-gray-200 rounded-full h-2 mt-2">
                           <div
                             className="bg-[#499E8E] h-2 rounded-full"
                             style={{ width: `${progress}%` }}
@@ -148,7 +150,7 @@ const DashboardView = () => {
             </div>
 
             {/* Task Status Chart */}
-            <div className="bg-white dark:bg-black shadow rounded-xl p-4 w-[58%]">
+            <div className="bg-white dark:bg-[#0E1012] shadow rounded-xl p-4 w-[58%]">
               <h2 className="text-lg text-gray-800 dark:text-white font-semibold mb-6">
                 My Tasks Overview
               </h2>

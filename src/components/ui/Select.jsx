@@ -63,7 +63,7 @@ function SelectMenu({
       MenuProps={{
         PaperProps: {
           sx: {
-            backgroundColor: isDark ? "#262626" : "#ffffff", // dark: gray-800, light: white
+            backgroundColor: isDark ? "#0E1012" : "#ffffff", // dark: gray-800, light: white
             color: isDark ? "#f3f4f6" : "#111827", // text-gray-100 vs gray-900
           },
         },

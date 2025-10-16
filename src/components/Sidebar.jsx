@@ -50,7 +50,7 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-[18%] h-screen dark:bg-[#151515] bg-[#D9D9D9] p-1 flex ">
+    <div className="w-[18%] h-screen dark:bg-[#15191C] bg-[#D9D9D9] p-1 flex ">
       <div className="w-full h-full dark:bg-[#262e37] bg-[#1F2937] text-gray-100 py-5 px-3 flex flex-col rounded-xl shadow">
         {/* <div className="flex justify-end ">
           <Tooltip title="Add Workspace" placement="bottom" arrow>

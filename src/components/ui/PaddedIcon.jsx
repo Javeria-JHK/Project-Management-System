@@ -2,7 +2,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const bgColors = {
   gray: "bg-gray-700 ",
-  lightGray: "bg-gray-200 dark:bg-[#151515]",
+  lightGray: "bg-gray-200 dark:bg-[#15191C]",
   blue: "bg-blue-300 dark:bg-blue-950",
   green: "bg-green-300",
   red: "bg-red-300",

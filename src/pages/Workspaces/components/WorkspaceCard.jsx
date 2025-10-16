@@ -19,17 +19,17 @@ function WorkspaceCard({
         isDefault
           ? "border-2 border-gray-800 dark:border-gray-600"
           : "border border-gray-200 dark:border-gray-900"
-      } bg-white dark:bg-black shadow-md rounded-xl p-4 w-70 hover:shadow-lg transition cursor-pointer flex flex-col justify-between`}
+      } bg-white dark:bg-[#0E1012] shadow-md rounded-xl p-4 w-70 hover:shadow-lg transition cursor-pointer flex flex-col justify-between`}
       onClick={onClick}
     >
       <div>
-        <h2 className="text-xl font-bold text-gray-800 dark:text-[#b5b5b5] ">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-300 ">
           {name}{" "}
           {isDefault && (
             <span className="text-xs text-[#14B8A6]">(Active)</span>
           )}
         </h2>
-        <p className="text-sm text-gray-600 dark:text-[#838383] mt-1">
+        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
           {description}
         </p>
       </div>
@@ -37,10 +37,10 @@ function WorkspaceCard({
       <div className="flex justify-between items-center mt-10">
         <div className="flex items-center">
           <GroupIcon
-            className="text-gray-800 dark:text-[#838383]"
+            className="text-gray-800 dark:text-white"
             sx={{ fontSize: 24 }}
           />
-          <p className=" ml-2 text-sm text-gray-600 dark:text-[#838383]">
+          <p className=" ml-2 text-sm text-gray-600 dark:text-gray-400">
             {members} {members < 2 ? "Member" : "Members"}{" "}
           </p>
         </div>

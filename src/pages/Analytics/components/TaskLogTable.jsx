@@ -9,8 +9,8 @@ function TaskLogTable({ analytics }) {
   }));
   return (
     <div className="rounded-2xl shadow h-[90%]">
-      <table className="w-full border-1 border-gray-800 rounded-lg overflow-hidden px-2">
-        <thead className="bg-gray-300 text-gray-700 text-sm font-semibold">
+      <table className="w-full border-1 dark:border-gray-100 border-gray-800 rounded-lg overflow-hidden px-2">
+        <thead className="bg-gray-300 dark:bg-[#15191C]  text-gray-700 dark:text-gray-300 text-sm font-semibold dark:border-b-1 dark:border-b-gray-500">
           <tr>
             <th className="px-4 py-2 text-left">Date</th>
             <th className="px-4 py-2 text-left">User</th>
@@ -19,7 +19,7 @@ function TaskLogTable({ analytics }) {
             <th className="px-4 py-2 text-left">Status</th>
           </tr>
         </thead>
-        <tbody className="text-sm text-gray-800 divide-y divide-gray-300 ">
+        <tbody className="text-sm text-gray-800 divide-y dark:bg-[#121517] divide-gray-300 ">
           {taskLogs.length === 0 ? (
             <tr>
               <td
@@ -33,16 +33,20 @@ function TaskLogTable({ analytics }) {
             taskLogs.map((log) => (
               <tr
                 key={log.id}
-                className="hover:bg-gray-100 transition bg-gray-50"
+                className="hover:bg-gray-100 dark:hover:bg-gray-800 transition dark:bg-[#121517] bg-gray-50"
               >
-                <td className="px-4 py-3 font-medium text-xs text-gray-800">
+                <td className="px-4 py-3 font-medium text-xs text-gray-800 dark:text-gray-400">
                   {log.date}
                 </td>
-                <td className="px-4 py-3  text-xs text-gray-800">{log.user}</td>
-                <td className="px-4 py-3  text-xs text-gray-800">
+                <td className="px-4 py-3  text-xs text-gray-800  dark:text-gray-400">
+                  {log.user}
+                </td>
+                <td className="px-4 py-3  text-xs text-gray-800  dark:text-gray-400">
                   Created {log.action}
                 </td>
-                <td className="px-4 py-3  text-xs text-gray-800">{log.task}</td>
+                <td className="px-4 py-3  text-xs text-gray-800  dark:text-gray-400">
+                  {log.task}
+                </td>
                 <tr className="px-4 py-2 flex justify-center items-center w-30">
                   <span
                     className={`px-2 py-1 text-xs font-semibold rounded-full ${
