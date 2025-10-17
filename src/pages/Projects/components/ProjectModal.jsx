@@ -60,9 +60,9 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center">
-      <div className="bg-white text-gray-800 rounded-lg shadow py-10 px-8 w-[40%] border-2 border-gray-800">
-        <h2 className="text-2xl text-gray-900 font-bold mb-4">
+    <div className="fixed inset-0 bg-black/50 dark:bg-gray-800/50 backdrop-blur-sm flex justify-center items-center">
+      <div className="bg-white dark:bg-[#15191C] text-gray-800 rounded-lg shadow py-10 px-8 w-[40%] border-2 border-gray-800">
+        <h2 className="text-2xl text-gray-800 dark:text-white font-bold mb-4">
           {initialData ? "Edit Project" : "Add Project"}
         </h2>
 
@@ -98,8 +98,9 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
 
         {/* Status Chips */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            Status: <span className="text-gray-900">{status}</span>
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+            Status:{" "}
+            <span className="text-gray-800 dark:text-white">{status}</span>
           </label>
           <div className="flex gap-2">
             {["To Do", "In Progress", "Completed", "In Review"].map((s) => (
@@ -110,8 +111,8 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
                 className={`px-4 py-2 rounded-full text-sm font-medium border transition cursor-pointer
           ${
             status === s
-              ? "bg-gray-700 text-white border-blue-600"
-              : "bg-gray-100 text-gray-700 border-gray-900 hover:bg-gray-200"
+              ? "bg-gray-800 text-white border-[#499E8E] dark:border-gray-900"
+              : "bg-gray-200 dark:bg-[#15191C] text-gray-700 dark:text-gray-400 border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700"
           }`}
               >
                 {s}
@@ -120,11 +121,14 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
           </div>
         </div>
 
-        <div className="flex justify-end mt-4  pt-2 gap-2">
+        <div className="flex justify-end mt-6  pt-2 gap-2">
           <Button
             onClick={handleClose}
-            className="px-4 py-2 text-white border rounded"
             width="w-[20%]"
+            height={"h-10"}
+            bgcolor="white"
+            border="ring-1 ring-gray-800"
+            textColor="black"
           >
             Cancel
           </Button>
@@ -132,7 +136,8 @@ export default function ProjectModal({ isOpen, onClose, onSave, initialData }) {
             onClick={handleSubmit}
             className="px-4 py-2  text-white rounded"
             width="w-[20%]"
-            bgcolor="gray"
+            height={"h-10"}
+            bgcolor="accent"
           >
             Save
           </Button>

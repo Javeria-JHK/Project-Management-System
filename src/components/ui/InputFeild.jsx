@@ -12,7 +12,10 @@ function InputField({
   return (
     <div className="mb-4">
       {/* Label with required asterisk */}
-      <label htmlFor={id} className="block text-gray-700 font-semibold mb-2">
+      <label
+        htmlFor={id}
+        className="block text-gray-700 dark:text-gray-300 font-semibold mb-2"
+      >
         {label} {required && <span className="text-red-500">*</span>}
       </label>
 
@@ -24,7 +27,7 @@ function InputField({
         onChange={onChange}
         placeholder={placeholder}
         onBlur={onBlur}
-        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 
+        className={`w-full px-3 py-2 dark:text-gray-500 border rounded-lg focus:outline-none focus:ring-1 
           ${
             error
               ? "border-red-500 focus:ring-red-500"

@@ -1,13 +1,3 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
-
 function TaskLogTable({ analytics }) {
   const taskLogs = (analytics?.recent_activity ?? []).map((log, idx) => ({
     id: idx + 1,
@@ -18,34 +8,48 @@ function TaskLogTable({ analytics }) {
     status: "To Do", // or derive later if backend adds statuses
   }));
   return (
-    <TableContainer className="rounded-2xl shadow h-[90%]">
-      <Table>
-        <TableHead>
-          <TableRow className="bg-gray-100">
-            <TableCell>Date</TableCell>
-            <TableCell>User</TableCell>
-            <TableCell>Action</TableCell>
-            <TableCell>Task</TableCell>
-            <TableCell>Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+    <div className="rounded-2xl shadow h-[90%]">
+      <table className="w-full border-1 dark:border-gray-100 border-gray-800 rounded-lg overflow-hidden px-2">
+        <thead className="bg-gray-300 dark:bg-[#15191C]  text-gray-700 dark:text-gray-300 text-sm font-semibold dark:border-b-1 dark:border-b-gray-500">
+          <tr>
+            <th className="px-4 py-2 text-left">Date</th>
+            <th className="px-4 py-2 text-left">User</th>
+            <th className="px-4 py-2 text-left">Action</th>
+            <th className="px-4 py-2 text-left">Task</th>
+            <th className="px-4 py-2 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody className="text-sm text-gray-800 divide-y dark:bg-[#121517] divide-gray-300 ">
           {taskLogs.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={5} className="text-center  text-gray-500">
+            <tr>
+              <td
+                colSpan="5"
+                className="px-4 py-4 text-center text-gray-400 italic"
+              >
                 No recent activity
-              </TableCell>
-            </TableRow>
+              </td>
+            </tr>
           ) : (
             taskLogs.map((log) => (
-              <TableRow key={log.id} className="hover:bg-gray-50 text-xs">
-                <TableCell>{log.date}</TableCell>
-                <TableCell>{log.user}</TableCell>
-                <TableCell>{log.action}</TableCell>
-                <TableCell>{log.task}</TableCell>
-                <TableCell>
+              <tr
+                key={log.id}
+                className="hover:bg-gray-100 dark:hover:bg-gray-800 transition dark:bg-[#121517] bg-gray-50"
+              >
+                <td className="px-4 py-3 font-medium text-xs text-gray-800 dark:text-gray-400">
+                  {log.date}
+                </td>
+                <td className="px-4 py-3  text-xs text-gray-800  dark:text-gray-400">
+                  {log.user}
+                </td>
+                <td className="px-4 py-3  text-xs text-gray-800  dark:text-gray-400">
+                  Created {log.action}
+                </td>
+                <td className="px-4 py-3  text-xs text-gray-800  dark:text-gray-400">
+                  {log.task}
+                </td>
+                <tr className="px-4 py-2 flex justify-center items-center w-30">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    className={`px-2 py-1 text-xs font-semibold rounded-full ${
                       log.status === "completed"
                         ? "bg-green-100 text-green-700"
                         : log.status === "In Progress"
@@ -57,13 +61,13 @@ function TaskLogTable({ analytics }) {
                   >
                     {log.status}
                   </span>
-                </TableCell>
-              </TableRow>
+                </tr>
+              </tr>
             ))
           )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
+    </div>
   );
 }
 

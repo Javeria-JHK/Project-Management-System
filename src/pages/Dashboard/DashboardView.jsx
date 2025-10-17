@@ -79,7 +79,7 @@ const DashboardView = () => {
   return (
     <div className="px-2 text-gray-600 h-full w-full">
       {/* Header */}
-      <h2 className="text-2xl font-bold dark:text-white text-black pb-2">
+      <h2 className="text-2xl font-bold dark:text-white text-gray-800 pb-2">
         Welcome back
       </h2>
 
@@ -94,14 +94,14 @@ const DashboardView = () => {
             {quickStats.map((stat, idx) => (
               <div
                 key={idx}
-                className="bg-white dark:bg-black shadow rounded-xl p-4 flex flex-col gap-2 items-start "
+                className="bg-white dark:bg-[#0E1012] shadow rounded-xl p-4 flex flex-col gap-2 items-start "
               >
                 <PaddedIcon Icon={stat.icon} bgColor={"lightGray"} />
-                <p className="text-gray-500 dark:text-gray-500 text-lg font-semibold">
+                <p className="text-gray-600 dark:text-gray-500 text-lg font-semibold">
                   {stat.label}
                 </p>
 
-                <p className="text-2xl font-bold dark:text-gray-400 text-gray-900">
+                <p className="text-2xl font-bold dark:text-gray-400 text-gray-800">
                   {stat.value}
                 </p>
               </div>
@@ -110,8 +110,8 @@ const DashboardView = () => {
 
           <div className="flex justify-between w-full">
             {/* Projects */}
-            <div className="bg-white  dark:bg-black  space-y-4 h-full shadow rounded-xl p-2 w-[40%]">
-              <h2 className="text-lg dark:text-white font-semibold pl-2 mb-2">
+            <div className="bg-white  dark:bg-[#0E1012]  space-y-4 h-full shadow rounded-xl p-2 w-[40%]">
+              <h2 className="text-lg text-gray-800 dark:text-white font-semibold pl-2 mb-2">
                 Recent Projects
               </h2>
               <div className="flex flex-col space-y-2 max-h-[400px] overflow-y-auto pr-2">
@@ -124,15 +124,17 @@ const DashboardView = () => {
                     return (
                       <div
                         key={proj.id}
-                        className="p-3 rounded-lg bg-gray-50 hover:bg-gray-100"
+                        className="p-3 rounded-lg dark:bg-[#121517] bg-gray-50 hover:bg-gray-100 dark:hover:bg-[#15191C]"
                       >
-                        <p className="font-semibold">{proj.name}</p>
+                        <p className="font-semibold dark:text-gray-300">
+                          {proj.name}
+                        </p>
                         <p className="text-sm text-gray-500">
                           Tasks: {proj.task_count} • Progress: {progress}%
                         </p>
-                        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div className="w-full  dark:bg-gray-800 bg-gray-200 rounded-full h-2 mt-2">
                           <div
-                            className="bg-blue-800 h-2 rounded-full"
+                            className="bg-[#499E8E] h-2 rounded-full"
                             style={{ width: `${progress}%` }}
                           ></div>
                         </div>
@@ -148,8 +150,8 @@ const DashboardView = () => {
             </div>
 
             {/* Task Status Chart */}
-            <div className="bg-white dark:bg-black shadow rounded-xl p-4 w-[58%]">
-              <h2 className="text-lg  dark:text-white font-semibold mb-6">
+            <div className="bg-white dark:bg-[#0E1012] shadow rounded-xl p-4 w-[58%]">
+              <h2 className="text-lg text-gray-800 dark:text-white font-semibold mb-6">
                 My Tasks Overview
               </h2>
               <div className="flex justify-center items-center gap-6">

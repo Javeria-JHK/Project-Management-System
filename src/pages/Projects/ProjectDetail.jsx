@@ -13,6 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useTasks } from "../../hooks/useTasks";
 import { useStore } from "../../hooks/useStore";
 import { useProjects } from "../../hooks/useProjects";
+import useTheme from "../../hooks/useTheme";
 
 const members = [
   { value: "Alice" },
@@ -32,7 +33,8 @@ const workspaceMembers = [
 
 function ProjectDetail() {
   const { id, taskId } = useParams();
-
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [selectedTab, setSelectedTab] = useState("kanban");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFilter, setSearchFilter] = useState("name");
@@ -95,11 +97,19 @@ function ProjectDetail() {
     }, 300);
   };
 
+  const getIconColor = (tab) => {
+    if (selectedTab === tab) {
+      return isDark ? "#FFFFFF" : "#18213B";
+    } else {
+      return isDark ? "#9CA3AF" : "#6B7280";
+    }
+  };
+
   return (
     <div className="p-1 relative">
       {/* <MemberList members={project.members} /> */}
       <div className="flex justify-between items-start">
-        <h2 className="font-bold text-xl text-black">
+        <h2 className="font-bold text-xl text-gray-800 dark:text-white">
           {project.currentProject?.name || "Project Name"}
         </h2>
         <div>
@@ -133,14 +143,14 @@ function ProjectDetail() {
         <Button
           width="w-34"
           height={"h-10"}
-          bgcolor="lightGray"
+          bgcolor="accent"
           onClick={() => {
             setOpen(true);
             navigate(`/projects/${id}/members`);
           }}
         >
-          <GroupIcon sx={{ fontSize: 24, color: "black" }} />
-          <p className="text-gray-900 font-semibold ml-2"> Members</p>
+          <GroupIcon sx={{ fontSize: 24, color: "white" }} />
+          <p className="text-white font-semibold ml-2"> Members</p>
         </Button>
       </div>
 
@@ -150,26 +160,23 @@ function ProjectDetail() {
         <div
           className={`flex gap-1 font-semibold cursor-pointer ${
             selectedTab === "kanban"
-              ? "border-b-3 border-black text-gray-900 "
-              : "text-gray-700"
+              ? "border-b-3 border-[#499E8E] text-gray-800 dark:text-gray-100"
+              : "text-gray-700 dark:text-gray-400"
           }`}
           onClick={() => {
             setSelectedTab("kanban");
           }}
         >
           <ViewKanbanIcon
-            sx={{
-              fontSize: 24,
-              color: selectedTab === "kanban" ? "#18213B" : "#343846",
-            }}
+            sx={{ fontSize: 24, color: getIconColor("kanban") }}
           />
           <p>Kanban</p>
         </div>
         <div
           className={`flex gap-1 font-semibold cursor-pointer ${
             selectedTab === "list"
-              ? "border-b-3 border-black text-gray-900 "
-              : "text-gray-700"
+              ? "border-b-3 border-[#499E8E] text-gray-800 dark:text-gray-100 "
+              : "text-gray-700 dark:text-gray-400"
           }`}
           onClick={() => {
             setSelectedTab("list");
@@ -178,7 +185,7 @@ function ProjectDetail() {
           <ListIcon
             sx={{
               fontSize: 24,
-              color: selectedTab === "list" ? "#18213B" : "#343846",
+              color: getIconColor("list"),
             }}
           />
           <p>List</p>
