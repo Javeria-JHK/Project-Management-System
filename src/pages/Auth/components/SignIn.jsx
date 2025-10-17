@@ -83,7 +83,7 @@ function SignIn() {
         Sign In to Continue
       </h2>
       {invalidCred && (
-        <div className=" w-full mt-4 px-4 py-2 bg-red-100 text-red-500 text-md rounded-lg border-1 border-red-300">
+        <div className=" w-full mt-4 px-4 py-2 bg-red-100 text-red-500 text-md error-alert rounded-lg border-1 border-red-300">
           <p>{apiError}</p>
         </div>
       )}
