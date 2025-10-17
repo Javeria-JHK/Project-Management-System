@@ -8,6 +8,7 @@ import PageNotFound from "../pages/PageNotFound";
 import Settings from "../pages/Settings/Settings";
 import DashboardView from "../pages/Dashboard/DashboardView";
 import Workspace from "../pages/Workspaces/workspace";
+import ThemeProvider from "../context/theme/ThemeProvider";
 
 import {
   AuthProtectedRoute,
@@ -26,9 +27,11 @@ function AppRoutes() {
         <Route
           path="/"
           element={
-            <AuthProtectedRoute>
-              <Main />
-            </AuthProtectedRoute>
+            <ThemeProvider>
+              <AuthProtectedRoute>
+                <Main />
+              </AuthProtectedRoute>
+            </ThemeProvider>
           }
         >
           <Route index element={<DashboardView />} />
