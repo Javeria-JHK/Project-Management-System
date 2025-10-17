@@ -2,7 +2,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const bgColors = {
   gray: "bg-gray-700 ",
-  lightGray: "bg-gray-200 dark:bg-[#151515]",
+  lightGray: "bg-gray-200 dark:bg-[#15191C]",
   blue: "bg-blue-300 dark:bg-blue-950",
   green: "bg-green-300",
   red: "bg-red-300",
@@ -19,7 +19,7 @@ const hoverColors = {
 };
 
 function PaddedIcon({ Icon = HelpOutlineIcon, color, bgColor, hoverBg }) {
-  const iconColor = color || "text-black dark:text-white";
+  const iconColor = color || "text-gray-800 dark:text-white";
   return (
     <div
       className={`flex items-center justify-center relative w-7 h-7 cursor-pointer 

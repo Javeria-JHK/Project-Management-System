@@ -17,24 +17,26 @@ const flagColors = {
 function TaskCard({ task, onClick, bordered }) {
   return (
     <div
-      className={`py-3 px-2 rounded-xl  bg-[#f0f0f0] ${
-        bordered ? "border-2 border-gray-700 p-2" : "border-1 border-gray-300"
+      className={`py-3 px-2 rounded-xl  bg-[#f0f0f0]  dark:bg-[#121517] ${
+        bordered
+          ? "border-2 border-gray-700 dark:border-gray-300 p-2"
+          : "border-1 border-gray-300 dark:border-gray-800"
       } border-1 border-gray-300`}
       onClick={onClick}
     >
       <div className="flex justify-between items-center cursor-pointer">
-        <h3 className="text-gray-800 font-semibold text-sm py-1">
+        <h3 className="text-gray-800 dark:text-gray-300 font-semibold text-sm py-1">
           {task.title}
         </h3>
       </div>
 
-      <p className="text-gray-600 text-xs font-semibold py-1 overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer">
+      <p className="text-gray-600 dark:text-gray-500 text-xs font-semibold py-1 overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer">
         {task.description}
       </p>
 
-      <div className="flex my-1 gap-1 text-gray-700 text-xs items-center justify-between">
+      <div className="flex my-1 gap-1 text-gray-700 dark:text-gray-500 text-xs items-center justify-between">
         <div className="flex items-center">
-          <p className="w-7 h-7 rounded-full border-1 bg-black/80 text-white font-bold  flex justify-center items-center">
+          <p className="w-7 h-7 rounded-full border-1 bg-gray-800 dark:text-gray-500 text-white font-bold  flex justify-center items-center">
             {task.assignee_id?.toUpperCase()[0] || "A"}
           </p>
 
@@ -43,14 +45,15 @@ function TaskCard({ task, onClick, bordered }) {
           </p>
         </div>
         <div className="flex items-center">
-          <PaddedIcon Icon={ChatIcon} color="grey" />
+          <PaddedIcon Icon={ChatIcon} color="mdGray" />
           <p>Comments</p>
         </div>
       </div>
       <div className="flex rounded justify-between items-center">
         <div className="flex items-center">
-          <CalendarMonthOutlinedIcon sx={{ fontSize: 18, color: "black" }} />
-          <p className="text-xs ml-2 font-semibold text-gray-800">
+          <PaddedIcon Icon={CalendarMonthOutlinedIcon} />
+
+          <p className="text-xs ml-2 font-semibold text-gray-800 dark:text-gray-400">
             Due: {formatDeadline(task.deadline)}
           </p>
         </div>
@@ -60,7 +63,7 @@ function TaskCard({ task, onClick, bordered }) {
               <FlagIcon
                 sx={{ fontSize: 18, color: flagColors[task.priority] }}
               />
-              <p className="text-xs font-semibold text-gray-800">
+              <p className="text-xs font-semibold text-gray-800 dark:text-gray-300">
                 {capitalize(task.priority)}
               </p>
             </div>

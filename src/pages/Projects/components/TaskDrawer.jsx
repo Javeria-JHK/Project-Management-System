@@ -22,6 +22,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useParams } from "react-router-dom";
 import { capitalize } from "../../../utils/stringAlterations";
 import { useStore } from "../../../hooks/useStore";
+import useTheme from "../../../hooks/useTheme";
 
 const statusColors = {
   completed: "bg-green-100 text-green-700",
@@ -71,7 +72,7 @@ function TaskDrawer({
   const { comment } = state;
   const { getComments, createComment, comments } = useComments();
   const [isEditMode, setIsEditMode] = useState(false);
-
+  const { theme } = useTheme();
   const [taskDetails, setTaskDetails] = useState({
     id: task?.id || "",
     title: task?.title || "",
@@ -81,6 +82,7 @@ function TaskDrawer({
     assignee_id: task?.assignee_id || "",
     deadline: task?.deadline || "",
   });
+  const isDark = theme === "dark";
 
   useEffect(() => {
     if (task) {
@@ -132,7 +134,7 @@ function TaskDrawer({
       {open && task && (
         <>
           <motion.div
-            className="fixed inset-0 bg-black/30 z-40"
+            className="fixed inset-0 bg-black/30 dark:bg-gray-800/30 z-40"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -146,14 +148,14 @@ function TaskDrawer({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 right-0 h-full w-1/2 bg-white shadow-2xl z-50 flex flex-col"
+            className="fixed top-0 right-0 h-full w-1/2 bg-white dark:bg-[#0E1012] shadow-2xl z-50 flex flex-col"
           >
             {
               isEditMode ? (
                 <>
                   {/* Header */}
-                  <div className="flex justify-between items-center bg-gray-100 border-b p-4">
-                    <h2 className="text-xl font-bold text-gray-800">
+                  <div className="flex justify-between items-center bg-gray-100 dark:bg-[#15191C] border-b p-4">
+                    <h2 className="text-xl font-bold text-gray-800 dark:text-gray-400">
                       <input
                         className="border p-1 rounded-md h-8"
                         value={taskDetails.title}
@@ -165,7 +167,7 @@ function TaskDrawer({
                     </h2>
                     <div className="flex gap-2">
                       <Button
-                        bgcolor="lightGray"
+                        bgcolor="accent"
                         width="w-20"
                         height="h-8"
                         onClick={() => {
@@ -174,8 +176,8 @@ function TaskDrawer({
                           setIsEditMode(!isEditMode);
                         }}
                       >
-                        <TaskAltIcon sx={{ color: "black" }} />
-                        <p className="text-black ml-2">Save</p>
+                        <TaskAltIcon sx={{ color: "white" }} />
+                        <p className="text-white ml-2">Save</p>
                       </Button>
 
                       <IconButton
@@ -184,7 +186,12 @@ function TaskDrawer({
                           onClose();
                         }}
                       >
-                        <CloseIcon sx={{ color: "black", fontSize: 18 }} />
+                        <CloseIcon
+                          sx={{
+                            color: isDark ? "white" : "black",
+                            fontSize: 18,
+                          }}
+                        />
                       </IconButton>
                     </div>
                   </div>
@@ -192,8 +199,8 @@ function TaskDrawer({
               ) : (
                 <>
                   {/* Header */}
-                  <div className="flex justify-between items-center bg-gray-100 border-b p-4">
-                    <h2 className="text-xl font-bold text-gray-800">
+                  <div className="flex justify-between items-center bg-gray-100 dark:bg-[#15191C] border-b p-4">
+                    <h2 className="text-xl font-bold text-gray-800  dark:text-gray-400">
                       <span className="cursor-pointer h-8 p-1">
                         {taskDetails.title}
                       </span>
@@ -205,11 +212,21 @@ function TaskDrawer({
                           setIsEditMode(!isEditMode);
                         }}
                       >
-                        <EditIcon sx={{ color: "black", fontSize: 18 }} />
+                        <EditIcon
+                          sx={{
+                            color: isDark ? "white" : "black",
+                            fontSize: 18,
+                          }}
+                        />
                       </IconButton>
 
                       <IconButton onClick={onClose}>
-                        <CloseIcon sx={{ color: "black", fontSize: 18 }} />
+                        <CloseIcon
+                          sx={{
+                            color: isDark ? "white" : "black",
+                            fontSize: 18,
+                          }}
+                        />
                       </IconButton>
                     </div>
                   </div>
@@ -221,14 +238,14 @@ function TaskDrawer({
             <div className="flex flex-col justify-between items-start overflow-y-auto p-4 space-y-4 h-full mb-1">
               <div className="flex-1 w-full ">
                 {/* Task Info */}
-                <div className="text-md text-gray-800">
+                <div className="text-md text-gray-800  dark:text-gray-300">
                   <div className="flex justify-between h-8 ">
                     <p className="font-semibold">Description:</p>
                   </div>
 
                   {isEditMode ? (
                     <textarea
-                      className="w-full rounded-xl text-gray-600  border  p-2 mt-2"
+                      className="w-full rounded-xl text-gray-600  dark:text-gray-400 border  p-2 mt-2"
                       value={taskDetails.description}
                       onChange={(e) =>
                         updateTaskDetail("description", e.target.value)
@@ -237,11 +254,11 @@ function TaskDrawer({
                     />
                   ) : (
                     <>
-                      <div className=" text-gray-600 w-full py-1 ">
+                      <div className=" text-gray-600  dark:text-gray-400 w-full py-1 ">
                         {taskDetails.description || "No description"}
                       </div>
 
-                      <div className="h-[1px] my-2 bg-gray-200 shadow"></div>
+                      <div className="h-[1px] my-2 bg-gray-200 dark:bg-gray-500 shadow"></div>
                     </>
                   )}
 
@@ -251,8 +268,11 @@ function TaskDrawer({
                     <div className="flex justify-between">
                       {/* Status */}
                       <div className="flex gap-4 w-1/2 ">
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <AdjustIcon sx={{ fontSize: 18 }} />
+                        <div className="flex items-center gap-2 text-gray-600  dark:text-gray-400">
+                          <AdjustIcon
+                            sx={{ fontSize: 18 }}
+                            className="text-gray-800  dark:text-gray-400"
+                          />
                           <p className="font-normal">Status:</p>
                         </div>
                         {isEditMode ? (
@@ -283,14 +303,17 @@ function TaskDrawer({
 
                       {/* Priority */}
                       <div className="flex gap-6 w-1/2">
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <OutlinedFlagIcon sx={{ fontSize: 18 }} />
+                        <div className="flex items-center gap-2 text-gray-600  dark:text-gray-400">
+                          <OutlinedFlagIcon
+                            sx={{ fontSize: 18 }}
+                            className="text-gray-800  dark:text-gray-400"
+                          />
                           <p className="font-normal">Priority:</p>
                         </div>
-                        <div className="flex items-center gap-2 text-gray-800 ">
+                        <div className="flex items-center gap-2 text-gray-800  dark:text-gray-100 ">
                           {isEditMode ? (
                             <SelectMenu
-                              className="border rounded px-2 py-1"
+                              className="border rounded px-2 py-1 "
                               value={taskDetails.priority}
                               height={20}
                               onChange={(e) =>
@@ -326,8 +349,11 @@ function TaskDrawer({
                   <div className="flex justify-between mt-2 py-1 w-full text-md">
                     {/* Assignee */}
                     <div className="flex  gap-4 w-1/2 ">
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <PersonOutlineIcon sx={{ fontSize: 18 }} />
+                      <div className="flex items-center gap-2 text-gray-600  dark:text-gray-400">
+                        <PersonOutlineIcon
+                          sx={{ fontSize: 18 }}
+                          className="text-gray-800  dark:text-gray-400"
+                        />
                         <p className="font-normal">Assignee:</p>
                       </div>
                       <div className="flex items-center">
@@ -343,7 +369,7 @@ function TaskDrawer({
                           />
                         ) : (
                           <>
-                            <p className="w-7 h-7 rounded-full border bg-black/80 text-white font-bold flex justify-center items-center">
+                            <p className="w-7 h-7 rounded-full border bg-gray-800  dark:text-gray-400 text-white font-bold flex justify-center items-center">
                               {taskDetails.assignee_id[0]?.toUpperCase() || "?"}
                             </p>
                             <span className="cursor-pointer ml-2 h-6 font-semibold">
@@ -357,11 +383,14 @@ function TaskDrawer({
 
                     {/* Due Date */}
                     <div className="flex w-1/2  gap-6 ">
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <CalendarMonthIcon sx={{ fontSize: 18 }} />
+                      <div className="flex items-center gap-2 text-gray-600  dark:text-gray-400">
+                        <CalendarMonthIcon
+                          sx={{ fontSize: 18 }}
+                          className="text-gray-800  dark:text-gray-400"
+                        />
                         <p className="font-normal">Due Date:</p>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-800 ">
+                      <div className="flex items-center gap-2 text-gray-800   dark:text-gray-100">
                         {isEditMode ? (
                           <input
                             type="date"
@@ -385,17 +414,17 @@ function TaskDrawer({
 
                 {!isEditMode && (
                   <>
-                    <div className="h-[1px] my-3 bg-gray-200 shadow"></div>
+                    <div className="h-[1px] my-3 bg-gray-200 dark:bg-gray-500 shadow"></div>
                     {/* Activity Logs */}
                     <div>
-                      <h3 className="font-semibold text-gray-800 mt-4 mb-2">
+                      <h3 className="font-semibold text-gray-800  dark:text-gray-300 mt-4 mb-2">
                         Activity Log
                       </h3>
                       {activities.length ? (
-                        <ul className="text-sm text-gray-600">
+                        <ul className="text-sm text-gray-600  dark:text-gray-400">
                           {activities.map((a, idx) => (
                             <li key={idx} className="p-2 ">
-                              <span className="font-semibold mr-1 text-gray-800">
+                              <span className="font-semibold mr-1 text-gray-800  dark:text-gray-300">
                                 <ArrowRightAltIcon />
                                 {a.user}
                               </span>
@@ -416,15 +445,17 @@ function TaskDrawer({
 
                     {/* Comments */}
                     <div>
-                      <div className="h-[0.5px] my-2 bg-gray-200 shadow"></div>
-                      <h3 className="font-semibold text-gray-800 mb-2">
+                      <div className="h-[0.5px] my-2 bg-gray-200 dark:bg-gray-500 shadow"></div>
+                      <h3 className="font-semibold text-gray-800  dark:text-gray-300 mb-2">
                         Comments
                       </h3>
                       {comment.comments.length > 0 ? (
                         <ul className="space-y-2">
                           {comment.comments.map((c, idx) => (
                             <li key={idx} className="p-2 bg-gray-100 rounded">
-                              <p className="text-gray-800">{c.content}</p>
+                              <p className="text-gray-800  dark:text-gray-300">
+                                {c.content}
+                              </p>
                               <div className="text-xs text-gray-500 mt-1 flex justify-between">
                                 <p>{c.user}</p>
                                 <p>{formatCommentDate(c.date)}</p>
@@ -433,7 +464,7 @@ function TaskDrawer({
                           ))}
                         </ul>
                       ) : (
-                        <p className="text-sm text-gray-500 italic">
+                        <p className="text-sm text-gray-500  italic">
                           No comments yet
                         </p>
                       )}
@@ -444,7 +475,7 @@ function TaskDrawer({
             </div>
 
             {!isEditMode && (
-              <div className="text-gray-800  border-1 border-gray-300 mx-2 mb-4 rounded-2xl pt-4 p-2">
+              <div className="text-gray-800  dark:text-gray-400 dark:bg-[#15191C] border-1 dark:border-gray-500 border-gray-300 mx-2 mb-4 rounded-2xl pt-4 p-2">
                 <textarea
                   className="w-full rounded-xl focus:outline-none"
                   value={cmnt}
@@ -460,7 +491,7 @@ function TaskDrawer({
                 </IconButton> */}
 
                   <Button
-                    bgcolor="gray"
+                    bgcolor="accent"
                     width="w-24"
                     height="h-8 "
                     onClick={() => {

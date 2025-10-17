@@ -5,6 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import useTheme from "../../../hooks/useTheme";
 import {
   Menu,
   MenuItem,
@@ -15,9 +16,10 @@ import {
 import PaddedIcon from "../../../components/ui/PaddedIcon";
 
 function ProjectCard({ project, onEdit, onDelete }) {
+  const { theme } = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
+  const isDark = theme === "dark";
   const handleMenuOpen = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
@@ -34,17 +36,17 @@ function ProjectCard({ project, onEdit, onDelete }) {
     active: "bg-gray-300 text-gray-800",
   };
   return (
-    <div className="rounded-2xl shadow-md hover:shadow-lg transition-all bg-white dark:bg-black w-100 ">
+    <div className="rounded-2xl shadow-md hover:shadow-lg transition-all bg-white dark:bg-[#0E1012] w-96 ">
       <div className="p-4 flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <Link to={`/projects/${project.id}`}>
-            <h3 className="text-lg font-bold  text-gray-800 dark:text-[#b5b5b5] flex items-center gap-2 cursor-pointer">
+            <h3 className="text-lg font-bold  text-gray-800 dark:text-gray-300 flex items-center gap-2 cursor-pointer">
               {project.name}
             </h3>
           </Link>
           <div>
             <span
-              className={`text-xs font-semibold px-2 py-1 rounded-full mr-1 ${
+              className={`text-xs font-semibold dark:bg-[#15191C] dark:text-gray-200 px-2 py-1 rounded-full mr-1 ${
                 statusColors[project.status]
               }`}
             >
@@ -71,6 +73,14 @@ function ProjectCard({ project, onEdit, onDelete }) {
                 vertical: "top",
                 horizontal: "right",
               }}
+              PaperProps={{
+                sx: {
+                  backgroundColor: isDark ? "#15191C" : "#ffffff",
+                  color: isDark ? "#f3f4f6" : "#111827",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", // optional
+                  borderRadius: "8px",
+                },
+              }}
             >
               <MenuItem
                 onClick={() => {
@@ -81,7 +91,6 @@ function ProjectCard({ project, onEdit, onDelete }) {
                 <ListItemIcon>
                   <PaddedIcon
                     Icon={EditIcon}
-                    color="#333"
                     bgColor="lightGray"
                     bgHover="lightGray"
                   />
@@ -96,11 +105,7 @@ function ProjectCard({ project, onEdit, onDelete }) {
                 }}
               >
                 <ListItemIcon>
-                  <PaddedIcon
-                    Icon={DeleteIcon}
-                    bgColor="lightGray"
-                    color="#333"
-                  />
+                  <PaddedIcon Icon={DeleteIcon} bgColor="lightGray" />
                 </ListItemIcon>
                 <ListItemText>Delete</ListItemText>
               </MenuItem>
@@ -120,8 +125,8 @@ function ProjectCard({ project, onEdit, onDelete }) {
             <div className="flex items-center text-sm text-gray-500  dark:text-[#838383] gap-2">
               <PaddedIcon
                 Icon={AssignmentIcon}
-                bgColor={"blue"}
-                color={"text-gray-900 dark:text-gray-400"}
+                bgColor={"lightGray"}
+                color={"text-gray-800 dark:text-gray-400"}
               />
 
               <p className="font-semibold">{project.tasks || 0} tasks</p>

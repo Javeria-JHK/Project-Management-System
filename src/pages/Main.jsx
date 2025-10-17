@@ -12,11 +12,11 @@ function Main() {
   }, []);
 
   return (
-    <div className="flex h-screen w-screen dark:bg-[#151515] bg-[#E2E2E2] ">
+    <div className="flex h-screen w-screen dark:bg-[#15191C] bg-[#D9D9D9] ">
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header />
-        <div className="flex-1 p-2 dark:bg-[#151515] bg-[#E2E2E2] overflow-y-auto">
+        <div className="flex-1 p-2 dark:bg-[#15191C] bg-[#D9D9D9] overflow-y-auto">
           <Outlet />
         </div>
       </div>

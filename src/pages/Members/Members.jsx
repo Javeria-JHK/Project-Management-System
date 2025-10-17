@@ -15,6 +15,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import useTheme from "../../hooks/useTheme";
 
 const workspaceMembers = [
   { id: 1, name: "Alice", email: "alice@email.com", role: "Member" },
@@ -28,12 +29,14 @@ const workspaceMembers = [
 function Members() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { workspace } = useWorkspace();
+  const { workspaces, workspaceId } = useWorkspace();
   const [query, setQuery] = useState("");
   const [members, setMembers] = useState(workspaceMembers);
   const [selectedMember, setSelectedMember] = useState(null);
   const [InvitationAnchorEl, setInvitationAnchorEl] = useState(null);
   const InviteOpen = Boolean(InvitationAnchorEl);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const items = [
     { label: "Remove", action: () => deleteMember(selectedMember.id) },
@@ -55,6 +58,9 @@ function Members() {
     setInvitationAnchorEl(event.currentTarget);
   };
 
+  const WorkspaceName =
+    workspaces.find((ws) => ws.id === workspaceId)?.name || "No Workspace";
+
   const filteredMembers =
     members.filter((wm) => {
       return (
@@ -74,9 +80,9 @@ function Members() {
 
   return (
     <div className="px-2 h-full w-full">
-      <h2 className="text-2xl font-bold text-black pb-2">
+      <h2 className="text-2xl font-bold text-gray-800 pb-2 dark:text-white">
         {" "}
-        {workspace}
+        {WorkspaceName}
         {" Members"}
       </h2>
       <div className="flex justify-between  mb-2">
@@ -88,17 +94,17 @@ function Members() {
         />
 
         <Button
-          width="w-[9%]"
+          width="w-[10%]"
           height={"h-10"}
-          bgcolor="gray"
+          bgcolor="accent"
           onClick={handleInviteMenuOpen}
         >
           <AddIcon />
-          <p className="pl-2"> Invite</p>
+          <p className="pl-1"> Invite</p>
         </Button>
       </div>
-      <table className="w-full border border-gray-400 shadow rounded-2xl overflow-hidden px-4">
-        <thead className="bg-gray-300 text-gray-700 text-sm font-semibold ">
+      <table className="w-full border border-gray-400 dark:border-gray-100 shadow rounded-2xl overflow-hidden px-4">
+        <thead className="bg-gray-300 dark:bg-[#0E1012]  text-gray-700 dark:text-gray-300 text-sm font-semibold dark:border-b-1 dark:border-b-gray-500">
           <tr className="">
             <th className="px-4 py-2 text-left">Name</th>
             <th className="px-4 py-2 text-left">Email</th>
@@ -106,25 +112,25 @@ function Members() {
             <th className="pl-4 py-2 text-right pr-20">Options</th>
           </tr>
         </thead>
-        <tbody className="text-sm text-gray-800 divide-y divide-gray-300">
+        <tbody className="text-sm text-gray-800  dark:text-gray-500 dark:bg-[#121517]  divide-y divide-gray-300 dark:divide-gray-800">
           {workspaceMembers.length === 0 ? (
             <tr>
               <td
                 colSpan="7"
-                className="px-4 py-4 text-center text-gray-400 italic"
+                className="px-4 py-4 text-center dark:bg-[#121517] text-gray-400 italic"
               >
-                No tasks available
+                No members available
               </td>
             </tr>
           ) : (
             filteredMembers.map((wm) => (
               <tr
                 key={wm.id}
-                className="hover:bg-gray-300 transition bg-gray-100"
+                className="hover:bg-gray-300 transition  dark:hover:bg-gray-800   dark:bg-[#0E1012] bg-gray-100"
               >
-                <td className="px-6 py-2 font-medium text-gray-800">
+                <td className="px-6 py-2 font-medium text-gray-800 dark:text-gray-300 ">
                   <div className="flex justify-start items-center">
-                    <p className="w-7 h-7 rounded-full border bg-black/80 text-white font-bold flex justify-center items-center">
+                    <p className="w-7 h-7 rounded-full border bg-gray-800 text-white font-bold flex justify-center items-center">
                       {wm.name[0]?.toUpperCase()}
                     </p>
                     <span className="cursor-pointer ml-2 h-6 font-semibold">
@@ -132,13 +138,15 @@ function Members() {
                     </span>
                   </div>
                 </td>
-                <td className="font-medium text-gray-600">{wm.email}</td>
+                <td className="font-medium text-gray-600 dark:text-gray-500">
+                  {wm.email}
+                </td>
                 <td className=" font-medium text-gray-800">
                   <span
                     className={`rounded-full px-2 py-1 text-xs ${
                       wm.role === "Invited"
-                        ? "text-blue-600  bg-blue-100 "
-                        : "text-gray-700  bg-gray-200 "
+                        ? "text-blue-600  bg-blue-100  dark:bg-blue-800 dark:text-blue-100"
+                        : "text-gray-700  bg-gray-200 dark:bg-gray-800 dark:text-gray-100 "
                     }`}
                   >
                     {wm.role}
@@ -152,7 +160,9 @@ function Members() {
                       handleMenuOpen(e, wm);
                     }}
                   >
-                    <MoreVertIcon sx={{ fontSize: 16 }} />
+                    <MoreVertIcon
+                      sx={{ color: isDark ? "white" : "black", fontSize: 16 }}
+                    />
                   </IconButton>
                 </td>
               </tr>
@@ -165,6 +175,7 @@ function Members() {
       </table>
       <MenuBar
         member={selectedMember}
+        bgColor={isDark ? "#15191C" : "white"}
         items={selectedMember?.role === "Invited" ? invitedMenuItems : items}
         open={open}
         anchorEl={anchorEl}
@@ -187,17 +198,20 @@ function Members() {
         slotProps={{
           paper: {
             sx: {
+              backgroundColor: isDark ? "#121517" : "white",
               width: 400,
             },
           },
         }}
       >
-        <div className="w-full px-4 py-2 rounded-lg">
-          <p className="text-md text-gray-700 font-semibold">Invite link</p>
-          <p className="text-sm text-gray-700 pb-2">
+        <div className="w-full px-4 py-2  rounded-lg">
+          <p className="text-md text-gray-700 dark:text-gray-300 font-semibold">
+            Invite link
+          </p>
+          <p className="text-sm text-gray-700 dark:text-gray-400 pb-2">
             Use the link below to invite people to join your workspace.
           </p>
-          <div className="bg-gray-200 rounded-lg px-2 py-3 border border-gray-400 mt-2 text-sm">
+          <div className="bg-gray-200 dark:bg-[#0E1012] dark:text-white rounded-lg px-2 py-3 border border-gray-400 mt-2 text-sm">
             <p>http://localhost:5173/signin</p>
           </div>
         </div>

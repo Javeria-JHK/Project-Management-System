@@ -74,9 +74,9 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-white text-gray-800 rounded-lg shadow py-8 px-6 w-[40%] border-2 border-gray-800">
-        <h2 className="text-2xl text-gray-900 font-bold mb-4">
+    <div className="fixed inset-0 bg-black/50  dark:bg-gray-800/50 backdrop-blur-sm flex justify-center items-center z-50">
+      <div className="bg-white dark:bg-[#15191C] text-gray-800 rounded-lg shadow py-8 px-6 w-[40%] border-2 border-gray-800">
+        <h2 className="text-2xl text-gray-800  dark:text-white font-bold mb-4">
           {initialData ? "Edit Task" : "Add Task"}
         </h2>
 
@@ -108,7 +108,7 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
 
         {/* Assignee */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-md font-semibold text-gray-700 dark:text-gray-300 mb-2">
             Assignee
           </label>
           <div className="w-full px-3 py-2 border h-10 flex items-center justify-center border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-700">
@@ -136,7 +136,7 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
 
         {/* Priority */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-md font-semibold text-gray-700 dark:text-gray-300 mb-2">
             Priority
           </label>
           <div className="flex gap-2 flex-wrap">
@@ -147,8 +147,8 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
                 className={`px-4 py-1 rounded-full text-sm font-medium border cursor-pointer transition
                   ${
                     priority === p
-                      ? "bg-gray-700 text-white border-gray-700"
-                      : "bg-gray-100 text-gray-700 border-gray-400 hover:bg-gray-200"
+                      ? "bg-gray-800 text-white border-[#499E8E] dark:border-gray-900"
+                      : "bg-gray-200 dark:bg-[#15191C] text-gray-700 dark:text-gray-400 border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`}
               >
                 {p}
@@ -158,11 +158,14 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="flex justify-end gap-2 mt-6">
           <Button
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 border rounded hover:bg-gray-100"
             width="w-[20%]"
+            height={"h-10"}
+            border="ring-1 ring-gray-800"
+            bgcolor="white"
+            textColor="black"
           >
             Cancel
           </Button>
@@ -170,7 +173,8 @@ function AddTaskModal({ isOpen, onClose, onSave, initialData, members }) {
             onClick={handleSubmit}
             className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
             width="w-[20%]"
-            bgcolor="gray"
+            height={"h-10"}
+            bgcolor="accent"
           >
             Save
           </Button>

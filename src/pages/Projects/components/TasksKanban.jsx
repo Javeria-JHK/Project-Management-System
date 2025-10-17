@@ -18,7 +18,7 @@ const statusColors = {
 function mapStatus(status) {
   const map = {
     "To Do": "todo",
-    "In Progress": "inprogress",
+    "In Progress": "in_progress",
     "In Review": "review",
     Completed: "completed",
   };
@@ -58,7 +58,7 @@ function TasksKanban({
   const columns = ["To Do", "In Progress", "In Review", "Completed"];
   const mapCols = {
     todo: "To Do",
-    inprogress: "In Progress",
+    in_progress: "In Progress",
     inreview: "In Review",
     completed: "Completed",
   };
@@ -168,7 +168,7 @@ function TasksKanban({
       {columns.map((col) => (
         <div
           key={col}
-          className="bg-gray-50 rounded-2xl shadow p-3 w-74 flex-shrink-0"
+          className="bg-gray-50 dark:bg-[#0E1012] rounded-2xl shadow p-3 w-74 flex-shrink-0"
           onDragOver={(e) => e.preventDefault()}
           onDragEnter={() => handleDragEnter(col)}
           onDrop={() => handleDrop(col)}
@@ -180,7 +180,7 @@ function TasksKanban({
               >
                 {col}
               </span>
-              <span className="text-gray-800 px-3 text-sm">
+              <span className="text-gray-800 px-3 dark:text-gray-400 text-sm">
                 {tasks.filter((t) => mapCols[t.status] === col).length}
               </span>
             </div>
@@ -191,7 +191,7 @@ function TasksKanban({
                   size="small"
                   onClick={() => setIsModalOpen(true)}
                 >
-                  <AddIcon fontSize="inherit" sx={{ color: "black" }} />
+                  <AddIcon fontSize="medium" sx={{ color: "#499E8E" }} />
                 </IconButton>
               </Tooltip>
             )}

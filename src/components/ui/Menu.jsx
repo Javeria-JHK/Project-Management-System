@@ -10,7 +10,7 @@ import {
   ListItemText,
 } from "@mui/material";
 
-function MenuBar({ open, anchorEl, setAnchorEl, items }) {
+function MenuBar({ open, anchorEl, setAnchorEl, items, bgColor }) {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -31,6 +31,8 @@ function MenuBar({ open, anchorEl, setAnchorEl, items }) {
         paper: {
           elevation: 0,
           sx: {
+            backgroundColor: bgColor,
+
             boxShadow: "none",
             border: "1px solid #ddd",
           },
@@ -44,7 +46,9 @@ function MenuBar({ open, anchorEl, setAnchorEl, items }) {
             item.action();
           }}
         >
-          <ListItemText>{item.label}</ListItemText>
+          <ListItemText className="dark:text-gray-200">
+            {item.label}
+          </ListItemText>
         </MenuItem>
       ))}
     </Menu>
