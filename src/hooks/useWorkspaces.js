@@ -50,7 +50,7 @@ export function useWorkspaces() {
       console.error("Error fetching workspaces:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "SET_WORKSPACES_DONE" });
+      dispatch({ type: WORKSPACE_ACTIONS.SET_WORKSPACES_DONE });
     }
   }
 
@@ -74,7 +74,7 @@ export function useWorkspaces() {
       console.error("Error creating workspace:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "SET_WORKSPACES_DONE" });
+      dispatch({ type: WORKSPACE_ACTIONS.SET_WORKSPACES_DONE  });
     }
   }
 
@@ -95,7 +95,7 @@ export function useWorkspaces() {
       console.error("Error fetching workspace details:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "SET_WORKSPACES_DONE" });
+      dispatch({ type: WORKSPACE_ACTIONS.SET_WORKSPACES_DONE  });
     }
   }
 
@@ -122,7 +122,7 @@ export function useWorkspaces() {
       console.error("Error updating workspace:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "SET_WORKSPACES_DONE" });
+      dispatch({ type: WORKSPACE_ACTIONS.SET_WORKSPACES_DONE  });
     }
   }
 
@@ -146,7 +146,7 @@ export function useWorkspaces() {
       console.error("Error deleting workspace:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "SET_WORKSPACES_DONE" });
+      dispatch({ type: WORKSPACE_ACTIONS.SET_WORKSPACES_DONE  });
     }
   }
 

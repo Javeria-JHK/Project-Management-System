@@ -7,7 +7,8 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function invalidSignInTest() {
   const options = new chrome.Options();
-  // comment next line if you want to watch the browser actions
+   options.addArguments("--start-maximized");
+  // following line is to not to watch the browser actions
   // options.addArguments("--headless=new");
 
   const driver = await new Builder()

@@ -13,7 +13,7 @@ export function projectReducer(state, action) {
       return { ...state, isProjectLoading: true, error: null };
 
     case PROJECT_ACTIONS.SET_PROJECTS:
-      return { ...state, projects: action.payload, isProjectLoading: false };
+      return { ...state, projects: action.payload, isProjectLoading: false ,currentProject:null};
 
     case PROJECT_ACTIONS.SET_CURRENT_PROJECT:
       return { ...state, currentProject: action.payload, isProjectLoading: false };
@@ -41,6 +41,10 @@ export function projectReducer(state, action) {
 
     case PROJECT_ACTIONS.PROJECT_ERROR:
       return { ...state, isProjectLoading: false, error: action.payload };
+
+
+    case PROJECT_ACTIONS.PROJECTS_DONE:
+      return {...state,isProjectLoading:false,error:null}
 
     default:
       return state;

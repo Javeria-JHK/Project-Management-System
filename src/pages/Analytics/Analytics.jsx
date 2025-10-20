@@ -36,7 +36,9 @@ function Analytics() {
   const { dispatch } = useStore();
 
   const { projects, getProjects, isProjectLoading } = useProjects();
-  const [projectId, setProjectId] = useState("Select Project");
+  const [projectId, setProjectId] = useState(
+    currentProject?.id || "Select Project"
+  );
 
   const filteredProjects =
     projects.filter((p) => p.workspace_id === workspaceId) || [];
@@ -47,9 +49,10 @@ function Analytics() {
       label: p.name,
       value: p.id,
     })) || [];
-  console.log("Available workspaces:", projectItems);
+  console.log("Available projects:", projectItems);
 
   useEffect(() => {
+    console.log("usseEffect 1 is being callled");
     setProjectId(currentProject?.id);
     // When workspace changes, fetch projects of that workspace
     async function fetchProjectsForWorkspace() {
@@ -61,7 +64,7 @@ function Analytics() {
 
       if (workspaceProjects.length > 0) {
         const firstProject = workspaceProjects[0];
-        setProjectId(currentProject?.id || firstProject.id);
+        setProjectId(firstProject.id);
         dispatch({
           type: PROJECT_ACTIONS.SET_CURRENT_PROJECT,
           payload: firstProject,
@@ -76,6 +79,7 @@ function Analytics() {
   }, [workspaceId]);
 
   useEffect(() => {
+    console.log("usseEffect 2 is being callled");
     if (projectId !== "") {
       console.log("Fetching analytics for project:", projectId);
       getProjectAnalytics(projectId);
