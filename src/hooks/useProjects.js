@@ -23,19 +23,25 @@ export function useProjects() {
       if (!res.ok) throw new Error(response.error || "Failed to fetch projects");
 
       dispatch({ type: PROJECT_ACTIONS.SET_PROJECTS, payload: response.data });
-      if(!project.currentProject){
-        const currentProject = response.data[0];
+      const data = response.data;
+        
+      const filteredProjects =
+        data?.filter((p) => p.workspace_id === state.workspace.activeWorkspaceId) || [];
+        const currentProject =  filteredProjects[0] || "";
         console.log("setting project",currentProject);
-        if(currentProject)
-        dispatch({type:PROJECT_ACTIONS.SET_CURRENT_PROJECT, payload:currentProject})
-      }
+        console.log(currentProject.name)
+        if(currentProject){
+           dispatch({type:PROJECT_ACTIONS.SET_CURRENT_PROJECT, payload:currentProject});
+        }
+       
+    
 
       return response.data;
     } catch (error) {
       console.error("Error fetching projects:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "PROJECTS_DONE" });
+      dispatch({ type: PROJECT_ACTIONS.PROJECTS_DONE });
     }
   }
 
@@ -64,7 +70,7 @@ export function useProjects() {
       console.error("Error creating project:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "PROJECTS_DONE" });
+      dispatch({ type: PROJECT_ACTIONS.PROJECTS_DONE });
     }
   }
 
@@ -91,7 +97,7 @@ export function useProjects() {
       console.error("Error fetching project details:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "PROJECTS_DONE" });
+      dispatch({ type: PROJECT_ACTIONS.PROJECTS_DONE });
     }
   }
 
@@ -120,7 +126,7 @@ export function useProjects() {
       console.error("Error updating project:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "PROJECTS_DONE" });
+      dispatch({ type: PROJECT_ACTIONS.PROJECTS_DONE});
     }
   }
 
@@ -146,7 +152,7 @@ export function useProjects() {
       console.error("Error deleting project:", error);
       return { error: error.message };
     } finally {
-      dispatch({ type: "PROJECTS_DONE" });
+      dispatch({ type: PROJECT_ACTIONS.PROJECTS_DONE });
     }
   }
 

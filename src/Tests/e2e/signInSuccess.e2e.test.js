@@ -7,7 +7,9 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 async function signInTest() {
   // Setup Chrome browser (non-headless so you can see it)
   const options = new chrome.Options();
-  // comment this out only if you want it hidden
+   options.addArguments("--start-maximized");
+  options.addArguments("--disable-password-manager-reauth");
+  // following line is to not to watch the browser actions 
   // options.addArguments("--headless=new");
 
   const driver = await new Builder()
@@ -42,7 +44,7 @@ async function signInTest() {
 
     console.log("⏳ Waiting for navigation...");
      
-        await driver.wait(async () => {
+      await driver.wait(async () => {
       const currentUrl = await driver.getCurrentUrl();
       console.log("🌐 Current URL:", currentUrl);
    

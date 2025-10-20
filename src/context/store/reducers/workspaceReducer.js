@@ -48,6 +48,8 @@ export function workspaceReducer(state, action) {
     case WORKSPACE_ACTIONS.WORKSPACE_FAILURE:
       return { ...state, isWorkspaceLoading: false, error: action.payload };
 
+    case WORKSPACE_ACTIONS.SET_WORKSPACES_DONE:
+      return { ...state, isWorkspaceLoading: false, error: null };
     default:
       return state;
   }
