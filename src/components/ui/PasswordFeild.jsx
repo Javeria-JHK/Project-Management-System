@@ -15,7 +15,10 @@ function PasswordFeild({
   const [Visibility, SetVisibility] = useState(false);
   return (
     <div className="mb-4">
-      <label htmlFor={id} className="block text-gray-700 font-semibold mb-2">
+      <label
+        htmlFor={id}
+        className="block text-gray-700 dark:text-gray-300 font-semibold mb-2"
+      >
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
@@ -25,7 +28,7 @@ function PasswordFeild({
           value={value}
           onChange={onChange}
           id={id}
-          className={`w-full focus:outline-none   ${
+          className={`w-full focus:outline-none  dark:text-gray-500  ${
             error
               ? "border-red-500 focus:ring-red-500"
               : "border-gray-300 focus:ring-gray-700"
