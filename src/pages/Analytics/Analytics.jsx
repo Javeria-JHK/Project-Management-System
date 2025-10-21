@@ -58,9 +58,18 @@ function Analytics() {
     async function fetchProjectsForWorkspace() {
       if (!workspaceId) return;
 
-      const data = await getProjects(); // wait for projects
+      // const alreadyLoaded = projects.some(
+      //   (p) => p.workspace_id === workspaceId
+      // );
+      // if (alreadyLoaded) return;
+
+      // const data = await getProjects(); // wait for projects
+      console.log({ projects });
+      if (projects.length === 0) {
+        await getProjects();
+      }
       const workspaceProjects =
-        data.filter((p) => p.workspace_id === workspaceId) || [];
+        projects.filter((p) => p.workspace_id === workspaceId) || [];
 
       if (workspaceProjects.length > 0) {
         const firstProject = workspaceProjects[0];
@@ -80,7 +89,10 @@ function Analytics() {
 
   useEffect(() => {
     console.log("usseEffect 2 is being callled");
-    if (projectId !== "") {
+    console.log({ projectId });
+    console.log(currentProject?.id);
+
+    if (projectId !== "" && projectId != analytics?.project_id) {
       console.log("Fetching analytics for project:", projectId);
       getProjectAnalytics(projectId);
     }
