@@ -263,7 +263,6 @@ function MemberList({
                 <div className="flex justify-end gap-2">
                   <Button
                     border="ring-1 ring-gray-400"
-                    textColor="gray"
                     onClick={() => setDeleteTarget(null)}
                     width="w-20"
                     height="h-8"
