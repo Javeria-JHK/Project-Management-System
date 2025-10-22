@@ -41,7 +41,7 @@ describe("SignIn Component Tests", () => {
   // it.only("shows validation errors when email and password are empty", async () => {    //it.only to only run that specific test
   it("shows validation errors when email and password are empty", async () => {
     renderWithProviders(<SignIn />);
-    const signInButton = screen.getByRole("button", { name: /\bsign i\b/i }); //word boundary for exact match
+    const signInButton = screen.getByRole("button", { name: /\bsign in\b/i }); //word boundary for exact match
 
     await userEvent.click(signInButton);
 
