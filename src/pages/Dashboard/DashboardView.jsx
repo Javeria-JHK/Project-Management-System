@@ -17,6 +17,7 @@ const DashboardView = () => {
 
   useEffect(() => {
     getDashboardData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {

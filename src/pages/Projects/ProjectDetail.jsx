@@ -70,6 +70,7 @@ function ProjectDetail() {
     getTasksByProject(id);
     setOpen(isMembersPage);
     getProjectById(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, isMembersPage, tasks.length]);
 
   const filteredTasks =

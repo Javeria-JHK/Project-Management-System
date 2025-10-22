@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../../../components/ui/Button";
+// eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import SearchBar from "../../../components/ui/SearchBar";
 import AddIcon from "@mui/icons-material/Add";

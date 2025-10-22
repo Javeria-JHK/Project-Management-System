@@ -42,6 +42,7 @@ function Projects() {
     if (projects.length === 0) {
       getProjects();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workspaceId]);
 
   //projects handler functions
