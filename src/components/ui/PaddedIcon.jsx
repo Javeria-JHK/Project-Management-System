@@ -18,15 +18,17 @@ const hoverColors = {
   white: "hover:bg-gray-100 dark:hover:bg-gray-200",
 };
 
-function PaddedIcon({ Icon = HelpOutlineIcon, color, bgColor, hoverBg }) {
+function PaddedIcon({ Icon, color, bgColor, hoverBg }) {
   const iconColor = color || "text-gray-800 dark:text-white";
+  const defaultIcon = HelpOutlineIcon;
+  const RenderIcon = Icon || defaultIcon;
   return (
     <div
       className={`flex items-center justify-center relative w-7 h-7 cursor-pointer 
         transition-colors duration-200 rounded-md
         ${bgColors[bgColor] || ""} ${hoverColors[hoverBg] || ""}`}
     >
-      <Icon
+      <RenderIcon
         className={`${iconColor} dark:hover:text-gray-400`}
         sx={{ fontSize: 18 }}
       />

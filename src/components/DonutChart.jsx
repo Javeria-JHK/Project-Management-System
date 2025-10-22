@@ -26,7 +26,7 @@ function DonutChart({ data, width = 300 }) {
       .attr("height", height)
       .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
-    const path = svg
+    const _path = svg
       .selectAll("path")
       .data(pie(data))
       .join("path")

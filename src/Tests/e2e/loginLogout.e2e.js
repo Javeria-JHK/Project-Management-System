@@ -60,7 +60,7 @@ async function testLoginAndLogout() {
 
     if (currentUrl === dashboardUrl) {
     console.log("✅ Login successful! Redirected exactly to Dashboard.\n");
-    await delay(1500);
+    await delay(2500);
 
      // Step 4: Find log out button and click
 

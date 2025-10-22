@@ -58,12 +58,6 @@ function Analytics() {
     async function fetchProjectsForWorkspace() {
       if (!workspaceId) return;
 
-      // const alreadyLoaded = projects.some(
-      //   (p) => p.workspace_id === workspaceId
-      // );
-      // if (alreadyLoaded) return;
-
-      // const data = await getProjects(); // wait for projects
       console.log({ projects });
       if (projects.length === 0) {
         await getProjects();
@@ -85,6 +79,7 @@ function Analytics() {
     }
 
     fetchProjectsForWorkspace();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workspaceId]);
 
   useEffect(() => {
@@ -96,6 +91,7 @@ function Analytics() {
       console.log("Fetching analytics for project:", projectId);
       getProjectAnalytics(projectId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   function handleUpdate(pid) {

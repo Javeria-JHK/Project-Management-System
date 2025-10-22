@@ -49,6 +49,7 @@ function Workspace() {
     }
 
     handleWorkspaces();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, workspaces.length]);
 
   const addWorkspace = async (workspace) => {
