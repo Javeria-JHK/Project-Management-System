@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../../../components/ui/Button";
+// eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "motion/react";
 import SearchBar from "../../../components/ui/SearchBar";
 import AddIcon from "@mui/icons-material/Add";
@@ -263,7 +264,6 @@ function MemberList({
                 <div className="flex justify-end gap-2">
                   <Button
                     border="ring-1 ring-gray-400"
-                    textColor="gray"
                     onClick={() => setDeleteTarget(null)}
                     width="w-20"
                     height="h-8"

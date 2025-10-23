@@ -37,6 +37,7 @@ function Settings() {
       const timer = setTimeout(() => setSuccessMessage(""), 3000);
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successMessage]);
 
   const validateForm = () => {
@@ -119,9 +120,9 @@ function Settings() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="bg-white text-gray-800 rounded-xl p-8 w-full max-w-lg shadow-xl animate-fadeIn">
-            <h3 className="text-xl font-bold mb-6 text-gray-700">
+        <div className="fixed inset-0 bg-black/50  dark:bg-gray-800/50 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#15191C] text-gray-800 rounded-xl p-8 w-full max-w-lg shadow-xl animate-fadeIn">
+            <h3 className="text-xl font-bold mb-6 dark:text-white text-gray-700">
               Change Password
             </h3>
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -180,6 +181,9 @@ function Settings() {
               <div className="flex justify-end gap-4 mt-6">
                 <Button
                   width="w-[30%]"
+                  bgcolor="white"
+                  border="ring-1 ring-gray-800"
+                  textColor="black"
                   onClick={(e) => {
                     e.preventDefault();
                     setFormData({
@@ -193,7 +197,7 @@ function Settings() {
                 >
                   Cancel
                 </Button>
-                <Button width="w-[30%]" bgcolor="gray" type="submit">
+                <Button width="w-[30%]" bgcolor="accent" type="submit">
                   Save
                 </Button>
               </div>

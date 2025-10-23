@@ -1,6 +1,5 @@
 import { useParams, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useWorkspace } from "../../hooks/useWorkspace";
 import { useTasks } from "../../hooks/useTasks";
 import SearchBar from "../../components/ui/SearchBar";
 import MyTasksListView from "./MyTaskListView";
@@ -23,6 +22,7 @@ function MyTasks() {
     if (user.id) {
       getTasksByUser(user.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userTasks.length]);
 
   const filters = [

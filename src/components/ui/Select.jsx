@@ -47,7 +47,7 @@ function SelectMenu({
         ...(focusedVariant
           ? {
               "&.Mui-focused": {
-                backgroundColor: isDark ? "#363636" : "#eff6ff", // dark: gray-700, light: blue-50
+                backgroundColor: isDark ? "#363636" : "#eff6ff",
                 boxShadow: isDark
                   ? "0 0 0 3px rgba(255,255,255,0.2)"
                   : "0 0 0 3px rgba(37, 99, 235, 0.3)",

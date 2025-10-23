@@ -36,7 +36,9 @@ function Analytics() {
   const { dispatch } = useStore();
 
   const { projects, getProjects, isProjectLoading } = useProjects();
-  const [projectId, setProjectId] = useState("Select Project");
+  const [projectId, setProjectId] = useState(
+    currentProject?.id || "Select Project"
+  );
 
   const filteredProjects =
     projects.filter((p) => p.workspace_id === workspaceId) || [];
@@ -47,21 +49,25 @@ function Analytics() {
       label: p.name,
       value: p.id,
     })) || [];
-  console.log("Available workspaces:", projectItems);
+  console.log("Available projects:", projectItems);
 
   useEffect(() => {
+    console.log("usseEffect 1 is being callled");
     setProjectId(currentProject?.id);
     // When workspace changes, fetch projects of that workspace
     async function fetchProjectsForWorkspace() {
       if (!workspaceId) return;
 
-      const data = await getProjects(); // wait for projects
+      console.log({ projects });
+      if (projects.length === 0) {
+        await getProjects();
+      }
       const workspaceProjects =
-        data.filter((p) => p.workspace_id === workspaceId) || [];
+        projects.filter((p) => p.workspace_id === workspaceId) || [];
 
       if (workspaceProjects.length > 0) {
         const firstProject = workspaceProjects[0];
-        setProjectId(currentProject?.id || firstProject.id);
+        setProjectId(firstProject.id);
         dispatch({
           type: PROJECT_ACTIONS.SET_CURRENT_PROJECT,
           payload: firstProject,
@@ -73,13 +79,19 @@ function Analytics() {
     }
 
     fetchProjectsForWorkspace();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workspaceId]);
 
   useEffect(() => {
-    if (projectId !== "") {
+    console.log("usseEffect 2 is being callled");
+    console.log({ projectId });
+    console.log(currentProject?.id);
+
+    if (projectId !== "" && projectId != analytics?.project_id) {
       console.log("Fetching analytics for project:", projectId);
       getProjectAnalytics(projectId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   function handleUpdate(pid) {

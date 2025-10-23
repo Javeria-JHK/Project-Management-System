@@ -6,7 +6,6 @@ import AddTaskModal from "./AddTaskModal";
 import TaskDrawer from "./TaskDrawer";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTasks } from "../../../hooks/useTasks";
-import { useStore } from "../../../hooks/useStore";
 
 const statusColors = {
   Completed: "bg-green-100 text-green-700",
@@ -38,7 +37,6 @@ function TasksKanban({
   const [dragOverCol, setDragOverCol] = useState(null);
   const { taskId } = useParams();
   const { createTask, editTask, getTasksByProject } = useTasks();
-  const { state, dispatch } = useStore();
 
   const navigate = useNavigate();
   const pId = projectId;
